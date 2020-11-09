@@ -8,16 +8,16 @@ import Navbar from './components/ui/Navbar';
 
 const App = () => {
 	return (
-		<div className='wrapper'>
-			<Router>
-				<Navbar />
+		<Router>
+			<Navbar />
+			<div className='wrapper'>
 				<Switch>
 					<Route exact path='/' component={LandingPage} />
 					<Route exact path='/dashboard' component={DashboardPage} />
 					<Route exact path='/category' component={CategoryPage} />
 				</Switch>
-			</Router>
-		</div>
+			</div>
+		</Router>
 	);
 };
 
