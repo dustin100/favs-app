@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Column from '../ui/Column';
 import { fakeData } from '../../fakeData';
 import CurrentCategory from '../ui/CurrentCategory';
@@ -13,12 +13,14 @@ import CurrentCategory from '../ui/CurrentCategory';
 
 const CategoryPage = (props) => {
 	return (
-		<div>
-			<CurrentCategory category='Beer'/>
-			<Column cards={fakeData} />
-			<Column cards={fakeData} />
-			<Column cards={fakeData} />
-		</div>
+		<Fragment>
+			<CurrentCategory category='Beer' />
+			<div className='threeCols'>
+				<Column cards={fakeData} />
+				<Column cards={fakeData} />
+				<Column cards={fakeData} />
+			</div>
+		</Fragment>
 	);
 };
 

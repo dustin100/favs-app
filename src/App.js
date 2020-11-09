@@ -3,7 +3,7 @@ import CategoryPage from './components/pages/CategoryPage'
 
 const App = () => {
 	return (
-		<div className='App'>
+		<div className='wrapper'>
 			<CategoryPage />
 		</div>
 	);

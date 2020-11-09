@@ -1,3 +1,45 @@
-.App {
-	text-align: center;
+.wrapper {
+	max-width: 1400px;
+	margin: 0 auto;
+	width: 95%;
+}
+
+.btn {
+	text-transform: uppercase;
+	text-decoration: none;
+	padding: 20px;
+	background: green;
+	color: red;
+	border: 2px solid red;
+	display: inline-block;
+	margin-bottom: 1rem;
+	width: 400px;
+}
+
+.btn:hover {
+	cursor: pointer;
+	color: green;
+	background: red;
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+	color: #000;
+	opacity: 0.2;
+	cursor: not-allowed;
+	background: #e4f2e4;
+}
+
+.threeCols {
+  display: flex;
+  justify-content: space-around;
+}
+
+.col {
+  max-width: 33%;
+  padding: 1rem;
+}
+
+.currentCatTitle {
+text-align: center;
 }

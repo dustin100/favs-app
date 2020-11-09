@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
 
-
 const CurrentCategory = ({ category }) => {
 	return (
 		<Fragment>
-			<h2>{category}</h2>
+			<h2 className='currentCatTitle'>{category}</h2>
 		</Fragment>
 	);
 };
