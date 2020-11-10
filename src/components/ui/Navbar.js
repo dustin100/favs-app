@@ -12,7 +12,7 @@ const Navbar = (props) => {
 					<Link to='/dashboard'> Dashboard </Link>
 				</li>
 				<li>
-					<Link to='/dashboard'> Login </Link>
+					<Link to='/login'> Login </Link>
 				</li>
 				<li>
 					<Link to='/dashboard'> Logout </Link>
