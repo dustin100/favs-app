@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-
 const Login = (props) => {
 	const [formData, setFormData] = useState({
 		email: '',
@@ -19,7 +18,7 @@ const Login = (props) => {
 	};
 
 	return (
-		<Fragment>
+		<section className='login'>
 			<h1>Sign In</h1>
 			<p>
 				<i className='fas fa-user'></i> Sign into Your Account
@@ -51,7 +50,7 @@ const Login = (props) => {
 			<p className='my-1'>
 				Don't have an account? <Link to='/register'>Sign up</Link>
 			</p>
-		</Fragment>
+		</section>
 	);
 };
 

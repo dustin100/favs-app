@@ -424,3 +424,31 @@ template {
 .currentCatTitle {
 	text-align: center;
 }
+
+.login {
+	max-width: 400px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+/* Forms */
+.form .form-group {
+	margin: 1.2rem 0;
+}
+
+.form input[type='text'],
+.form input[type='email'],
+.form input[type='password'],
+.form select,
+.form textarea {
+	display: block;
+	width: 100%;
+	padding: 0.4rem;
+	font-size: 1.2rem;
+	border: 1px solid #ccc;
+}
+
+.form input[type='submit'],
+button {
+	font: inherit;
+}
