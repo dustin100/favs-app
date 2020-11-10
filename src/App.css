@@ -21,7 +21,9 @@ html {
  */
 
 body {
+	background: #0b0c10;
 	margin: 0;
+	color: #fff;
 }
 
 /**
@@ -75,6 +77,7 @@ pre {
 
 a {
 	background-color: transparent;
+	color: #64fcf1;
 }
 
 /**
@@ -350,6 +353,17 @@ template {
 	display: none;
 }
 
+/* 
+Color ideas
+#0b0c10 Dark
+#1f2833 DarkGrey
+#c5c6c8 LightGrey
+#64fcf1 Blue
+#44a29f DarkBlue
+
+
+*/
+
 .wrapper {
 	max-width: 1400px;
 	margin: 0 auto;
@@ -360,9 +374,9 @@ template {
 	text-transform: uppercase;
 	text-decoration: none;
 	padding: 20px;
-	background: green;
-	color: red;
-	border: 2px solid red;
+	background: #0b0c10;
+	color: #64fcf1;
+	border: 2px solid #64fcf1;
 	display: inline-block;
 	margin-bottom: 1rem;
 	width: 400px;
@@ -370,8 +384,8 @@ template {
 
 .btn:hover {
 	cursor: pointer;
-	color: green;
-	background: red;
+	color: #0b0c10;
+	background: #64fcf1;
 }
 
 .btn:disabled,
@@ -379,7 +393,6 @@ template {
 	color: #000;
 	opacity: 0.2;
 	cursor: not-allowed;
-	background: #e4f2e4;
 }
 
 /* Navbar */
@@ -387,11 +400,10 @@ template {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0.7rem 0;
 	z-index: 1;
 	width: 100%;
 	top: 0;
-	border-bottom: solid 1px blue;
+	border-bottom: solid 1px #64fcf1;
 	opacity: 0.9;
 }
 
@@ -401,19 +413,27 @@ template {
 }
 
 .navbar a {
-	color: green;
+	color: #64fcf1;
 	padding: 0.45rem;
 	margin: 0 0.25rem;
 }
 
 .navbar a:hover {
-	color: red;
+	color: #fff;
 }
 
 /* Category Page Layout */
 .threeCols {
 	display: flex;
 	justify-content: space-around;
+}
+
+.col h2 {
+	text-align: center;
+}
+
+.col h2 span {
+	color: #64fcf1;
 }
 
 .col {
@@ -423,6 +443,18 @@ template {
 
 .currentCatTitle {
 	text-align: center;
+}
+
+.card {
+	border: 1px solid #64fcf1;
+	padding: .4rem;
+	margin-bottom: 1rem;
+}
+
+.card h3 {
+	text-align: center;
+	color: #64fcf1;
+	text-transform: uppercase;
 }
 
 .login,
@@ -446,7 +478,7 @@ template {
 	width: 100%;
 	padding: 0.4rem;
 	font-size: 1.2rem;
-	border: 1px solid #ccc;
+	border: 1px solid #64fcf1;
 }
 
 .form input[type='submit'],
