@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/ui/Navbar';
 import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 import LandingPage from './components/pages/LandingPage';
 import CategoryPage from './components/pages/CategoryPage';
 import DashboardPage from './components/pages/DashboardPage';
@@ -23,6 +24,7 @@ const App = () => {
 							<Route exact path='/dashboard' component={DashboardPage} />
 							<Route exact path='/category' component={CategoryPage} />
 							<Route exact path='/login' component={Login} />
+							<Route exact path='/register' component={Register} />
 						</Switch>
 					</div>
 				</Fragment>

@@ -15,6 +15,9 @@ const Navbar = (props) => {
 					<Link to='/login'> Login </Link>
 				</li>
 				<li>
+					<Link to='/register'> Register </Link>
+				</li>
+				<li>
 					<Link to='/dashboard'> Logout </Link>
 				</li>
 				<li>
