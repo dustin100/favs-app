@@ -1,7 +1,18 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+// Styles
+const useStyles = makeStyles((theme) => ({
+	btn: {
+		width: '385px'
+	},
+}));
 
 const Login = (props) => {
+	const classes = useStyles();
+
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
@@ -45,7 +56,14 @@ const Login = (props) => {
 					/>
 				</div>
 
-				<input type='submit' className='btn btn-primary' value='Login' />
+				<Button
+					className={classes.btn}
+					variant='outlined'
+					color='secondary'
+					type='submit'
+					value='Login'>
+					Login
+				</Button>
 			</form>
 			<p className='my-1'>
 				Don't have an account? <Link to='/register'>Sign up</Link>

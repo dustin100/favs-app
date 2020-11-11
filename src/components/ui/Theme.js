@@ -28,6 +28,15 @@ const theme = createMuiTheme({
 			default: favBlack,
 			paper: '#000',
 		},
+
+		typography: {
+			button: {
+				padding: '20px',
+				marginBottom: '1rem',
+				width: '390px',
+				color: '#fff',
+			},
+		},
 	},
 });
 

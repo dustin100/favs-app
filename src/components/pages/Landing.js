@@ -1,12 +1,26 @@
 import React from 'react';
-import Button from '../ui/Button';
+import { Link } from 'react-router-dom';
+import { Button, Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+// Styles
+const useStyles = makeStyles((theme) => ({
+	btn: {
+		...theme.typography.button,
+	},
+}));
 
 const LandingPage = (props) => {
+	const classes = useStyles();
 	return (
-		<div>
-			<Button text='sign up' />
-			<Button text='login' />
-		</div>
+		<Container maxWidth='sm'>
+			<Button className={classes.btn} variant='outlined' color='secondary'>
+				Sign up
+			</Button>
+			<Button className={classes.btn} variant='outlined' color='secondary'>
+				Sign in
+			</Button>
+		</Container>
 	);
 };
 

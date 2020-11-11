@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+// Styles
+const useStyles = makeStyles((theme) => ({
+	btn: {
+		width: '385px',
+	},
+}));
 
 export const Register = (props) => {
+	const classes = useStyles();
+
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -50,7 +61,6 @@ export const Register = (props) => {
 						onChange={(e) => onChange(e)}
 						required
 					/>
-					
 				</div>
 				<div className='form-group'>
 					<input
@@ -72,7 +82,14 @@ export const Register = (props) => {
 						onChange={(e) => onChange(e)}
 					/>
 				</div>
-				<input type='submit' className='btn btn-primary' value='Register' />
+				<Button
+					className={classes.btn}
+					variant='outlined'
+					color='secondary'
+					type='submit'
+					value='register'>
+					Register
+				</Button>
 			</form>
 			<p className='my-1'>
 				Already have an account? <Link to='/login'>Sign In</Link>

@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import {
-	AppBar,
-	Toolbar,
-	Typography,
-	Button,
-	Tab,
-	Tabs,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Tab, Tabs } from '@material-ui/core';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
 		textTransform: 'capitalize',
 		minWidth: 10,
 		marginLeft: '25px',
+	},
+	toolbarMargin: {
+		...theme.mixins.toolbar,
 	},
 }));
 
@@ -50,40 +46,43 @@ const Navbar = (props) => {
 	}, [value]);
 
 	return (
-		<AppBar>
-			<Toolbar>
-				<Typography variant='h6' className={classes.title}>
-					<Link to='/'>Logo</Link>
-				</Typography>
-				<Tabs value={value} onChange={handleChange}>
-					<Tab
-						className={classes.tab}
-						component={Link}
-						to='/dashboard'
-						label='Dashboard'></Tab>
-					<Tab
-						className={classes.tab}
-						component={Link}
-						to='/login'
-						label='Login'></Tab>
-					<Tab
-						className={classes.tab}
-						component={Link}
-						to='/register'
-						label='Register'></Tab>
-					<Tab
-						className={classes.tab}
-						component={Link}
-						to='/dashboard'
-						label='Logout'></Tab>
-					<Tab
-						className={classes.tab}
-						component={Link}
-						to='/category'
-						label='Category'></Tab>
-				</Tabs>
-			</Toolbar>
-		</AppBar>
+		<Fragment>
+			<AppBar>
+				<Toolbar>
+					<Typography variant='h6' className={classes.title}>
+						<Link to='/'>Logo</Link>
+					</Typography>
+					<Tabs value={value} onChange={handleChange}>
+						<Tab
+							className={classes.tab}
+							component={Link}
+							to='/dashboard'
+							label='Dashboard'></Tab>
+						<Tab
+							className={classes.tab}
+							component={Link}
+							to='/login'
+							label='Login'></Tab>
+						<Tab
+							className={classes.tab}
+							component={Link}
+							to='/register'
+							label='Register'></Tab>
+						<Tab
+							className={classes.tab}
+							component={Link}
+							to='/dashboard'
+							label='Logout'></Tab>
+						<Tab
+							className={classes.tab}
+							component={Link}
+							to='/category'
+							label='Category'></Tab>
+					</Tabs>
+				</Toolbar>
+			</AppBar>
+			<div className={classes.toolbarMargin} />
+		</Fragment>
 	);
 };
 
