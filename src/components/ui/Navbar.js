@@ -42,11 +42,31 @@ const Navbar = (props) => {
 					<Link to='/'>Logo</Link>
 				</Typography>
 				<Tabs value={value} onChange={handleChange}>
-					<Tab className={classes.tab} label='Dashbaord'></Tab>
-					<Tab className={classes.tab} label='Login'></Tab>
-					<Tab className={classes.tab} label='Register'></Tab>
-					<Tab className={classes.tab} label='Logout'></Tab>
-					<Tab className={classes.tab} label='Category'></Tab>
+					<Tab
+						className={classes.tab}
+						component={Link}
+						to='/dashboard'
+						label='Dashboard'></Tab>
+					<Tab
+						className={classes.tab}
+						component={Link}
+						to='/login'
+						label='Login'></Tab>
+					<Tab
+						className={classes.tab}
+						component={Link}
+						to='/register'
+						label='Register'></Tab>
+					<Tab
+						className={classes.tab}
+						component={Link}
+						to='/dashboard'
+						label='Logout'></Tab>
+					<Tab
+						className={classes.tab}
+						component={Link}
+						to='/category'
+						label='Category'></Tab>
 				</Tabs>
 			</Toolbar>
 		</AppBar>
@@ -54,21 +74,3 @@ const Navbar = (props) => {
 };
 
 export default Navbar;
-
-{
-	/* <Button>
-					<Link to='/dashboard'> Dashboard </Link>
-				</Button>
-				<Button>
-					<Link to='/login'> Login </Link>
-				</Button>
-				<Button>
-					<Link to='/register'> Register </Link>
-				</Button>
-				<Button>
-					<Link to='/dashboard'> Logout </Link>
-				</Button>
-				<Button>
-					<Link to='/category'> Category </Link>
-				</Button> */
-}
