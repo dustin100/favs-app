@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,6 +34,20 @@ const Navbar = (props) => {
 	const handleChange = (e, value) => {
 		setValue(value);
 	};
+
+	useEffect(() => {
+		if (window.location.pathname === '/dashboard' && value !== 0) {
+			setValue(0);
+		} else if (window.location.pathname === '/login' && value !== 1) {
+			setValue(1);
+		} else if (window.location.pathname === '/register' && value !== 2) {
+			setValue(2);
+		} else if (window.location.pathname === '/logout' && value !== 3) {
+			setValue(3);
+		} else if (window.location.pathname === '/category' && value !== 4) {
+			setValue(4);
+		}
+	}, [value]);
 
 	return (
 		<AppBar>
