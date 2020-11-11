@@ -1,5 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from './components/ui/Theme';
 
 import Navbar from './components/ui/Navbar';
 import Login from './components/auth/Login';
@@ -15,20 +18,23 @@ import { Fragment } from 'react';
 const App = () => {
 	return (
 		<Provider store={store}>
-			<Router>
-				<Fragment>
-					<Navbar />
-					<div className='wrapper'>
-						<Switch>
-							<Route exact path='/' component={Landing} />
-							<Route exact path='/dashboard' component={Dashboard} />
-							<Route exact path='/category' component={Category} />
-							<Route exact path='/login' component={Login} />
-							<Route exact path='/register' component={Register} />
-						</Switch>
-					</div>
-				</Fragment>
-			</Router>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<Router>
+					<Fragment>
+						<Navbar />
+						<div className='wrapper'>
+							<Switch>
+								<Route exact path='/' component={Landing} />
+								<Route exact path='/dashboard' component={Dashboard} />
+								<Route exact path='/category' component={Category} />
+								<Route exact path='/login' component={Login} />
+								<Route exact path='/register' component={Register} />
+							</Switch>
+						</div>
+					</Fragment>
+				</Router>
+			</ThemeProvider>
 		</Provider>
 	);
 };
