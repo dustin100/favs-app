@@ -1,12 +1,35 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+
+import {
+	Button,
+	TextField,
+	Typography,
+	Container,
+	Avatar,
+	makeStyles,
+} from '@material-ui/core';
+import Register from './Register';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
-	btn: {
-		width: '385px'
+	paper: {
+		marginTop: theme.spacing(8),
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+	},
+	avatar: {
+		margin: theme.spacing(1),
+		backgroundColor: theme.palette.secondary.main,
+	},
+	form: {
+		width: '100%', // Fix IE 11 issue.
+		marginTop: theme.spacing(1),
+	},
+	submit: {
+		margin: theme.spacing(3, 0, 2),
 	},
 }));
 
@@ -29,46 +52,62 @@ const Login = (props) => {
 	};
 
 	return (
-		<section className='login'>
-			<h1>Sign In</h1>
-			<p>
-				<i className='fas fa-user'></i> Sign into Your Account
-			</p>
-			<form className='form' onSubmit={(e) => onSubmit(e)}>
-				<div className='form-group'>
-					<input
-						type='email'
-						placeholder='Email Address'
-						name='email'
-						value={email}
-						onChange={(e) => onChange(e)}
-						required
-					/>
-				</div>
-				<div className='form-group'>
-					<input
-						type='password'
-						placeholder='Password'
-						name='password'
-						minLength='6'
-						onChange={(e) => onChange(e)}
-						value={password}
-					/>
-				</div>
-
-				<Button
-					className={classes.btn}
-					variant='outlined'
-					color='secondary'
-					type='submit'
-					value='Login'>
-					Login
-				</Button>
-			</form>
-			<p className='my-1'>
-				Don't have an account? <Link to='/register'>Sign up</Link>
-			</p>
-		</section>
+		<Container component='main' maxWidth='xs'>
+			<div className={classes.paper}>
+				<Avatar className={classes.avatar}>
+					<LockOutlinedIcon />
+				</Avatar>
+				<Typography component='h1' variant='h5'>
+					Sign in
+				</Typography>
+				<form className={classes.form} onSubmit={(e) => onSubmit(e)}>
+				
+						<TextField
+							variant='outlined'
+							required
+							fullWidth
+							color='secondary'
+							placeholder='Enter Your Email'
+							type='email'
+							label='Email'
+							onChange={(e) => onChange(e)}
+							defaultValue={email}
+							margin='normal'
+							name='email'
+							autoFocus
+						/>
+				
+					
+						<TextField
+							variant='outlined'
+							required
+							fullWidth
+							color='secondary'
+							type='password'
+							placeholder='Enter Your Password'
+							name='password'
+							label='Password'
+							minLength='6'
+							onChange={(e) => onChange(e)}
+							value={password}
+						/>
+					
+					<Button
+						className={classes.submit}
+						type='submit'
+						variant='outlined'
+						color='secondary'>
+						Login
+					</Button>
+				</form>
+				<Typography variant='subtitle1' component='p'>
+					Don't have an account?{' '}
+					<Button color='secondary' component={Link} to='/register'>
+						Sign up
+					</Button>
+				</Typography>
+			</div>
+		</Container>
 	);
 };
 

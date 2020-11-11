@@ -1,12 +1,34 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { HowToRegOutlined } from '@material-ui/icons';
+
+import {
+	Button,
+	TextField,
+	Typography,
+	Container,
+	Avatar,
+	makeStyles,
+} from '@material-ui/core';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
-	btn: {
-		width: '385px',
+	paper: {
+		marginTop: theme.spacing(8),
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+	},
+	avatar: {
+		margin: theme.spacing(1),
+		backgroundColor: theme.palette.secondary.main,
+	},
+	form: {
+		width: '100%', // Fix IE 11 issue.
+		marginTop: theme.spacing(1),
+	},
+	submit: {
+		margin: theme.spacing(3, 0, 2),
 	},
 }));
 
@@ -36,65 +58,91 @@ export const Register = (props) => {
 	};
 
 	return (
-		<section className='register'>
-			<h1>Sign Up</h1>
-			<p>
-				<i className='fas fa-user'></i> Create Your Account
-			</p>
-			<form className='form' onSubmit={(e) => onSubmit(e)}>
-				<div className='form-group'>
-					<input
-						type='text'
-						placeholder='Name'
+		<Container component='main' maxWidth='xs'>
+			<div className={classes.paper}>
+				<Avatar className={classes.avatar}>
+					<HowToRegOutlined />
+				</Avatar>
+				<Typography component='h1' variant='h5'>
+					Sign Up
+				</Typography>
+
+				<form className={classes.form} onSubmit={(e) => onSubmit(e)}>
+					<TextField
+						variant='outlined'
+						required
+						fullWidth
+						color='secondary'
+						placeholder='Your Name'
+						type='name'
+						label='Name'
+						onChange={(e) => onChange(e)}
+						margin='normal'
 						name='name'
 						value={name}
-						onChange={(e) => onChange(e)}
-						required
+						autoFocus
 					/>
-				</div>
-				<div className='form-group'>
-					<input
+
+					<TextField
+						variant='outlined'
+						required
+						fullWidth
+						color='secondary'
+						placeholder='Enter Your Email'
 						type='email'
-						placeholder='Email Address'
-						name='email'
-						value={email}
+						label='Email'
 						onChange={(e) => onChange(e)}
-						required
+						value={email}
+						margin='normal'
+						name='email'
 					/>
-				</div>
-				<div className='form-group'>
-					<input
+
+					<TextField
+						variant='outlined'
+						required
+						fullWidth
+						color='secondary'
 						type='password'
-						placeholder='Password'
+						placeholder='Set Your Password'
 						name='password'
+						label='Password'
 						minLength='6'
+						margin='normal'
 						onChange={(e) => onChange(e)}
 						value={password}
 					/>
-				</div>
-				<div className='form-group'>
-					<input
+
+					<TextField
+						variant='outlined'
+						required
+						fullWidth
+						color='secondary'
 						type='password'
 						placeholder='Confirm Password'
 						name='password2'
+						label='Confirm Password'
 						minLength='6'
-						value={password2}
+						margin='normal'
 						onChange={(e) => onChange(e)}
+						value={password2}
 					/>
-				</div>
-				<Button
-					className={classes.btn}
-					variant='outlined'
-					color='secondary'
-					type='submit'
-					value='register'>
-					Register
-				</Button>
-			</form>
-			<p className='my-1'>
-				Already have an account? <Link to='/login'>Sign In</Link>
-			</p>
-		</section>
+
+					<Button
+						className={classes.submit}
+						type='submit'
+						color='secondary'
+						variant='outlined'>
+						Register
+					</Button>
+				</form>
+				<Typography variant='subtitle1' component='p'>
+					Already have an account?{' '}
+					<Button color='secondary' component={Link} to='/login'>
+						Sign In
+					</Button>
+				</Typography>
+			</div>
+		</Container>
 	);
 };
 
