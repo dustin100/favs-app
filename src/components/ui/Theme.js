@@ -1,5 +1,4 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-
 const favBlack = '#0b0c10';
 const favDarkGrey = '#1f2833';
 const favLightGrey = '#c5c6c8';
