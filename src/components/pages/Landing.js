@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // Styles
 const useStyles = makeStyles((theme) => ({
 	btn: {
-		...theme.typography.button,
+		...theme.palette.typography.button,
 	},
 }));
 
