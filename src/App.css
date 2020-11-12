@@ -1,6 +1,4 @@
 
-
-
 /* Category Page Layout */
 .threeCols {
 	display: flex;
@@ -24,16 +22,6 @@
 	text-align: center;
 }
 
-.card {
-	border: 1px solid #64fcf1;
-	padding: 0.4rem;
-	margin-bottom: 1rem;
-}
 
-.card h3 {
-	text-align: center;
-	color: #64fcf1;
-	text-transform: uppercase;
-}
 
 

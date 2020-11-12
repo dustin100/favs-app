@@ -1,34 +1,23 @@
 import React, { Fragment } from 'react';
+import StarIcon from '@material-ui/icons/Star';
 
 export const oneStar = (
 	<Fragment>
-		<span>
-			<i class='fas fa-star'></i>
-		</span>
+		<StarIcon color='secondary' />
 	</Fragment>
 );
 
 export const twoStar = (
 	<Fragment>
-		<span>
-			<i class='fas fa-star'></i>
-		</span>
-		<span>
-			<i class='fas fa-star'></i>
-		</span>
+		<StarIcon color='secondary' />
+		<StarIcon color='secondary' />
 	</Fragment>
 );
 
 export const threeStar = (
 	<Fragment>
-		<span>
-			<i class='fas fa-star'></i>
-		</span>
-		<span>
-			<i class='fas fa-star'></i>
-		</span>
-		<span>
-			<i class='fas fa-star'></i>
-		</span>
+		<StarIcon color='secondary' />
+		<StarIcon color='secondary' />
+		<StarIcon color='secondary' />
 	</Fragment>
 );

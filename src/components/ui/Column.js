@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './Card';
+import MyCard from './MyCard';
 
 const Column = ({ cards, stars }) => {
 	if (cards) {
@@ -8,7 +8,7 @@ const Column = ({ cards, stars }) => {
 				<h2>{stars}</h2>
 				{cards.map((card) => {
 					return (
-						<Card name={card.name} rating={card.rating} notes={card.notes} />
+						<MyCard name={card.name} rating={card.rating} notes={card.notes} />
 					);
 				})}
 			</div>
