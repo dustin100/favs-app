@@ -61,37 +61,35 @@ const Login = (props) => {
 					Sign in
 				</Typography>
 				<form className={classes.form} onSubmit={(e) => onSubmit(e)}>
-				
-						<TextField
-							variant='outlined'
-							required
-							fullWidth
-							color='secondary'
-							placeholder='Enter Your Email'
-							type='email'
-							label='Email'
-							onChange={(e) => onChange(e)}
-							defaultValue={email}
-							margin='normal'
-							name='email'
-							autoFocus
-						/>
-				
-					
-						<TextField
-							variant='outlined'
-							required
-							fullWidth
-							color='secondary'
-							type='password'
-							placeholder='Enter Your Password'
-							name='password'
-							label='Password'
-							minLength='6'
-							onChange={(e) => onChange(e)}
-							value={password}
-						/>
-					
+					<TextField
+						variant='outlined'
+						required
+						fullWidth
+						color='secondary'
+						placeholder='Enter Your Email'
+						type='email'
+						label='Email'
+						onChange={(e) => onChange(e)}
+						defaultValue={email}
+						margin='normal'
+						name='email'
+						autoFocus
+					/>
+
+					<TextField
+						variant='outlined'
+						required
+						fullWidth
+						color='secondary'
+						type='password'
+						placeholder='Enter Your Password'
+						name='password'
+						label='Password'
+						minLength='6'
+						onChange={(e) => onChange(e)}
+						value={password}
+					/>
+
 					<Button
 						className={classes.submit}
 						type='submit'
