@@ -100,7 +100,7 @@ const MyCard = ({ name, rating, notes }) => {
 			/>
 			<CardMedia className={classes.media} image={beer} title='Beer' />
 			<CardContent>
-				<Typography variant='body2' color='textSecondary' component='p'>
+				<Typography variant='body2' component='p'>
 					{notes}
 				</Typography>
 			</CardContent>
