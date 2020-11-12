@@ -85,10 +85,7 @@ const MyCard = ({ name, rating, notes }) => {
 								},
 							}}>
 							{options.map((option) => (
-								<MenuItem
-									key={option}
-									selected={option === 'Pyxis'}
-									onClick={handleClose}>
+								<MenuItem key={option} onClick={handleClose}>
 									{option}
 								</MenuItem>
 							))}

@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import {CssBaseline, Container} from '@material-ui/core';
 import theme from './components/ui/Theme';
 
 import Navbar from './components/ui/Navbar';
@@ -23,7 +23,7 @@ const App = () => {
 				<Router>
 					<Fragment>
 						<Navbar />
-						<div className='wrapper'>
+						<Container>
 							<Switch>
 								<Route exact path='/' component={Landing} />
 								<Route exact path='/dashboard' component={Dashboard} />
@@ -31,7 +31,7 @@ const App = () => {
 								<Route exact path='/login' component={Login} />
 								<Route exact path='/register' component={Register} />
 							</Switch>
-						</div>
+						</Container>
 					</Fragment>
 				</Router>
 			</ThemeProvider>

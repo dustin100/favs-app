@@ -1,26 +1,4 @@
 
-/* Category Page Layout */
-.threeCols {
-	display: flex;
-	justify-content: space-around;
-}
-
-.col h2 {
-	text-align: center;
-}
-
-.col h2 span {
-	color: #64fcf1;
-}
-
-.col {
-	max-width: 33%;
-	padding: 1rem;
-}
-
-.currentCatTitle {
-	text-align: center;
-}
 
 
 
