@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Column from '../ui/Column';
-import { fakeData } from '../../fakeData';
+import { category } from '../../fakeData';
 import CurrentCategory from '../ui/CurrentCategory';
 import { oneStar, twoStar, threeStar } from '../../helpers';
 import { Grid, makeStyles } from '@material-ui/core';
@@ -30,17 +30,16 @@ const CategoryPage = (props) => {
 				container
 				direction='row'
 				justify='center'
-				alignItems='center'
 				spacing={2}>
 				<Grid item xs={4}>
-					<Column cards={fakeData} stars={oneStar} />
+					<Column cards={category[0].catList} stars={oneStar} />
 				</Grid>
 				<Grid item xs={4}>
-					<Column cards={fakeData} stars={twoStar} />
+					<Column cards={category[1].catList} stars={twoStar} />
 				</Grid>
 
 				<Grid item xs={4}>
-					<Column cards={fakeData} stars={threeStar} />
+					<Column cards={category[2].catList} stars={threeStar} />
 				</Grid>
 			</Grid>
 		</Fragment>

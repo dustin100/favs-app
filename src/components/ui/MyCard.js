@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const options = ['Edit', 'Delete'];
 
-const ITEM_HEIGHT = 38;
+const ITEM_HEIGHT = 48;
 
 const MyCard = ({ name, rating, notes }) => {
 	const classes = useStyles();
@@ -131,10 +131,3 @@ const MyCard = ({ name, rating, notes }) => {
 
 export default MyCard;
 
-{
-	/* <div className='card'>
-	<h3>{name}</h3>
-	<div className='starCount'>{rating}</div>
-	<p className='notes'>{notes}</p>
-</div>; */
-}
