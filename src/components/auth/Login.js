@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, {  useState } from 'react';
 import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
@@ -10,7 +10,6 @@ import {
 	Avatar,
 	makeStyles,
 } from '@material-ui/core';
-import Register from './Register';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
