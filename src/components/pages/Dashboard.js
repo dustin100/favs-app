@@ -34,15 +34,15 @@ const Dashboard = (props) => {
 	}, []);
 
 	const handleClick = (index) => {
-		console.log(props)
+		console.log(props);
 		const listData = data[index].catList;
 		setClickedCat(listData);
-		props.history.push('/category')
+		props.history.push('/category');
 	};
 
 	const categoryList = data.map(({ catName, catList }, index) => {
 		return (
-			<Grid item xs={4}>
+			<Grid key={index} item xs={4}>
 				<Card variant='outlined'>
 					<CardContent>
 						<Typography className={classes.title} variant='h4' component='h2'>
@@ -67,7 +67,7 @@ const Dashboard = (props) => {
 		);
 	});
 	return (
-		<Grid container justify='start' spacing={2} className={classes.root}>
+		<Grid container justify='flex-start' spacing={2} className={classes.root}>
 			{categoryList}
 		</Grid>
 	);

@@ -19,9 +19,9 @@ const Column = ({ cards, stars, rating }) => {
 				alignItems='center'>
 				<Grid item>
 					<h2 className={classes.title}>{stars}</h2>
-					{cards.map((card) => {
+					{cards.map((card, index) => {
 						return (
-							<MyCard
+							<MyCard key ={index}
 								name={card.name}
 								rating={card.rating}
 								notes={card.notes}
