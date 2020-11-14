@@ -35,11 +35,11 @@ const CategoryPage = (props) => {
 					<Column cards={category[0].catList} stars={oneStar} />
 				</Grid>
 				<Grid item xs={4}>
-					<Column cards={category[1].catList} stars={twoStar} />
+					<Column cards={category[0].catList} stars={twoStar} />
 				</Grid>
 
 				<Grid item xs={4}>
-					<Column cards={category[2].catList} stars={threeStar} />
+					<Column cards={category[0].catList} stars={threeStar} />
 				</Grid>
 			</Grid>
 		</Fragment>
