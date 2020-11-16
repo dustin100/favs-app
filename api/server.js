@@ -3,7 +3,8 @@ const connectDB = require('../config/db');
 
 const app = express();
 connectDB();
-// Init Middleware
+
+// Init Middleware alternative to bodyParser.json()
 app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Running'));
