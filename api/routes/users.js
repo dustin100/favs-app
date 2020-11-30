@@ -13,8 +13,6 @@ const User = require('../models/User');
 router.post(
 	'/',
 	[
-		check('name', 'Name is required').not().isEmpty(),
-
 		check('email', 'Please include a valid email').isEmail(),
 
 		check(
@@ -28,7 +26,7 @@ router.post(
 			return res.status(400).json({ errors: errors.array() });
 		}
 
-		const { name, email, password } = req.body;
+		const { email, password } = req.body;
 
 		try {
 			// see if user exists
@@ -41,7 +39,6 @@ router.post(
 			}
 
 			user = new User({
-				name,
 				email,
 				password,
 			});
@@ -54,7 +51,6 @@ router.post(
 			await user.save();
 
 			// Return jsonwebtoken
-
 			const payload = {
 				user: {
 					id: user.id,
