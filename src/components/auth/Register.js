@@ -45,6 +45,8 @@ export const Register = ({ setAlert }) => {
 		password2: '',
 	});
 
+	const [helperText, setHelperText] = useState('');
+
 	const { email, password, password2 } = formData;
 
 	const onChange = (e) => {
@@ -55,10 +57,12 @@ export const Register = ({ setAlert }) => {
 		e.preventDefault();
 		if (password !== password2) {
 			setAlert('Passwords do not match', 'warning');
+			setHelperText('Passwords do not match');
 		} else {
 			console.log(formData);
 			// register user with name, email, and password;
 			setAlert('Success', 'success');
+			setHelperText('');
 		}
 	};
 
@@ -100,6 +104,7 @@ export const Register = ({ setAlert }) => {
 						margin='normal'
 						onChange={(e) => onChange(e)}
 						value={password}
+						helperText={helperText}
 					/>
 
 					<TextField
@@ -115,6 +120,7 @@ export const Register = ({ setAlert }) => {
 						margin='normal'
 						onChange={(e) => onChange(e)}
 						value={password2}
+						helperText={helperText}
 					/>
 
 					<Button
