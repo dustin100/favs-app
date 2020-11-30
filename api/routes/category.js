@@ -48,8 +48,8 @@ router.delete('/:cat_id', auth, async (req, res) => {
 		//get remove index
 		const removeIndex = profile.category
 			.map((item) => item._id)
-			.indexOf(req.params.cat_id);
-		console.log(removeIndex);
+            .indexOf(req.params.cat_id);
+            
 		if (removeIndex >= 0) {
 			profile.category.splice(removeIndex, 1);
 		}

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HowToRegOutlined } from '@material-ui/icons';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import PropTypes from 'prop-types';
 
 import {
 	Button,
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export const Register = (props) => {
+export const Register = ({ setAlert }) => {
 	const classes = useStyles();
 
 	const [formData, setFormData] = useState({
@@ -42,7 +45,7 @@ export const Register = (props) => {
 		password2: '',
 	});
 
-	const { name, email, password, password2 } = formData;
+	const { email, password, password2 } = formData;
 
 	const onChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,9 +54,11 @@ export const Register = (props) => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		if (password !== password2) {
-			console.log('no match');
+			setAlert('Passwords do not match', 'warning');
 		} else {
+			console.log(formData);
 			// register user with name, email, and password;
+			setAlert('Success', 'success');
 		}
 	};
 
@@ -68,21 +73,6 @@ export const Register = (props) => {
 				</Typography>
 
 				<form className={classes.form} onSubmit={(e) => onSubmit(e)}>
-					<TextField
-						variant='outlined'
-						required
-						fullWidth
-						color='secondary'
-						placeholder='Your Name'
-						type='name'
-						label='Name'
-						onChange={(e) => onChange(e)}
-						margin='normal'
-						name='name'
-						value={name}
-						autoFocus
-					/>
-
 					<TextField
 						variant='outlined'
 						required
@@ -146,4 +136,8 @@ export const Register = (props) => {
 	);
 };
 
-export default Register;
+Register.propTypes = {
+	setAlert: PropTypes.func.isRequired,
+};
+
+export default connect(null, { setAlert })(Register);

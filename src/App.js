@@ -1,10 +1,11 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
-import {CssBaseline, Container} from '@material-ui/core';
+import { CssBaseline, Container } from '@material-ui/core';
 import theme from './components/ui/Theme';
 
 import Navbar from './components/ui/Navbar';
+import Alert from './components/ui/SimpleAlert';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Landing from './components/pages/Landing';
@@ -24,6 +25,7 @@ const App = () => {
 					<Fragment>
 						<Navbar />
 						<Container>
+							<Alert />
 							<Switch>
 								<Route exact path='/' component={Landing} />
 								<Route exact path='/dashboard' component={Dashboard} />
