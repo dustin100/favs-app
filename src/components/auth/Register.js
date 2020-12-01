@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { HowToRegOutlined } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+
 import PropTypes from 'prop-types';
 
 import {
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export const Register = ({ setAlert }) => {
+export const Register = ({ setAlert, register }) => {
 	const classes = useStyles();
 
 	const [formData, setFormData] = useState({
@@ -61,7 +63,7 @@ export const Register = ({ setAlert }) => {
 		} else {
 			console.log(formData);
 			// register user with name, email, and password;
-			setAlert('Success', 'success');
+			register({ email, password });
 			setHelperText('');
 		}
 	};
@@ -144,6 +146,7 @@ export const Register = ({ setAlert }) => {
 
 Register.propTypes = {
 	setAlert: PropTypes.func.isRequired,
+	register: PropTypes.func.isRequired,
 };
 
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
