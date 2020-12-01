@@ -11,12 +11,21 @@ import Register from './components/auth/Register';
 import Landing from './components/pages/Landing';
 import Category from './components/pages/Category';
 import Dashboard from './components/pages/Dashboard';
+import { loadUser } from './actions/auth';
+import setAuthToken from './utils/setAuthToken';
 
 import { Provider } from 'react-redux';
 import store from './store';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
+
+if (localStorage.token) {
+	setAuthToken(localStorage.token);
+}
 
 const App = () => {
+	useEffect(() => {
+		store.dispatch(loadUser());
+	}, []);
 	return (
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
