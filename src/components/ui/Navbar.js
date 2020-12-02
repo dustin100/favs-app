@@ -1,5 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../../actions/auth';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Tab, Tabs } from '@material-ui/core';
@@ -23,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Navbar = (props) => {
+const Navbar = ({ logout, auth: { loading, isAuthenticated } }) => {
 	const classes = useStyles();
 	const [value, setValue] = useState(0);
 
@@ -31,19 +34,60 @@ const Navbar = (props) => {
 		setValue(value);
 	};
 
+	// check url to set which nav link should be selected / highlighted
 	useEffect(() => {
 		if (window.location.pathname === '/dashboard' && value !== 0) {
 			setValue(0);
-		} else if (window.location.pathname === '/login' && value !== 1) {
+		} else if (window.location.pathname === '/login' && value !== 0) {
+			setValue(0);
+		} else if (window.location.pathname === '/register' && value !== 1) {
 			setValue(1);
-		} else if (window.location.pathname === '/register' && value !== 2) {
+		} else if (window.location.pathname === '/logout' && value !== 2) {
 			setValue(2);
-		} else if (window.location.pathname === '/logout' && value !== 3) {
-			setValue(3);
-		} else if (window.location.pathname === '/category' && value !== 4) {
-			setValue(4);
+		} else if (window.location.pathname === '/category' && value !== 1) {
+			setValue(1);
 		}
 	}, [value]);
+
+	const authLinks = (
+		<Tabs value={value} onChange={handleChange}>
+			<Tab
+				className={classes.tab}
+				component={Link}
+				to='/dashboard'
+				label='Dashboard'></Tab>
+
+			<Tab
+				className={classes.tab}
+				component={Link}
+				to='/category'
+				label='Category'></Tab>
+			<Tab
+				className={classes.tab}
+				component={Link}
+				to='/dashboard'
+				onClick={logout}
+				label='Logout'></Tab>
+		</Tabs>
+	);
+
+	const guestLinks = (
+		<Tabs value={value} onChange={handleChange}>
+			<Tab
+				className={classes.tab}
+				component={Link}
+				to='/login'
+				label='Login'
+				index={0}></Tab>
+
+			<Tab
+				className={classes.tab}
+				component={Link}
+				to='/register'
+				label='Register'
+				index={1}></Tab>
+		</Tabs>
+	);
 
 	return (
 		<Fragment>
@@ -52,33 +96,10 @@ const Navbar = (props) => {
 					<Typography variant='h6' className={classes.title}>
 						<Link to='/'>Logo</Link>
 					</Typography>
-					<Tabs value={value} onChange={handleChange}>
-						<Tab
-							className={classes.tab}
-							component={Link}
-							to='/dashboard'
-							label='Dashboard'></Tab>
-						<Tab
-							className={classes.tab}
-							component={Link}
-							to='/login'
-							label='Login'></Tab>
-						<Tab
-							className={classes.tab}
-							component={Link}
-							to='/register'
-							label='Register'></Tab>
-						<Tab
-							className={classes.tab}
-							component={Link}
-							to='/dashboard'
-							label='Logout'></Tab>
-						<Tab
-							className={classes.tab}
-							component={Link}
-							to='/category'
-							label='Category'></Tab>
-					</Tabs>
+
+					{!loading && (
+						<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+					)}
 				</Toolbar>
 			</AppBar>
 			<div className={classes.toolbarMargin} />
@@ -86,4 +107,13 @@ const Navbar = (props) => {
 	);
 };
 
-export default Navbar;
+Navbar.propTypes = {
+	logout: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);
