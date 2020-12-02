@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline, Container } from '@material-ui/core';
 import theme from './components/ui/Theme';
 
+import PrivateRoute from './components/routing/PrivateRoute';
 import Navbar from './components/ui/Navbar';
 import Alert from './components/ui/SimpleAlert';
 import Login from './components/auth/Login';
@@ -37,8 +38,8 @@ const App = () => {
 							<Alert />
 							<Switch>
 								<Route exact path='/' component={Landing} />
-								<Route exact path='/dashboard' component={Dashboard} />
-								<Route exact path='/category' component={Category} />
+								<PrivateRoute exact path='/dashboard' component={Dashboard} />
+								<PrivateRoute exact path='/category' component={Category} />
 								<Route exact path='/login' component={Login} />
 								<Route exact path='/register' component={Register} />
 							</Switch>
