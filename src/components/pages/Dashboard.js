@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { category } from '../../fakeData';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getCurrentProfile } from '../../actions/profile';
 import {
 	makeStyles,
 	Card,
@@ -24,7 +27,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const Dashboard = (props) => {
+const Dashboard = ({ getCurrentProfile, history, auth, profile }) => {
 	const classes = useStyles();
 	const [data, setData] = useState([]);
 	const [clickedCat, setClickedCat] = useState([]);
@@ -34,10 +37,9 @@ const Dashboard = (props) => {
 	}, []);
 
 	const handleClick = (index) => {
-		console.log(props);
 		const listData = data[index].catList;
 		setClickedCat(listData);
-		props.history.push('/category');
+		history.push('/category');
 	};
 
 	const categoryList = data.map(({ catName, catList }, index) => {
@@ -66,6 +68,9 @@ const Dashboard = (props) => {
 			</Grid>
 		);
 	});
+	useEffect(() => {
+		getCurrentProfile();
+	}, []);
 	return (
 		<Grid container justify='flex-start' spacing={2} className={classes.root}>
 			{categoryList}
@@ -73,4 +78,15 @@ const Dashboard = (props) => {
 	);
 };
 
-export default Dashboard;
+Dashboard.propTypes = {
+	getCurrentProfile: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	profile: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+	profile: state.profile,
+});
+
+export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);

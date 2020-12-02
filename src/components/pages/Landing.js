@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Button, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Redirect, Link } from 'react-router-dom';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -9,8 +12,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const LandingPage = (props) => {
+const LandingPage = ({ isAuthenticated }) => {
 	const classes = useStyles();
+
+	if (isAuthenticated) {
+		<Redirect to='/dashboard' />;
+	}
 	return (
 		<Container maxWidth='sm'>
 			<Button className={classes.btn} variant='outlined' color='secondary'>
@@ -23,4 +30,12 @@ const LandingPage = (props) => {
 	);
 };
 
-export default LandingPage;
+LandingPage.propTypes = {
+	isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+	isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(LandingPage);
