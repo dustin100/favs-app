@@ -1,6 +1,9 @@
-import React, {  useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../../actions/auth';
 
 import {
 	Button,
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Login = (props) => {
+const Login = ({ login, isAuthenticated }) => {
 	const classes = useStyles();
 
 	const [formData, setFormData] = useState({
@@ -47,9 +50,13 @@ const Login = (props) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		// pass email and password to backend
+		login(email, password);
 	};
 
+	// redirect if logged in
+	if (isAuthenticated) {
+		return <Redirect to='/dashboard' />;
+	}
 	return (
 		<Container component='main' maxWidth='xs'>
 			<div className={classes.paper}>
@@ -108,4 +115,13 @@ const Login = (props) => {
 	);
 };
 
-export default Login;
+Login.propTypes = {
+	login: PropTypes.func.isRequired,
+	isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+	isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);
