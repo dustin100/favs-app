@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { category } from '../../fakeData';
+import Spinner from '../ui/Spinner';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getCurrentProfile } from '../../actions/profile';
@@ -27,10 +28,19 @@ const useStyles = makeStyles({
 	},
 });
 
-const Dashboard = ({ getCurrentProfile, history, auth, profile }) => {
+const Dashboard = ({
+	getCurrentProfile,
+	history,
+	auth,
+	profile: { profile, loading },
+}) => {
 	const classes = useStyles();
 	const [data, setData] = useState([]);
 	const [clickedCat, setClickedCat] = useState([]);
+
+	useEffect(() => {
+		getCurrentProfile();
+	}, [getCurrentProfile]);
 
 	useEffect(() => {
 		setData(category);
@@ -68,13 +78,20 @@ const Dashboard = ({ getCurrentProfile, history, auth, profile }) => {
 			</Grid>
 		);
 	});
-	useEffect(() => {
-		getCurrentProfile();
-	}, []);
-	return (
-		<Grid container justify='flex-start' spacing={2} className={classes.root}>
-			{categoryList}
-		</Grid>
+
+	return loading && profile === null ? (
+		<Spinner />
+	) : (
+		<Fragment>
+			<Grid container justify='flex-start' spacing={2} className={classes.root}>
+				{categoryList}
+			</Grid>
+			{profile !== null ? (
+				<Fragment>has</Fragment>
+			) : (
+				<Fragment>has not</Fragment>
+			)}
+		</Fragment>
 	);
 };
 

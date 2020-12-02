@@ -6,7 +6,8 @@ import { GET_PROFILE, PROFILE_ERROR } from './types';
 
 export const getCurrentProfile = () => async (dispatch) => {
 	try {
-		const res = await axios.get('/profile/me');
+		const res = await axios.get('profile/me');
+
 		dispatch({
 			type: GET_PROFILE,
 			payload: res.data,
@@ -14,7 +15,7 @@ export const getCurrentProfile = () => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: { msg: err.response.statusText, status: err.response.status },
+			payload: { msg: err.response.status.text, status: err.response.status },
 		});
 	}
 };

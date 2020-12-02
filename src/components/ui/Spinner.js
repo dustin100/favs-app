@@ -4,10 +4,11 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		width: '100%',
+		width: '80%',
 		'& > * + *': {
 			marginTop: theme.spacing(2),
 		},
+		margin: 'auto',
 	},
 }));
 
@@ -16,7 +17,7 @@ export default function LinearIndeterminate() {
 
 	return (
 		<div className={classes.root}>
-			<LinearProgress />
+			<LinearProgress color='secondary' />
 			<LinearProgress color='secondary' />
 		</div>
 	);

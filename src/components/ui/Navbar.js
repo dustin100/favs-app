@@ -42,8 +42,6 @@ const Navbar = ({ logout, auth: { loading, isAuthenticated } }) => {
 			setValue(0);
 		} else if (window.location.pathname === '/register' && value !== 1) {
 			setValue(1);
-		} else if (window.location.pathname === '/logout' && value !== 2) {
-			setValue(2);
 		} else if (window.location.pathname === '/category' && value !== 1) {
 			setValue(1);
 		}
