@@ -3,6 +3,7 @@ import { category } from '../../fakeData';
 import Spinner from '../ui/Spinner';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ProfileForm from '../forms/ProfileForm';
 import { getCurrentProfile } from '../../actions/profile';
 import {
 	makeStyles,
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
 const Dashboard = ({
 	getCurrentProfile,
 	history,
-
+	auth: { isAuthenticated },
 	profile: { profile, loading },
 }) => {
 	const classes = useStyles();
@@ -39,8 +40,8 @@ const Dashboard = ({
 	const [clickedCat, setClickedCat] = useState([]);
 
 	useEffect(() => {
-		setTimeout(getCurrentProfile, 1000);
-	}, [getCurrentProfile]);
+		getCurrentProfile();
+	}, [getCurrentProfile, isAuthenticated]);
 
 	useEffect(() => {
 		setData(category);
@@ -94,7 +95,11 @@ const Dashboard = ({
 			</Fragment>
 		);
 	} else {
-		return <Fragment>no profile</Fragment>;
+		return (
+			<Fragment>
+				<ProfileForm />
+			</Fragment>
+		);
 	}
 };
 
@@ -106,6 +111,7 @@ Dashboard.propTypes = {
 
 const mapStateToProps = (state) => ({
 	profile: state.profile,
+	auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
