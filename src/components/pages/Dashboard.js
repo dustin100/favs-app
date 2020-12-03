@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 const Dashboard = ({
 	getCurrentProfile,
 	history,
-	auth,
+
 	profile: { profile, loading },
 }) => {
 	const classes = useStyles();
@@ -39,7 +39,7 @@ const Dashboard = ({
 	const [clickedCat, setClickedCat] = useState([]);
 
 	useEffect(() => {
-		getCurrentProfile();
+		setTimeout(getCurrentProfile, 1000);
 	}, [getCurrentProfile]);
 
 	useEffect(() => {
@@ -79,20 +79,23 @@ const Dashboard = ({
 		);
 	});
 
-	return loading && profile === null ? (
-		<Spinner />
-	) : (
-		<Fragment>
-			<Grid container justify='flex-start' spacing={2} className={classes.root}>
-				{categoryList}
-			</Grid>
-			{profile !== null ? (
-				<Fragment>has</Fragment>
-			) : (
-				<Fragment>has not</Fragment>
-			)}
-		</Fragment>
-	);
+	if (loading) {
+		return <Spinner />;
+	} else if (profile !== null) {
+		return (
+			<Fragment>
+				<Grid
+					container
+					justify='flex-start'
+					spacing={2}
+					className={classes.root}>
+					{categoryList}
+				</Grid>
+			</Fragment>
+		);
+	} else {
+		return <Fragment>no profile</Fragment>;
+	}
 };
 
 Dashboard.propTypes = {
@@ -102,7 +105,6 @@ Dashboard.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	auth: state.auth,
 	profile: state.profile,
 });
 

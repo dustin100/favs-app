@@ -5,8 +5,10 @@ import { GET_PROFILE, PROFILE_ERROR } from './types';
 // Get current users profile
 
 export const getCurrentProfile = () => async (dispatch) => {
+	console.log('getCurrentProfile is getting called?');
 	try {
-		const res = await axios.get('profile/me');
+		const res = await axios.get('/profile/me');
+		console.log(res);
 
 		dispatch({
 			type: GET_PROFILE,
