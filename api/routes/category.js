@@ -31,7 +31,7 @@ router.post(
 			profile.category.unshift(newCat);
 			await newCat.save();
 			await profile.save();
-			res.json(newCat);
+			res.json(profile);
 		} catch (err) {
 			console.error(err.message);
 			res.status(500).send('Server Error');
@@ -48,8 +48,8 @@ router.delete('/:cat_id', auth, async (req, res) => {
 		//get remove index
 		const removeIndex = profile.category
 			.map((item) => item._id)
-            .indexOf(req.params.cat_id);
-            
+			.indexOf(req.params.cat_id);
+
 		if (removeIndex >= 0) {
 			profile.category.splice(removeIndex, 1);
 		}

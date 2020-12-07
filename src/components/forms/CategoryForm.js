@@ -4,13 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { createCategory } from '../../actions/profile';
 
-import {
-	Button,
-	TextField,
-	Typography,
-	Container,
-	makeStyles,
-} from '@material-ui/core';
+import { Button, TextField, Container, makeStyles } from '@material-ui/core';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -19,10 +13,6 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-	},
-	avatar: {
-		margin: theme.spacing(1),
-		backgroundColor: theme.palette.secondary.main,
 	},
 
 	radioFields: {
@@ -84,6 +74,10 @@ const CategoryForm = ({ createCategory, history }) => {
 			</div>
 		</Container>
 	);
+};
+
+CategoryForm.propTypes = {
+	createCategory: PropTypes.func.isRequired,
 };
 
 export default connect(null, { createCategory })(withRouter(CategoryForm));

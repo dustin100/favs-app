@@ -79,3 +79,21 @@ export const createCategory = (formData, history, edit = false) => async (
 		});
 	}
 };
+
+// Delete Category
+
+export const deleteCategory = (id) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/category/${id}`);
+		dispatch({
+			type: UPDATE_PROFILE,
+			payload: res.data,
+		});
+		dispatch(setAlert('Category Deleted', 'error'));
+	} catch (err) {
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: { msg: err.response.status.text, status: err.response.status },
+		});
+	}
+};

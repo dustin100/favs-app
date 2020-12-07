@@ -126,4 +126,4 @@ ProfileForm.propTypes = {
 	createProfile: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createProfile }) (ProfileForm);
+export default connect(null, { createProfile })(ProfileForm);
