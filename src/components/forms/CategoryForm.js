@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createProfile } from '../../actions/profile';
+import { withRouter } from 'react-router-dom';
+import { createCategory } from '../../actions/profile';
 
 import {
 	Button,
 	TextField,
 	Typography,
 	Container,
-	Avatar,
 	makeStyles,
-	FormControl,
-	RadioGroup,
-	FormControlLabel,
-	FormLabel,
-	Radio,
 } from '@material-ui/core';
 
 // Styles
@@ -44,14 +38,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const ProfileForm = ({ createProfile }) => {
+const CategoryForm = ({ createCategory, history }) => {
 	const classes = useStyles();
 
 	const [formData, setFormData] = useState({
-		name: '',
-		theme: '',
+		catName: '',
 	});
-	const { name, theme } = formData;
+	const { catName } = formData;
 
 	const onChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -59,55 +52,26 @@ const ProfileForm = ({ createProfile }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		createProfile(formData);
+		createCategory(formData, history);
 	};
 
 	return (
 		<Container component='main' maxWidth='xs'>
 			<div className={classes.paper}>
-				<Avatar className={classes.avatar}>
-					<SettingsApplicationsIcon />
-				</Avatar>
-				<Typography component='h1' variant='h5'>
-					Setup your account
-				</Typography>
 				<form className={classes.root} onSubmit={(e) => onSubmit(e)}>
 					<TextField
 						required
 						fullWidth
 						color='secondary'
-						placeholder='Your Name'
+						placeholder='Category Name'
 						type='name'
 						label='Name'
 						onChange={(e) => onChange(e)}
-						defaultValue={name}
+						defaultValue={catName}
 						margin='normal'
-						name='name'
+						name='catName'
 						autoFocus
 					/>
-
-					<FormControl className={classes.radioFields} component='fieldset'>
-						<FormLabel component='legend'>Theme</FormLabel>
-						<RadioGroup
-							className={classes.radioButtons}
-							aria-label='theme'
-							name='theme'>
-							<FormControlLabel
-								onChange={(e) => onChange(e)}
-								value='dark'
-								control={<Radio />}
-								label='Dark'
-								labelPlacement='top'
-							/>
-							<FormControlLabel
-								onChange={(e) => onChange(e)}
-								value='light'
-								control={<Radio />}
-								label='Light'
-								labelPlacement='top'
-							/>
-						</RadioGroup>
-					</FormControl>
 
 					<Button
 						className={classes.submit}
@@ -122,8 +86,4 @@ const ProfileForm = ({ createProfile }) => {
 	);
 };
 
-ProfileForm.propTypes = {
-	createProfile: PropTypes.func.isRequired,
-};
-
-export default connect(null, { createProfile }) (ProfileForm);
+export default connect(null, { createCategory })(withRouter(CategoryForm));

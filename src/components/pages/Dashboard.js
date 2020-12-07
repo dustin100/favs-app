@@ -4,7 +4,10 @@ import Spinner from '../ui/Spinner';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProfileForm from '../forms/ProfileForm';
+import { Link } from 'react-router-dom';
 import { getCurrentProfile } from '../../actions/profile';
+
+import AddIcon from '@material-ui/icons/Add';
 import {
 	makeStyles,
 	Card,
@@ -13,13 +16,14 @@ import {
 	Button,
 	Typography,
 	Grid,
+	Fab,
 } from '@material-ui/core';
 
 // When user is loggedIn this is the page they are taken to
 
 // Here they can add new categories or delete existing ones
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
 		marginTop: '35px',
@@ -27,7 +31,16 @@ const useStyles = makeStyles({
 	title: {
 		textTransform: 'capitalize',
 	},
-});
+	addBox: {
+		minHeight: 100,
+		position: 'relative',
+	},
+	fab: {
+		position: 'absolute',
+		bottom: theme.spacing(2),
+		right: theme.spacing(2),
+	},
+}));
 
 const Dashboard = ({
 	getCurrentProfile,
@@ -37,7 +50,7 @@ const Dashboard = ({
 }) => {
 	const classes = useStyles();
 	const [data, setData] = useState([]);
-	const [clickedCat, setClickedCat] = useState([]);
+	const [viewCat, setViewCat] = useState([]);
 
 	useEffect(() => {
 		getCurrentProfile();
@@ -49,7 +62,7 @@ const Dashboard = ({
 
 	const handleClick = (index) => {
 		const listData = data[index].catList;
-		setClickedCat(listData);
+		setViewCat(listData);
 		history.push('/category');
 	};
 
@@ -85,6 +98,18 @@ const Dashboard = ({
 	} else if (profile !== null) {
 		return (
 			<Fragment>
+				<div className={classes.addBox}>
+					<Fab
+						className={classes.fab}
+						component={Link}
+						to='/categoryform'
+						variant='extended'
+						color='primary'
+						aria-label='add'>
+						<AddIcon color='secondary' />
+						Category
+					</Fab>
+				</div>
 				<Grid
 					container
 					justify='flex-start'

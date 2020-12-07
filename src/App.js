@@ -12,6 +12,8 @@ import Register from './components/auth/Register';
 import Landing from './components/pages/Landing';
 import Category from './components/pages/Category';
 import Dashboard from './components/pages/Dashboard';
+import CategoryForm from './components/forms/CategoryForm';
+
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
@@ -39,6 +41,11 @@ const App = () => {
 							<Switch>
 								<Route exact path='/' component={Landing} />
 								<PrivateRoute exact path='/dashboard' component={Dashboard} />
+								<PrivateRoute
+									exact
+									path='/categoryform'
+									component={CategoryForm}
+								/>
 								<PrivateRoute exact path='/category' component={Category} />
 								<Route exact path='/login' component={Login} />
 								<Route exact path='/register' component={Register} />
