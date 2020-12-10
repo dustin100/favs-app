@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteCategory } from '../actions/profile';
+import { deleteCategory } from '../actions/category';
 import {
 	makeStyles,
 	Card,
@@ -39,8 +39,8 @@ const CategoryList = ({ profile, deleteCategory }) => {
 		console.log('something');
 	};
 
-	const categoryList = profile.category.map(
-		({ catName, catList, _id }, index) => {
+	const categoryList = profile.categories.map(
+		({ catName, catList = [], _id }, index) => {
 			return (
 				<Grid key={_id} item xs={4}>
 					<Card variant='outlined'>

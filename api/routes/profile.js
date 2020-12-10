@@ -13,7 +13,9 @@ router.get('/me', auth, async (req, res) => {
 	try {
 		const profile = await Profile.findOne({
 			user: req.user.id,
-		});
+		})
+			.populate('categories')
+			.exec();
 
 		if (!profile) {
 			return res
