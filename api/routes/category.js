@@ -6,6 +6,28 @@ const Profile = require('../models/Profile');
 const User = require('../models/User');
 const Category = require('../models/Category');
 
+// @route GET /category/:id
+// @desc Get current category
+// @access Private
+router.get('/:cat_id', auth, async (req, res) => {
+	try {
+		const category = await Category.findOne({
+			_id: req.params.cat_id,
+		})
+			.populate('catList')
+			.exec();
+
+		if (!category) {
+			return res.status(400).json({ msg: 'There is no category by this id' });
+		}
+
+		res.json(category);
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server Error something');
+	}
+});
+
 // @route POST /category
 // @desc add Category
 // @access Private
