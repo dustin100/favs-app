@@ -48,9 +48,7 @@ export const createProfile = (formData, edit = false) => async (dispatch) => {
 };
 
 // Create category
-export const createCategory = (formData, history, edit = false) => async (
-	dispatch
-) => {
+export const createCategory = (formData, history) => async (dispatch) => {
 	try {
 		const config = {
 			headers: {
@@ -64,9 +62,6 @@ export const createCategory = (formData, history, edit = false) => async (
 			payload: res.data,
 		});
 
-		dispatch(
-			setAlert(edit ? 'Category Updated' : 'Category Created', 'success')
-		);
 		history.push('/dashboard');
 	} catch (err) {
 		const errors = err.response.data.errors;
@@ -81,15 +76,35 @@ export const createCategory = (formData, history, edit = false) => async (
 };
 
 // Delete Category
-
 export const deleteCategory = (id) => async (dispatch) => {
 	try {
 		const res = await axios.delete(`/category/${id}`);
+		console.log(res.data);
+
 		dispatch({
 			type: UPDATE_PROFILE,
 			payload: res.data,
 		});
 		dispatch(setAlert('Category Deleted', 'error'));
+	} catch (err) {
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: { msg: err.response.status.text, status: err.response.status },
+		});
+	}
+};
+
+// Edit Cat this works in insomnia but waiting to build it out 
+export const editCategory = (id) => async (dispatch) => {
+	try {
+		const res = await axios.put(`/category/${id}`);
+		console.log(res.data);
+
+		dispatch({
+			type: UPDATE_PROFILE,
+			payload: res.data,
+		});
+		dispatch(setAlert('Category Updated', 'success'));
 	} catch (err) {
 		dispatch({
 			type: PROFILE_ERROR,

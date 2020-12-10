@@ -18,17 +18,19 @@ router.post(
 			return res.status(400).json({ errors: errors.array() });
 		}
 
-		const { catName } = req.body;
-
-		let newCat = new Category({
+		const profile = await Profile.findOne({
 			user: req.user.id,
+		});
+		const { catName } = req.body;
+		let newCat = new Category({
 			catName,
+			profile: profile._id,
 		});
 
 		try {
 			const profile = await Profile.findOne({ user: req.user.id });
 
-			profile.category.unshift(newCat);
+			profile.categories.unshift(newCat);
 			await newCat.save();
 			await profile.save();
 			res.json(profile);
@@ -46,19 +48,18 @@ router.delete('/:cat_id', auth, async (req, res) => {
 	try {
 		const profile = await Profile.findOne({ user: req.user.id });
 		//get remove index
-		const removeIndex = profile.category
+		const removeIndex = profile.categories
 			.map((item) => item._id)
 			.indexOf(req.params.cat_id);
 
 		if (removeIndex >= 0) {
-			profile.category.splice(removeIndex, 1);
+			profile.categories.splice(removeIndex, 1);
 		}
 
-		await profile.save();
 		await Category.findOneAndDelete({
 			_id: req.params.cat_id,
 		});
-
+		await profile.save();
 		res.json(profile);
 	} catch (err) {
 		console.error(err.message);

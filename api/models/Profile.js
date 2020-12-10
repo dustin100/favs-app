@@ -4,13 +4,10 @@ const ProfileSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'user',
 	},
-	category: [Object],
+	categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'category' }],
 
 	name: {
 		type: String,
-	},
-	age: {
-		type: Number,
 	},
 
 	theme: {

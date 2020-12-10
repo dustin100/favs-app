@@ -39,8 +39,8 @@ const CategoryList = ({ profile, deleteCategory }) => {
 		console.log('something');
 	};
 
-	const categoryList = profile.category.map(
-		({ catName, catList, _id }, index) => {
+	const categoryList = profile.categories.map(
+		({ catName, catList = [], _id }, index) => {
 			return (
 				<Grid key={_id} item xs={4}>
 					<Card variant='outlined'>
