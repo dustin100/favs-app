@@ -10,7 +10,7 @@ const CategorySchema = new mongoose.Schema({
 		required: true,
 	},
 
-	catList: [],
+	catList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'item' }],
 });
 
 module.exports = Profile = mongoose.model('category', CategorySchema);
