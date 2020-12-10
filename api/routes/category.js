@@ -66,12 +66,15 @@ router.delete('/:cat_id', auth, async (req, res) => {
 	}
 });
 
-// @route PUT /profile/category/:id
+// @route PUT /category/:id
 // @desc Update Category
 // @access Private
 router.put('/:cat_id', auth, async (req, res) => {
 	try {
 		const profile = await Profile.findOne({ user: req.user.id });
+		const category = await Category.findOne({
+			_id: req.params.cat_id,
+		});
 
 		const { catName } = req.body;
 

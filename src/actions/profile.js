@@ -47,7 +47,7 @@ export const createProfile = (formData, edit = false) => async (dispatch) => {
 	}
 };
 
-// Create or update category
+// Create category
 export const createCategory = (formData, history, edit = false) => async (
 	dispatch
 ) => {
