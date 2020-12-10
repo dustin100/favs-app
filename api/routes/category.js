@@ -46,7 +46,9 @@ router.post(
 // @access Private
 router.delete('/:cat_id', auth, async (req, res) => {
 	try {
-		const profile = await Profile.findOne({ user: req.user.id });
+		const profile = await Profile.findOne({ user: req.user.id })
+			.populate('categories')
+			.exec();
 		//get remove index
 		const removeIndex = profile.categories
 			.map((item) => item._id)

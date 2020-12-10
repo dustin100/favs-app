@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { createCategory } from '../../actions/profile';
+import { createCategory } from '../../actions/category';
 
 import { Button, TextField, Container, makeStyles } from '@material-ui/core';
 

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteCategory } from '../actions/profile';
+import { deleteCategory } from '../actions/category';
 import {
 	makeStyles,
 	Card,
