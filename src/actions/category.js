@@ -19,7 +19,7 @@ export const getCategory = (id, history) => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: CATEGORY_ERROR,
-			payload: { msg: err.response.status.text, status: err.response.status },
+			payload: err
 		});
 	}
 };
@@ -74,7 +74,6 @@ export const deleteCategory = (id) => async (dispatch) => {
 export const editCategory = (id) => async (dispatch) => {
 	try {
 		const res = await axios.put(`/category/${id}`);
-		console.log(res.data);
 
 		dispatch({
 			type: UPDATE_PROFILE,

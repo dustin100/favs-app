@@ -97,9 +97,7 @@ const MyCard = ({ name, rating, note, date }) => {
 			/>
 			<CardMedia className={classes.media} image={beer} title='Beer' />
 			<CardContent>
-				<Typography variant='body2' component='p'>
-					{note}
-				</Typography>
+				<Typography variant='body2' component='p'>Notes</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
 				<IconButton
@@ -116,9 +114,7 @@ const MyCard = ({ name, rating, note, date }) => {
 				<CardContent>
 					<Typography paragraph>Additional Notes</Typography>
 
-					<Typography paragraph>
-						{note}
-					</Typography>
+					<Typography paragraph>{note}</Typography>
 				</CardContent>
 			</Collapse>
 		</Card>
@@ -126,4 +122,3 @@ const MyCard = ({ name, rating, note, date }) => {
 };
 
 export default MyCard;
-

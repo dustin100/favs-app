@@ -21,15 +21,7 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		textTransform: 'capitalize',
 	},
-	addBox: {
-		minHeight: 100,
-		position: 'relative',
-	},
-	fab: {
-		position: 'absolute',
-		bottom: theme.spacing(2),
-		right: theme.spacing(2),
-	},
+
 }));
 
 const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {

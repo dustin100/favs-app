@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { createCategory } from '../../actions/category';
+import { addItem } from '../../actions/item';
 import Rating from '@material-ui/lab/Rating';
 
 import {
@@ -36,9 +36,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const ItemForm = ({ createCategory, history }) => {
+const ItemForm = ({ addItem, history, catState: { catInfo } }) => {
 	const classes = useStyles();
-	const [rating, setRating] = useState(2);
+	const [rating, setRating] = useState(0);
 
 	const [formData, setFormData] = useState({
 		name: null,
@@ -52,8 +52,17 @@ const ItemForm = ({ createCategory, history }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		createCategory(formData, rating, history);
+		const currentCat = catInfo._id;
+		addItem(formData, rating, history, currentCat);
 	};
+
+	if (catInfo === null) {
+		return (
+			<Fragment>
+				<p>No category selected</p>
+			</Fragment>
+		);
+	}
 
 	return (
 		<Container component='main' maxWidth='xs'>
@@ -116,7 +125,10 @@ const ItemForm = ({ createCategory, history }) => {
 };
 
 ItemForm.propTypes = {
-	createCategory: PropTypes.func.isRequired,
+	addItem: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createCategory })(withRouter(ItemForm));
+const mapStateToProps = (state) => ({
+	catState: state.category,
+});
+export default connect(mapStateToProps, { addItem })(withRouter(ItemForm));
