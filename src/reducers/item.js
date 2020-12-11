@@ -1,7 +1,7 @@
-import { GET_CATEGORY, CATEGORY_ERROR } from '../actions/types';
+import { GET_ITEM, ITEM_ERROR } from '../actions/types';
 
 const initialState = {
-	catInfo: null,
+	itemInfo: null,
 	loading: true,
 	errors: {},
 };
@@ -10,13 +10,13 @@ export default (state = initialState, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case GET_CATEGORY:
+		case GET_ITEM:
 			return {
 				...state,
-				catInfo: payload,
+				itemInfo: payload,
 				loading: false,
 			};
-		case CATEGORY_ERROR:
+		case ITEM_ERROR:
 			return {
 				...state,
 				errors: payload,

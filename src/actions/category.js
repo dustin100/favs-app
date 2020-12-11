@@ -1,6 +1,28 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from './types';
+import {
+	GET_CATEGORY,
+	CATEGORY_ERROR,
+	PROFILE_ERROR,
+	UPDATE_PROFILE,
+} from './types';
+
+// Get current category
+export const getCategory = (id, history) => async (dispatch) => {
+	try {
+		const res = await axios.get(`/category/${id}`);
+		dispatch({
+			type: GET_CATEGORY,
+			payload: res.data,
+		});
+		history.push('/category');
+	} catch (err) {
+		dispatch({
+			type: CATEGORY_ERROR,
+			payload: err
+		});
+	}
+};
 
 // Create category
 export const createCategory = (formData, history) => async (dispatch) => {
@@ -52,7 +74,6 @@ export const deleteCategory = (id) => async (dispatch) => {
 export const editCategory = (id) => async (dispatch) => {
 	try {
 		const res = await axios.put(`/category/${id}`);
-		console.log(res.data);
 
 		dispatch({
 			type: UPDATE_PROFILE,

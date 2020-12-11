@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteCategory } from '../actions/category';
+import { deleteCategory, getCategory } from '../actions/category';
 import {
 	makeStyles,
 	Card,
@@ -21,26 +21,13 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		textTransform: 'capitalize',
 	},
-	addBox: {
-		minHeight: 100,
-		position: 'relative',
-	},
-	fab: {
-		position: 'absolute',
-		bottom: theme.spacing(2),
-		right: theme.spacing(2),
-	},
 }));
 
-const CategoryList = ({ profile, deleteCategory }) => {
+const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 	const classes = useStyles();
 
-	const handleClick = (index) => {
-		console.log('something');
-	};
-
 	const categoryList = profile.categories.map(
-		({ catName, catList = [], _id }, index) => {
+		({ catName, catList = [], _id }) => {
 			return (
 				<Grid key={_id} item xs={4}>
 					<Card variant='outlined'>
@@ -55,7 +42,7 @@ const CategoryList = ({ profile, deleteCategory }) => {
 						</CardContent>
 						<CardActions>
 							<Button
-								onClick={() => handleClick(index)}
+								onClick={() => getCategory(_id, history)}
 								variant='outlined'
 								color='secondary'
 								size='small'>
@@ -86,6 +73,10 @@ const CategoryList = ({ profile, deleteCategory }) => {
 
 CategoryList.propTypes = {
 	deleteCategory: PropTypes.func.isRequired,
+	profile: PropTypes.object.isRequired,
+	getCategory: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteCategory })(CategoryList);
+export default connect(null, { deleteCategory, getCategory })(
+	withRouter(CategoryList)
+);

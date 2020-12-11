@@ -11,6 +11,8 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Landing from './components/pages/Landing';
 import Category from './components/pages/Category';
+import ItemForm from './components/forms/ItemForm';
+
 import Dashboard from './components/pages/Dashboard';
 import CategoryForm from './components/forms/CategoryForm';
 
@@ -47,6 +49,8 @@ const App = () => {
 									component={CategoryForm}
 								/>
 								<PrivateRoute exact path='/category' component={Category} />
+								<PrivateRoute exact path='/item-form' component={ItemForm} />
+
 								<Route exact path='/login' component={Login} />
 								<Route exact path='/register' component={Register} />
 							</Switch>

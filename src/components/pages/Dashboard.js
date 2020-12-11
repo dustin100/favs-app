@@ -9,6 +9,7 @@ import CategoryList from '../CategoryList';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles, Fab } from '@material-ui/core';
 
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,

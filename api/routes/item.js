@@ -15,6 +15,7 @@ router.post(
 		auth,
 		[check('name', 'Name is Required').not().isEmpty()],
 		[check('rating', 'Rating is Required').not().isEmpty()],
+		[check('rating', 'Rating is Required').matches(/[1-3]/)],
 	],
 	async (req, res) => {
 		const errors = validationResult(req);
@@ -27,7 +28,7 @@ router.post(
 			catId: req.params.cat_id,
 			name,
 			rating,
-			note: '',
+			note,
 			date,
 		});
 
@@ -36,7 +37,6 @@ router.post(
 				_id: req.params.cat_id,
 			});
 
-			console.log(newItem);
 			category.catList.unshift(newItem);
 			await newItem.save();
 			await category.save();
