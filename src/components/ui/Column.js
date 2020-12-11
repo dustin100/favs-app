@@ -8,10 +8,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Column = ({ cards, stars, rating }) => {
+const Column = ({ cards, stars }) => {
 	const classes = useStyles();
 	if (cards) {
-		console.log(cards);
 		return (
 			<Grid
 				container

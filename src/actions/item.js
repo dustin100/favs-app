@@ -1,21 +1,13 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import {
-	GET_CATEGORY,
-	CATEGORY_ERROR,
-	PROFILE_ERROR,
-	UPDATE_PROFILE,
-	ITEM_ERROR,
-	GET_ITEM,
-} from './types';
+import { ITEM_ERROR, GET_ITEM } from './types';
 
-// Add item to category 
+// Add item to category
 export const addItem = (formData, rating, history, catId) => async (
 	dispatch
 ) => {
 	try {
 		formData.rating = rating;
-		console.log(formData);
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
@@ -26,6 +18,7 @@ export const addItem = (formData, rating, history, catId) => async (
 			type: GET_ITEM,
 			payload: res.data,
 		});
+
 		history.push('/category');
 	} catch (err) {
 		const errors = err.response.data.errors;

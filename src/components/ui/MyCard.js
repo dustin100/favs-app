@@ -42,7 +42,7 @@ const options = ['Edit', 'Delete'];
 
 const ITEM_HEIGHT = 48;
 
-const MyCard = ({ name, rating, note, date }) => {
+const MyCard = ({ name, note, date }) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
 

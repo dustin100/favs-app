@@ -21,18 +21,13 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		textTransform: 'capitalize',
 	},
-
 }));
 
 const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 	const classes = useStyles();
 
-	const handleClick = (index) => {
-		console.log('something');
-	};
-
 	const categoryList = profile.categories.map(
-		({ catName, catList = [], _id }, index) => {
+		({ catName, catList = [], _id }) => {
 			return (
 				<Grid key={_id} item xs={4}>
 					<Card variant='outlined'>
@@ -78,6 +73,10 @@ const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 
 CategoryList.propTypes = {
 	deleteCategory: PropTypes.func.isRequired,
+	profile: PropTypes.object.isRequired,
+	getCategory: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteCategory, getCategory })(withRouter(CategoryList));
+export default connect(null, { deleteCategory, getCategory })(
+	withRouter(CategoryList)
+);

@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import Column from '../ui/Column';
-import { category } from '../../fakeData';
 import CurrentCategory from '../ui/CurrentCategory';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { oneStar, twoStar, threeStar } from '../../helpers';
 import { Grid, makeStyles, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -23,11 +22,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-
 const CategoryPage = ({ cat }) => {
 	const classes = useStyles();
-
-	
 
 	if (cat.catInfo === null) {
 		return (
@@ -36,8 +32,6 @@ const CategoryPage = ({ cat }) => {
 			</Fragment>
 		);
 	}
-
-	
 
 	return (
 		<Fragment>
@@ -64,11 +58,11 @@ const CategoryPage = ({ cat }) => {
 					<Column cards={cat.catInfo.catList} stars={oneStar} />
 				</Grid>
 				<Grid item xs={4}>
-					<Column cards={category[0].catList} stars={twoStar} />
+					<Column cards={cat.catInfo.catList} stars={twoStar} />
 				</Grid>
 
 				<Grid item xs={4}>
-					<Column cards={category[0].catList} stars={threeStar} />
+					<Column cards={cat.catInfo.catList} stars={threeStar} />
 				</Grid>
 			</Grid>
 		</Fragment>
