@@ -35,10 +35,6 @@ const DisplayCategories = ({ cat, getCategory }) => {
 	const listTwo = sort(cat.catInfo.catList, 2);
 	const listThree = sort(cat.catInfo.catList, 3);
 
-	console.log(listOne);
-	console.log(listTwo);
-	console.log(listThree);
-
 	return (
 		<Fragment>
 			<div className={classes.addBox}>
