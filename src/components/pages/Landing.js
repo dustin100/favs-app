@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
-	btn: {
-		...theme.palette.typography.button,
+	root: {
+		textAlign: 'center',
 	},
 }));
 
@@ -20,12 +20,9 @@ const LandingPage = ({ isAuthenticated }) => {
 	}
 	return (
 		<Container maxWidth='sm'>
-			<Button className={classes.btn} variant='outlined' color='secondary'>
-				Sign up
-			</Button>
-			<Button className={classes.btn} variant='outlined' color='secondary'>
-				Sign in
-			</Button>
+			<Typography className={classes.root}>
+				Some lading page content goes here
+			</Typography>
 		</Container>
 	);
 };

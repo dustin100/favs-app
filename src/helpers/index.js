@@ -21,3 +21,7 @@ export const threeStar = (
 		<StarIcon color='secondary' />
 	</Fragment>
 );
+
+export const sort = (array, num) => {
+	return array.filter((item) => num === item.rating);
+};

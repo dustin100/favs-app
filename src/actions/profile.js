@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from './types';
+import { GET_PROFILE, PROFILE_ERROR } from './types';
 
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
@@ -46,4 +46,3 @@ export const createProfile = (formData, edit = false) => async (dispatch) => {
 		});
 	}
 };
-

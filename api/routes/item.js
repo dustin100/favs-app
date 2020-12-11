@@ -37,7 +37,6 @@ router.post(
 				_id: req.params.cat_id,
 			});
 
-			console.log(newItem);
 			category.catList.unshift(newItem);
 			await newItem.save();
 			await category.save();
