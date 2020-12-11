@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
 const Column = ({ cards, stars, rating }) => {
 	const classes = useStyles();
 	if (cards) {
+		console.log(cards);
 		return (
 			<Grid
 				container
@@ -21,10 +22,12 @@ const Column = ({ cards, stars, rating }) => {
 					<h2 className={classes.title}>{stars}</h2>
 					{cards.map((card, index) => {
 						return (
-							<MyCard key ={index}
+							<MyCard
+								key={index}
 								name={card.name}
 								rating={card.rating}
-								notes={card.notes}
+								note={card.note}
+								date={card.date}
 							/>
 						);
 					})}

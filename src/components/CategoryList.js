@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteCategory } from '../actions/category';
+import { deleteCategory, getCategory } from '../actions/category';
 import {
 	makeStyles,
 	Card,
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoryList = ({ profile, deleteCategory }) => {
+const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 	const classes = useStyles();
 
 	const handleClick = (index) => {
@@ -55,7 +55,7 @@ const CategoryList = ({ profile, deleteCategory }) => {
 						</CardContent>
 						<CardActions>
 							<Button
-								onClick={() => handleClick(index)}
+								onClick={() => getCategory(_id, history)}
 								variant='outlined'
 								color='secondary'
 								size='small'>
@@ -88,4 +88,4 @@ CategoryList.propTypes = {
 	deleteCategory: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteCategory })(CategoryList);
+export default connect(null, { deleteCategory, getCategory })(withRouter(CategoryList));

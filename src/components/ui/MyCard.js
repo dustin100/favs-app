@@ -19,7 +19,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		maxWidth: 345,
+		minWidth: 345,
 		marginBottom: '1rem',
 	},
 	media: {
@@ -42,7 +42,7 @@ const options = ['Edit', 'Delete'];
 
 const ITEM_HEIGHT = 48;
 
-const MyCard = ({ name, rating, notes }) => {
+const MyCard = ({ name, rating, note, date }) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
 
@@ -93,12 +93,12 @@ const MyCard = ({ name, rating, notes }) => {
 					</Fragment>
 				}
 				title={name}
-				subheader='September 14, 2016'
+				subheader={date}
 			/>
 			<CardMedia className={classes.media} image={beer} title='Beer' />
 			<CardContent>
 				<Typography variant='body2' component='p'>
-					{notes}
+					{note}
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
@@ -117,11 +117,7 @@ const MyCard = ({ name, rating, notes }) => {
 					<Typography paragraph>Additional Notes</Typography>
 
 					<Typography paragraph>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
-						fugiat inventore magnam facilis natus sunt at, explicabo, dolore
-						ipsa deserunt necessitatibus obcaecati similique repellat enim
-						molestias ex ut accusamus earum laborum. Recusandae, unde at odio
-						labore veritatis distinctio reprehenderit laudantium.
+						{note}
 					</Typography>
 				</CardContent>
 			</Collapse>

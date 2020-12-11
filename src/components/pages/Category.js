@@ -1,17 +1,10 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Column from '../ui/Column';
 import { category } from '../../fakeData';
 import CurrentCategory from '../ui/CurrentCategory';
+import { connect } from 'react-redux';
 import { oneStar, twoStar, threeStar } from '../../helpers';
 import { Grid, makeStyles } from '@material-ui/core';
-
-// Pull in data from DB
-
-// Show three columns for each category
-
-// If category doesn't have data prompt user to add a new card
-
-// If category has data sort into columns by rating
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,31 +12,46 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoryPage = (props) => {
+const CategoryPage = ({ cat }) => {
 	const classes = useStyles();
 
-	return (
-		<Fragment>
-			<CurrentCategory category='Beer' />
-			<Grid
-				className={classes.root}
-				container
-				direction='row'
-				justify='center'
-				spacing={2}>
-				<Grid item xs={4}>
-					<Column cards={category[0].catList} stars={oneStar} />
-				</Grid>
-				<Grid item xs={4}>
-					<Column cards={category[0].catList} stars={twoStar} />
-				</Grid>
+	useEffect(() => {
+		console.log(cat);
+	});
+	if (cat.catInfo === null) {
+		return (
+			<Fragment>
+				<p>No categories created</p>{' '}
+			</Fragment>
+		);
+	} else {
+		return (
+			<Fragment>
+				<CurrentCategory category={cat.catInfo.catName} />
+				<Grid
+					className={classes.root}
+					container
+					direction='row'
+					justify='center'
+					spacing={2}>
+					<Grid item xs={4}>
+						<Column cards={cat.catInfo.catList} stars={oneStar} />
+					</Grid>
+					<Grid item xs={4}>
+						<Column cards={category[0].catList} stars={twoStar} />
+					</Grid>
 
-				<Grid item xs={4}>
-					<Column cards={category[0].catList} stars={threeStar} />
+					<Grid item xs={4}>
+						<Column cards={category[0].catList} stars={threeStar} />
+					</Grid>
 				</Grid>
-			</Grid>
-		</Fragment>
-	);
+			</Fragment>
+		);
+	}
 };
 
-export default CategoryPage;
+const mapStateToProps = (state) => ({
+	cat: state.category,
+});
+
+export default connect(mapStateToProps)(CategoryPage);

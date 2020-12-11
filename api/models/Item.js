@@ -10,8 +10,10 @@ const ItemSchema = new mongoose.Schema({
 		required: true,
 	},
 	rating: {
-		type: [Boolean],
+		type: Number,
 		required: true,
+		min: 1,
+		max: 3,
 	},
 
 	note: {

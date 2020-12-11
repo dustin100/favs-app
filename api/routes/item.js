@@ -15,6 +15,7 @@ router.post(
 		auth,
 		[check('name', 'Name is Required').not().isEmpty()],
 		[check('rating', 'Rating is Required').not().isEmpty()],
+		[check('rating', 'Rating can only be 1 2 or 3').matches(/[1-3]/)],
 	],
 	async (req, res) => {
 		const errors = validationResult(req);
@@ -27,7 +28,7 @@ router.post(
 			catId: req.params.cat_id,
 			name,
 			rating,
-			note: '',
+			note,
 			date,
 		});
 
