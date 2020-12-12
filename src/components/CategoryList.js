@@ -2,6 +2,9 @@ import React, { Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import EditIcon from '@material-ui/icons/Edit';
 import { deleteCategory, getCategory } from '../actions/category';
 import {
 	makeStyles,
@@ -35,7 +38,6 @@ const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 							<Typography className={classes.title} variant='h4' component='h2'>
 								{catName}
 							</Typography>
-
 							<Typography variant='body2' component='p'>
 								You have {catList.length} items in this category
 							</Typography>
@@ -45,14 +47,25 @@ const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 								onClick={() => getCategory(_id, history)}
 								variant='outlined'
 								color='secondary'
-								size='small'>
-								View Favs
+								size='small'
+								startIcon={<VisibilityIcon />}>
+								View
+							</Button>
+
+							<Button
+								onClick={() => getCategory(_id, history)}
+								color='secondary'
+								size='small'
+								variant='outlined'
+								startIcon={<EditIcon />}>
+								Edit
 							</Button>
 							<Button
 								onClick={() => deleteCategory(_id)}
 								variant='outlined'
 								color='secondary'
-								size='small'>
+								size='small'
+								startIcon={<DeleteIcon />}>
 								Delete
 							</Button>
 						</CardActions>
