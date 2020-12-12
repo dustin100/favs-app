@@ -13,7 +13,7 @@ import {
 	MenuItem,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import beer from '../../assets/beer.jpg';
+import defaultImg from '../../assets/defaultImg.jpg';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
@@ -109,7 +109,7 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId }) => {
 				title={name}
 				subheader={`Created on ${format(new Date(date), 'MMM-do-yyyy')}`}
 			/>
-			<CardMedia className={classes.media} image={beer} title='Beer' />
+			<CardMedia className={classes.media} image={defaultImg} title='image' />
 
 			<CardActions disableSpacing>
 				<Typography>Notes</Typography>
