@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { deleteItem } from '../../actions/item';
+import { parse, format } from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -106,15 +107,12 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId }) => {
 					</Fragment>
 				}
 				title={name}
-				subheader={date}
+				subheader={`Created on ${format(new Date(date), 'MMM-do-yyyy')}`}
 			/>
 			<CardMedia className={classes.media} image={beer} title='Beer' />
-			<CardContent>
-				<Typography variant='body2' component='p'>
-					Notes
-				</Typography>
-			</CardContent>
+
 			<CardActions disableSpacing>
+				<Typography>Notes</Typography>
 				<IconButton
 					className={clsx(classes.expand, {
 						[classes.expandOpen]: expanded,
@@ -127,8 +125,6 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId }) => {
 			</CardActions>
 			<Collapse in={expanded} timeout='auto' unmountOnExit>
 				<CardContent>
-					<Typography paragraph>Additional Notes</Typography>
-
 					<Typography paragraph>{note}</Typography>
 				</CardContent>
 			</Collapse>
