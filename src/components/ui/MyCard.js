@@ -16,6 +16,8 @@ import clsx from 'clsx';
 import beer from '../../assets/beer.jpg';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { connect } from 'react-redux';
+import { deleteItem } from '../../actions/item';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -38,11 +40,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const options = ['Edit', 'Delete'];
-
 const ITEM_HEIGHT = 48;
 
-const MyCard = ({ name, note, date }) => {
+const MyCard = ({ name, note, date, deleteItem, catId, itemId }) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
 
@@ -57,8 +57,20 @@ const MyCard = ({ name, note, date }) => {
 		setAnchorEl(event.currentTarget);
 	};
 
-	const handleClose = () => {
+	const handleClose = (event) => {
 		setAnchorEl(null);
+		console.log('anything else');
+	};
+
+	const handleEdit = (event) => {
+		setAnchorEl(null);
+		console.log('edit');
+		console.log(catId, itemId);
+	};
+	const handleDelete = (event) => {
+		setAnchorEl(null);
+		deleteItem(catId, itemId);
+		console.log('delete');
 	};
 
 	return (
@@ -84,11 +96,12 @@ const MyCard = ({ name, note, date }) => {
 									width: '20ch',
 								},
 							}}>
-							{options.map((option) => (
-								<MenuItem key={option} onClick={handleClose}>
-									{option}
-								</MenuItem>
-							))}
+							<MenuItem key='Edit' onClick={handleEdit}>
+								Edit
+							</MenuItem>
+							<MenuItem key='Delete' onClick={handleDelete}>
+								Delete
+							</MenuItem>
 						</Menu>
 					</Fragment>
 				}
@@ -97,7 +110,9 @@ const MyCard = ({ name, note, date }) => {
 			/>
 			<CardMedia className={classes.media} image={beer} title='Beer' />
 			<CardContent>
-				<Typography variant='body2' component='p'>Notes</Typography>
+				<Typography variant='body2' component='p'>
+					Notes
+				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
 				<IconButton
@@ -121,4 +136,4 @@ const MyCard = ({ name, note, date }) => {
 	);
 };
 
-export default MyCard;
+export default connect(null, { deleteItem })(MyCard);

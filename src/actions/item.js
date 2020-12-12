@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { ITEM_ERROR, GET_ITEM } from './types';
+import { ITEM_ERROR, GET_ITEM, GET_CATEGORY, CATEGORY_ERROR } from './types';
 
 // Add item to category
 export const addItem = (formData, rating, history, catId) => async (
@@ -33,21 +33,35 @@ export const addItem = (formData, rating, history, catId) => async (
 	}
 };
 
-// export const getItems = (id) => async (
-// 	dispatch
-// ) => {
-// 	try {
+export const getItem = (id) => async (dispatch) => {
+	try {
+		const res = await axios.post(`/item/${id}`);
+		dispatch({
+			type: GET_ITEM,
+			payload: res.data,
+		});
+	} catch (err) {
+		dispatch({
+			type: ITEM_ERROR,
+			payload: { msg: err.response.status.text, status: err.response.status },
+		});
+	}
+};
 
-// 		const res = await axios.post(`/item/${id}`);
-// 		dispatch({
-// 			type: GET_ITEM,
-// 			payload: res.data,
-// 		});
-// 	} catch (err) {
+// Delete item
+export const deleteItem = (catId, itemId) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/item/${catId}/${itemId}`);
 
-// 		dispatch({
-// 			type: ITEM_ERROR,
-// 			payload: { msg: err.response.status.text, status: err.response.status },
-// 		});
-// 	}
-// };
+		dispatch({
+			type: GET_CATEGORY,
+			payload: res.data,
+		});
+		dispatch(setAlert('Item Deleted', 'error'));
+	} catch (err) {
+		dispatch({
+			type: CATEGORY_ERROR,
+			payload: { msg: err.response.status.text, status: err.response.status },
+		});
+	}
+};
