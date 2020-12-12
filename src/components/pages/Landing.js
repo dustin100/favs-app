@@ -21,7 +21,7 @@ const LandingPage = ({ isAuthenticated }) => {
 	return (
 		<Container maxWidth='sm'>
 			<Typography className={classes.root}>
-				Some lading page content goes here
+				Some landing page content goes here
 			</Typography>
 		</Container>
 	);

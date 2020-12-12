@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 	},
 
+	titleA: {
+		textDecoration: 'none',
+		color: '#fff',
+	},
+
 	tab: {
 		textTransform: 'capitalize',
 		minWidth: 10,
@@ -42,8 +47,6 @@ const Navbar = ({ logout, auth: { loading, isAuthenticated } }) => {
 			setValue(0);
 		} else if (window.location.pathname === '/register' && value !== 1) {
 			setValue(1);
-		} else if (window.location.pathname === '/category' && value !== 1) {
-			setValue(1);
 		}
 	}, [value]);
 
@@ -55,11 +58,6 @@ const Navbar = ({ logout, auth: { loading, isAuthenticated } }) => {
 				to='/dashboard'
 				label='Dashboard'></Tab>
 
-			<Tab
-				className={classes.tab}
-				component={Link}
-				to='/category'
-				label='Category'></Tab>
 			<Tab
 				className={classes.tab}
 				component={Link}
@@ -92,7 +90,13 @@ const Navbar = ({ logout, auth: { loading, isAuthenticated } }) => {
 			<AppBar>
 				<Toolbar>
 					<Typography variant='h6' className={classes.title}>
-						<Link to='/'>Logo</Link>
+						<Link
+							color='primary'
+							className={classes.titleA}
+							underlineNone
+							to='/'>
+							Favs App
+						</Link>
 					</Typography>
 
 					{!loading && (

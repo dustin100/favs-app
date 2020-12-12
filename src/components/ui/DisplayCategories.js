@@ -4,23 +4,17 @@ import CategoryTitle from './CategoryTitle';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { oneStar, twoStar, threeStar } from '../../helpers';
-import { Grid, makeStyles, Fab } from '@material-ui/core';
+import { Grid, makeStyles, Fab, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { getCategory } from '../../actions/category';
 import { sort } from '../../helpers';
-
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
 	},
-	addBox: {
-		minHeight: 100,
-		position: 'relative',
-	},
-	fab: {
-		position: 'absolute',
-		bottom: theme.spacing(2),
-		right: theme.spacing(2),
+	container: {
+		marginTop: 20,
 	},
 }));
 
@@ -37,18 +31,30 @@ const DisplayCategories = ({ cat, getCategory }) => {
 
 	return (
 		<Fragment>
-			<div className={classes.addBox}>
-				<Fab
-					className={classes.fab}
-					component={Link}
-					to='/item-form'
-					variant='extended'
-					color='primary'
-					aria-label='add'>
-					<AddIcon color='secondary' />
-					Item
-				</Fab>
-			</div>
+			<Grid container justify='space-between' className={classes.container}>
+				<Tooltip title='Back To Categories' arrow>
+					<Fab
+						className={classes.fab}
+						component={Link}
+						to='/dashboard'
+						variant='round'
+						color='primary'
+						aria-label='add'>
+						<ArrowBackIcon color='secondary' />
+					</Fab>
+				</Tooltip>
+				<Tooltip title='Add' arrow>
+					<Fab
+						className={classes.fab}
+						component={Link}
+						to='/item-form'
+						variant='round'
+						color='primary'
+						aria-label='add'>
+						<AddIcon color='secondary' />
+					</Fab>
+				</Tooltip>
+			</Grid>
 			<CategoryTitle category={cat.catInfo.catName} />
 			<Grid
 				className={classes.root}
