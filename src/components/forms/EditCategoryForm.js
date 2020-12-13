@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
-import { createCategory } from '../../actions/category';
+import { withRouter } from 'react-router-dom';
+import { editCategory } from '../../actions/category';
 
 import {
 	Button,
 	TextField,
 	Container,
 	makeStyles,
-	Grid,
+	Typography,
 } from '@material-ui/core';
 
 // Styles
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoryForm = ({ createCategory, history }) => {
+const CategoryForm = ({ editCategory, catId, currentName, handleClose }) => {
 	const classes = useStyles();
 
 	const [formData, setFormData] = useState({
@@ -48,12 +48,14 @@ const CategoryForm = ({ createCategory, history }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		createCategory(formData, history);
+		await editCategory(formData, catId);
+		handleClose();
 	};
 
 	return (
 		<Container component='main' maxWidth='xs'>
 			<div className={classes.paper}>
+				<Typography variant='h5'>Edit Name</Typography>
 				<form className={classes.root} onSubmit={(e) => onSubmit(e)}>
 					<TextField
 						required
@@ -68,23 +70,14 @@ const CategoryForm = ({ createCategory, history }) => {
 						name='catName'
 						autoFocus
 					/>
-					<Grid container justify='space-between'>
-						<Button
-							className={classes.submit}
-							type='submit'
-							variant='outlined'
-							color='secondary'>
-							Create
-						</Button>
-						<Button
-							className={classes.submit}
-							component={Link}
-							to={'/dashboard'}
-							variant='outlined'
-							color='secondary'>
-							Cancel
-						</Button>
-					</Grid>
+
+					<Button
+						className={classes.submit}
+						type='submit'
+						variant='outlined'
+						color='secondary'>
+						Update
+					</Button>
 				</form>
 			</div>
 		</Container>
@@ -92,7 +85,7 @@ const CategoryForm = ({ createCategory, history }) => {
 };
 
 CategoryForm.propTypes = {
-	createCategory: PropTypes.func.isRequired,
+	editCategory: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createCategory })(withRouter(CategoryForm));
+export default connect(null, { editCategory })(withRouter(CategoryForm));

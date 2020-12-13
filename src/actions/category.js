@@ -19,7 +19,7 @@ export const getCategory = (id, history) => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: CATEGORY_ERROR,
-			payload: err
+			payload: err,
 		});
 	}
 };
@@ -71,14 +71,19 @@ export const deleteCategory = (id) => async (dispatch) => {
 };
 
 // Edit Cat this works in insomnia but waiting to build it out
-export const editCategory = (id) => async (dispatch) => {
+export const editCategory = (formData, id) => async (dispatch) => {
 	try {
-		const res = await axios.put(`/category/${id}`);
-
-		dispatch({
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+		const res = await axios.put(`/category/${id}`, formData, config);
+		 dispatch({
 			type: UPDATE_PROFILE,
 			payload: res.data,
 		});
+
 		dispatch(setAlert('Category Updated', 'success'));
 	} catch (err) {
 		dispatch({

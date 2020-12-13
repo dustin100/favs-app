@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -6,6 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
 import { deleteCategory, getCategory } from '../actions/category';
+import EditCategoryForm from './forms/EditCategoryForm';
 import {
 	makeStyles,
 	Card,
@@ -14,6 +15,7 @@ import {
 	Button,
 	Typography,
 	Grid,
+	Popover,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +30,23 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 	const classes = useStyles();
+
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [currentName, setCurrentName] = useState(null);
+	const [currentId, setCurrentId] = useState(null);
+
+	const handleClick = (event, name, id) => {
+		setAnchorEl(event.currentTarget);
+		setCurrentName(name);
+		setCurrentId(id);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const open = Boolean(anchorEl);
+	const edit = open ? 'simple-popover' : undefined;
 
 	const categoryList = profile.categories.map(
 		({ catName, catList = [], _id }) => {
@@ -53,13 +72,33 @@ const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 							</Button>
 
 							<Button
-								onClick={() => getCategory(_id, history)}
 								color='secondary'
 								size='small'
 								variant='outlined'
+								aria-describedby={edit}
+								onClick={(e) => handleClick(e, catName, _id)}
 								startIcon={<EditIcon />}>
 								Edit
 							</Button>
+							<Popover
+								id={edit}
+								open={open}
+								anchorEl={anchorEl}
+								onClose={handleClose}
+								anchorOrigin={{
+									vertical: 'top',
+									horizontal: 'center',
+								}}
+								transformOrigin={{
+									vertical: 'bottom',
+									horizontal: 'center',
+								}}>
+								<EditCategoryForm
+									currentName={currentName}
+									catId={currentId}
+									handleClose={handleClose}
+								/>
+							</Popover>
 							<Button
 								onClick={() => deleteCategory(_id)}
 								variant='outlined'
