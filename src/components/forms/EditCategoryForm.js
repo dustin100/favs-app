@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { editCategory } from '../../actions/category';
 
-import { Button, TextField, Container, makeStyles } from '@material-ui/core';
+import {
+	Button,
+	TextField,
+	Container,
+	makeStyles,
+	Typography,
+} from '@material-ui/core';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoryForm = ({ editCategory, catId, currentName }) => {
+const CategoryForm = ({ editCategory, catId, currentName, handleClose }) => {
 	const classes = useStyles();
 
 	const [formData, setFormData] = useState({
@@ -43,11 +49,13 @@ const CategoryForm = ({ editCategory, catId, currentName }) => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		await editCategory(formData, catId);
+		handleClose();
 	};
 
 	return (
 		<Container component='main' maxWidth='xs'>
 			<div className={classes.paper}>
+				<Typography variant='h5'>Edit Name</Typography>
 				<form className={classes.root} onSubmit={(e) => onSubmit(e)}>
 					<TextField
 						required

@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { createCategory } from '../../actions/category';
 
-import { Button, TextField, Container, makeStyles } from '@material-ui/core';
+import {
+	Button,
+	TextField,
+	Container,
+	makeStyles,
+	Grid,
+} from '@material-ui/core';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -62,14 +68,23 @@ const CategoryForm = ({ createCategory, history }) => {
 						name='catName'
 						autoFocus
 					/>
-
-					<Button
-						className={classes.submit}
-						type='submit'
-						variant='outlined'
-						color='secondary'>
-						Create
-					</Button>
+					<Grid container justify='space-between'>
+						<Button
+							className={classes.submit}
+							type='submit'
+							variant='outlined'
+							color='secondary'>
+							Create
+						</Button>
+						<Button
+							className={classes.submit}
+							component={Link}
+							to={'/dashboard'}
+							variant='outlined'
+							color='secondary'>
+							Cancel
+						</Button>
+					</Grid>
 				</form>
 			</div>
 		</Container>

@@ -93,7 +93,11 @@ const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 									vertical: 'bottom',
 									horizontal: 'center',
 								}}>
-								<EditCategoryForm currentName={currentName} catId={currentId} />
+								<EditCategoryForm
+									currentName={currentName}
+									catId={currentId}
+									handleClose={handleClose}
+								/>
 							</Popover>
 							<Button
 								onClick={() => deleteCategory(_id)}
