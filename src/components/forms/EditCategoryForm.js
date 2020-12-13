@@ -65,7 +65,7 @@ const CategoryForm = ({ editCategory, catId, currentName, handleClose }) => {
 						type='name'
 						label='Name'
 						onChange={(e) => onChange(e)}
-						defaultValue={currentName}
+						defaultValue={catName}
 						margin='normal'
 						name='catName'
 						autoFocus
