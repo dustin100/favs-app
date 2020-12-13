@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { createCategory } from '../../actions/category';
+import { editCategory } from '../../actions/category';
 
 import { Button, TextField, Container, makeStyles } from '@material-ui/core';
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoryForm = ({ createCategory, history }) => {
+const CategoryForm = ({ editCategory, catId, currentName }) => {
 	const classes = useStyles();
 
 	const [formData, setFormData] = useState({
@@ -42,7 +42,7 @@ const CategoryForm = ({ createCategory, history }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		createCategory(formData, history);
+		await editCategory(formData, catId);
 	};
 
 	return (
@@ -57,7 +57,7 @@ const CategoryForm = ({ createCategory, history }) => {
 						type='name'
 						label='Name'
 						onChange={(e) => onChange(e)}
-						defaultValue={catName}
+						defaultValue={currentName}
 						margin='normal'
 						name='catName'
 						autoFocus
@@ -68,7 +68,7 @@ const CategoryForm = ({ createCategory, history }) => {
 						type='submit'
 						variant='outlined'
 						color='secondary'>
-						Create
+						Update
 					</Button>
 				</form>
 			</div>
@@ -77,7 +77,7 @@ const CategoryForm = ({ createCategory, history }) => {
 };
 
 CategoryForm.propTypes = {
-	createCategory: PropTypes.func.isRequired,
+	editCategory: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createCategory })(withRouter(CategoryForm));
+export default connect(null, { editCategory })(withRouter(CategoryForm));

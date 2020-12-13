@@ -20,7 +20,7 @@ router.get('/:cat_id', auth, async (req, res) => {
 		if (!category) {
 			return res.status(400).json({ msg: 'There is no category by this id' });
 		}
-		
+
 		res.json(category);
 	} catch (err) {
 		console.error(err.message);
@@ -96,11 +96,6 @@ router.delete('/:cat_id', auth, async (req, res) => {
 // @access Private
 router.put('/:cat_id', auth, async (req, res) => {
 	try {
-		const profile = await Profile.findOne({ user: req.user.id });
-		const category = await Category.findOne({
-			_id: req.params.cat_id,
-		});
-
 		const { catName } = req.body;
 
 		const updateCat = await Category.findOneAndUpdate(
@@ -109,7 +104,14 @@ router.put('/:cat_id', auth, async (req, res) => {
 			{ new: true }
 		);
 
-		res.json(updateCat);
+		await updateCat.save();
+
+		const profile = await Profile.findOne({ user: req.user.id }).populate(
+			'categories'
+		);
+
+		await profile.save();
+		res.json(profile);
 	} catch (err) {
 		console.error(err.message);
 		res.status(500).send('Server Error');
