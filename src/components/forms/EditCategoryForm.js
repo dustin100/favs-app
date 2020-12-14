@@ -38,7 +38,7 @@ const CategoryForm = ({ editCategory, catId, currentName, handleClose }) => {
 	const classes = useStyles();
 
 	const [formData, setFormData] = useState({
-		catName: '',
+		catName: currentName,
 	});
 	const { catName } = formData;
 
