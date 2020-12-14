@@ -86,11 +86,11 @@ const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 								anchorEl={anchorEl}
 								onClose={handleClose}
 								anchorOrigin={{
-									vertical: 'top',
+									vertical: 'bottom',
 									horizontal: 'center',
 								}}
 								transformOrigin={{
-									vertical: 'bottom',
+									vertical: 'top',
 									horizontal: 'center',
 								}}>
 								<EditCategoryForm
