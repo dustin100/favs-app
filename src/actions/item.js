@@ -65,3 +65,34 @@ export const deleteItem = (catId, itemId) => async (dispatch) => {
 		});
 	}
 };
+
+// Edit item to category
+export const editItem = (formData, rating, history, catId) => async (
+	dispatch
+) => {
+	try {
+		formData.rating = rating;
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+		const res = await axios.post(`/item/${catId}`, formData, config);
+		dispatch({
+			type: GET_ITEM,
+			payload: res.data,
+		});
+
+		history.push('/category');
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		if (errors) {
+			errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+		}
+		dispatch({
+			type: ITEM_ERROR,
+			payload: { msg: err.response.status.text, status: err.response.status },
+		});
+	}
+};
