@@ -48,37 +48,43 @@ const ITEM_HEIGHT = 48;
 const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const open = Boolean(anchorEl);
+	const [anchorEditEl, setEditAnchorEl] = useState(null);
 
+	// For 3 dots menu
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
 	};
-
-	const [anchorEl, setAnchorEl] = useState(null);
-	const open = Boolean(anchorEl);
-
-	const [anchorEditEl, setEditAnchorEl] = useState(null);
-
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
+	const handleClick = (e) => {
+		setAnchorEl(e.currentTarget);
 	};
 
-	const handleClose = (event) => {
+	const handleClose = () => {
 		setAnchorEl(null);
 	};
-	const handleEditClose = (event) => {
+
+
+	// For edit button
+	const handleEditClose = () => {
 		setEditAnchorEl(null);
 		handleClose();
 	};
 
-	const handleEdit = (event) => {
-		setEditAnchorEl(event.currentTarget);
+	const handleEdit = (e) => {
+		setEditAnchorEl(e.currentTarget);
 	};
-	const handleDelete = (event) => {
+
+	const openEdit = Boolean(anchorEditEl);
+	const edit = open ? 'simple-popover' : undefined;
+
+	
+	// For Delete Button
+	const handleDelete = () => {
 		setAnchorEl(null);
 		deleteItem(catId, itemId);
 	};
-	const openEdit = Boolean(anchorEditEl);
-	const edit = open ? 'simple-popover' : undefined;
+	
 
 	return (
 		<Card variant='outlined' className={classes.root}>
