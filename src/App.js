@@ -12,7 +12,7 @@ import Register from './components/auth/Register';
 import Landing from './components/pages/Landing';
 import Category from './components/pages/Category';
 import ItemForm from './components/forms/ItemForm';
-
+import EditItemForm from './components/forms/EditItemForm';
 import Dashboard from './components/pages/Dashboard';
 import CategoryForm from './components/forms/CategoryForm';
 
@@ -50,6 +50,11 @@ const App = () => {
 								/>
 								<PrivateRoute exact path='/category' component={Category} />
 								<PrivateRoute exact path='/item-form' component={ItemForm} />
+								<PrivateRoute
+									exact
+									path='/edit-item-form'
+									component={EditItemForm}
+								/>
 
 								<Route exact path='/login' component={Login} />
 								<Route exact path='/register' component={Register} />

@@ -14,8 +14,7 @@ router.post(
 	[
 		auth,
 		[check('name', 'Name is Required').not().isEmpty()],
-		[check('rating', 'Rating is Required').not().isEmpty()],
-		[check('rating', 'Rating is Required').matches(/[1-3]/)],
+		[check('rating', 'Rating is Required').not().isEmpty().matches(/[1-3]/)],
 	],
 	async (req, res) => {
 		const errors = validationResult(req);
@@ -68,6 +67,29 @@ router.delete('/:cat_id/:item_id', auth, async (req, res) => {
 		await Item.findOneAndDelete({
 			_id: req.params.item_id,
 		});
+		await category.save();
+		res.json(category);
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server Error');
+	}
+});
+
+router.put('/:cat_id/:item_id', auth, async (req, res) => {
+	try {
+		const { name, rating, note } = req.body;
+
+		const updateItem = await Item.findOneAndUpdate(
+			{ _id: req.params.item_id },
+			{ name: name, rating: rating, note: note },
+			{ new: true }
+		);
+		await updateItem.save();
+
+		const category = await Category.findOne({
+			_id: req.params.cat_id,
+		}).populate('catList');
+
 		await category.save();
 		res.json(category);
 	} catch (err) {
