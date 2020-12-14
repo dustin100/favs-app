@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { addItem } from '../../actions/item';
+import { editItem } from '../../actions/item';
 import Rating from '@material-ui/lab/Rating';
 
 import {
@@ -36,13 +36,22 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const EditItemForm = ({ addItem, history, catState: { catInfo } }) => {
+const EditItemForm = ({
+	handleClose,
+	catId,
+	itemId,
+	editItem,
+	currentNote,
+	currentRating,
+	currentName,
+	
+}) => {
 	const classes = useStyles();
-	const [rating, setRating] = useState(0);
+	const [rating, setRating] = useState(currentRating);
 
 	const [formData, setFormData] = useState({
-		name: null,
-		notes: '',
+		name: currentName,
+		notes: currentNote,
 	});
 	const { name, notes } = formData;
 
@@ -52,17 +61,9 @@ const EditItemForm = ({ addItem, history, catState: { catInfo } }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		const currentCat = catInfo._id;
-		addItem(formData, rating, history, currentCat);
+		editItem(formData, rating, catId, itemId);
+		handleClose();
 	};
-
-	if (catInfo === null) {
-		return (
-			<Fragment>
-				<p>No category selected</p>
-			</Fragment>
-		);
-	}
 
 	return (
 		<Container component='main' maxWidth='xs'>
@@ -125,10 +126,8 @@ const EditItemForm = ({ addItem, history, catState: { catInfo } }) => {
 };
 
 EditItemForm.propTypes = {
-	addItem: PropTypes.func.isRequired,
+	editItem: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-	catState: state.category,
-});
-export default connect(mapStateToProps, { addItem })(withRouter(EditItemForm));
+
+export default connect(null, { editItem })(withRouter(EditItemForm));

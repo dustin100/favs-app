@@ -67,7 +67,7 @@ export const deleteItem = (catId, itemId) => async (dispatch) => {
 };
 
 // Edit item to category
-export const editItem = (formData, rating, history, catId) => async (
+export const editItem = (formData, rating, catId, itemId) => async (
 	dispatch
 ) => {
 	try {
@@ -77,13 +77,11 @@ export const editItem = (formData, rating, history, catId) => async (
 				'Content-Type': 'application/json',
 			},
 		};
-		const res = await axios.post(`/item/${catId}`, formData, config);
+		const res = await axios.put(`/item/${catId}/${itemId}`, formData, config);
 		dispatch({
-			type: GET_ITEM,
+			type: GET_CATEGORY,
 			payload: res.data,
 		});
-
-		history.push('/category');
 	} catch (err) {
 		const errors = err.response.data.errors;
 

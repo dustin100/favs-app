@@ -89,6 +89,7 @@ router.put('/:cat_id/:item_id', auth, async (req, res) => {
 		const category = await Category.findOne({
 			_id: req.params.cat_id,
 		}).populate('catList');
+
 		await category.save();
 		res.json(category);
 	} catch (err) {

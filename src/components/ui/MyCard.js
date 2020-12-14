@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import EditItemForm from '../forms/EditItemForm';
 import {
 	makeStyles,
 	Typography,
@@ -11,6 +12,7 @@ import {
 	CardHeader,
 	Menu,
 	MenuItem,
+	Popover,
 } from '@material-ui/core';
 import clsx from 'clsx';
 import defaultImg from '../../assets/defaultImg.jpg';
@@ -18,7 +20,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { deleteItem } from '../../actions/item';
-import { parse, format } from 'date-fns';
+import { format } from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -43,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ITEM_HEIGHT = 48;
 
-const MyCard = ({ name, note, date, deleteItem, catId, itemId }) => {
+const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
 
@@ -54,25 +56,29 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 
+	const [anchorEditEl, setEditAnchorEl] = useState(null);
+
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
 
 	const handleClose = (event) => {
 		setAnchorEl(null);
-		console.log('anything else');
+	};
+	const handleEditClose = (event) => {
+		setEditAnchorEl(null);
+		handleClose();
 	};
 
 	const handleEdit = (event) => {
-		setAnchorEl(null);
-		console.log('edit');
-		console.log(catId, itemId);
+		setEditAnchorEl(event.currentTarget);
 	};
 	const handleDelete = (event) => {
 		setAnchorEl(null);
 		deleteItem(catId, itemId);
-		console.log('delete');
 	};
+	const openEdit = Boolean(anchorEditEl);
+	const edit = open ? 'simple-popover' : undefined;
 
 	return (
 		<Card variant='outlined' className={classes.root}>
@@ -100,6 +106,28 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId }) => {
 							<MenuItem key='Edit' onClick={handleEdit}>
 								Edit
 							</MenuItem>
+							<Popover
+								id={edit}
+								open={openEdit}
+								anchorEl={anchorEditEl}
+								onClose={handleEditClose}
+								anchorOrigin={{
+									vertical: 'bottom',
+									horizontal: 'center',
+								}}
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'center',
+								}}>
+								<EditItemForm
+									handleClose={handleEditClose}
+									catId={catId}
+									itemId={itemId}
+									currentName={name}
+									currentRating={rating}
+									currentNote={note}
+								/>
+							</Popover>
 							<MenuItem key='Delete' onClick={handleDelete}>
 								Delete
 							</MenuItem>
