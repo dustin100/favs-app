@@ -10,7 +10,7 @@ app.use(express.json({ extended: false }));
 app.get('/', (req, res) => res.send('API Running'));
 
 // Define Routes
-app.use('/users', require('./routes/users'));
+app.use('/user', require('./routes/user'));
 app.use('/auth', require('./routes/auth'));
 app.use('/profile', require('./routes/profile'));
 app.use('/category', require('./routes/category'));
