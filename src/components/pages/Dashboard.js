@@ -9,7 +9,6 @@ import CategoryList from '../CategoryList';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles, Fab } from '@material-ui/core';
 
-
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
@@ -32,10 +31,6 @@ const Dashboard = ({
 	profile: { profile, loading },
 }) => {
 	const classes = useStyles();
-
-	useEffect(() => {
-		getCurrentProfile();
-	}, [getCurrentProfile, isAuthenticated]);
 
 	if (loading) {
 		return <Spinner />;

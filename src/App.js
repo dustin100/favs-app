@@ -15,17 +15,10 @@ import ItemForm from './components/forms/ItemForm';
 import EditItemForm from './components/forms/EditItemForm';
 import Dashboard from './components/pages/Dashboard';
 import CategoryForm from './components/forms/CategoryForm';
-
 import { loadUser } from './actions/auth';
-import setAuthToken from './utils/setAuthToken';
-
 import { Provider } from 'react-redux';
 import store from './store';
 import { Fragment, useEffect } from 'react';
-
-if (localStorage.token) {
-	setAuthToken(localStorage.token);
-}
 
 const App = () => {
 	useEffect(() => {

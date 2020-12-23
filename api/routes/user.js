@@ -11,7 +11,8 @@ router.post('/', async (req, res) => {
 	try {
 		await user.save();
 		const token = await user.genAuthToken();
-		res.status(201).send({ user, token });
+		res.cookie('auth_token', token);
+		res.status(200).send({ user, token });
 	} catch (err) {
 		res.status(400).send();
 	}
@@ -25,6 +26,7 @@ router.post('/login', async (req, res) => {
 			req.body.password
 		);
 		const token = await user.genAuthToken();
+		res.cookie('auth_token', token);
 		res.status(200).send({ user, token });
 	} catch (err) {
 		res.status(400).send(err);

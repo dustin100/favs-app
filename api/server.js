@@ -1,11 +1,17 @@
 const express = require('express');
 const connectDB = require('../config/db');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 connectDB();
 
 // Init Middleware alternative to bodyParser.json()
 app.use(express.json({ extended: false }));
+
+// added to setup cookies
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.get('/', (req, res) => res.send('API Running'));
 
