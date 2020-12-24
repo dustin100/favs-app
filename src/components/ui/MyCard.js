@@ -45,7 +45,15 @@ const useStyles = makeStyles((theme) => ({
 
 const ITEM_HEIGHT = 48;
 
-const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
+const MyCard = ({
+	name,
+	note,
+	createdAt,
+	deleteItem,
+	catId,
+	itemId,
+	rating,
+}) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -64,7 +72,6 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 		setAnchorEl(null);
 	};
 
-
 	// For edit button
 	const handleEditClose = () => {
 		setEditAnchorEl(null);
@@ -78,13 +85,11 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 	const openEdit = Boolean(anchorEditEl);
 	const edit = open ? 'simple-popover' : undefined;
 
-	
 	// For Delete Button
 	const handleDelete = () => {
 		setAnchorEl(null);
 		deleteItem(catId, itemId);
 	};
-	
 
 	return (
 		<Card variant='outlined' className={classes.root}>
@@ -141,7 +146,7 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 					</Fragment>
 				}
 				title={name}
-				subheader={`Created on ${format(new Date(date), 'MMM-do-yyyy')}`}
+				// subheader={`Created on ${format(new Date(createdAt), 'MMM-do-yyyy')}`}
 			/>
 			<CardMedia className={classes.media} image={defaultImg} title='image' />
 

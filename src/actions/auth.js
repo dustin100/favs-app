@@ -9,7 +9,7 @@ import {
 	LOGIN_FAIL,
 	LOGIN_SUCCESS,
 	LOGOUT,
-	CLEAR_PROFILE,
+	CLEAR_CATEGORY,
 } from './types';
 
 // Load User
@@ -85,8 +85,8 @@ export const login = (email, password) => async (dispatch) => {
 // Logout / Clear Profile
 export const logout = () => async (dispatch) => {
 	try {
-		const res = await axios.post('/user/logout');
-		dispatch({ type: CLEAR_PROFILE });
+		await axios.post('/user/logout');
+		dispatch({ type: CLEAR_CATEGORY });
 		dispatch({ type: LOGOUT });
 	} catch (err) {
 		const errors = err.response.data.errors;

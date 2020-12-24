@@ -35,7 +35,8 @@ export const addItem = (formData, rating, history, catId) => async (
 
 export const getItem = (id) => async (dispatch) => {
 	try {
-		const res = await axios.post(`/item/${id}`);
+		const res = await axios.get(`/item/${id}`);
+		console.log(res.data);
 		dispatch({
 			type: GET_ITEM,
 			payload: res.data,
@@ -77,7 +78,7 @@ export const editItem = (formData, rating, catId, itemId) => async (
 				'Content-Type': 'application/json',
 			},
 		};
-		const res = await axios.put(`/item/${catId}/${itemId}`, formData, config);
+		const res = await axios.patch(`/item/${catId}/${itemId}`, formData, config);
 		dispatch({
 			type: GET_CATEGORY,
 			payload: res.data,

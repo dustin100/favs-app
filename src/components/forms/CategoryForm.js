@@ -39,8 +39,9 @@ const CategoryForm = ({ createCategory, history }) => {
 
 	const [formData, setFormData] = useState({
 		catName: '',
+		catType: '',
 	});
-	const { catName } = formData;
+	const { catName, catType } = formData;
 
 	const onChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -67,6 +68,18 @@ const CategoryForm = ({ createCategory, history }) => {
 						margin='normal'
 						name='catName'
 						autoFocus
+					/>
+					<TextField
+						required
+						fullWidth
+						color='secondary'
+						placeholder='Category Type'
+						type='type'
+						label='Type'
+						onChange={(e) => onChange(e)}
+						defaultValue={catType}
+						margin='normal'
+						name='catType'
 					/>
 					<Grid container justify='space-between'>
 						<Button

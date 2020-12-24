@@ -61,7 +61,7 @@ const Navbar = ({ logout, auth: { loading, isAuthenticated } }) => {
 			<Tab
 				className={classes.tab}
 				component={Link}
-				to='/dashboard'
+				to='/login'
 				onClick={logout}
 				label='Logout'></Tab>
 		</Tabs>
@@ -90,11 +90,7 @@ const Navbar = ({ logout, auth: { loading, isAuthenticated } }) => {
 			<AppBar>
 				<Toolbar>
 					<Typography variant='h6' className={classes.title}>
-						<Link
-							color='primary'
-							className={classes.titleA}
-							underlineNone
-							to='/'>
+						<Link color='primary' className={classes.titleA} to='/'>
 							Favs App
 						</Link>
 					</Typography>

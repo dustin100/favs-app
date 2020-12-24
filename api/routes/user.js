@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
 		await user.save();
 		const token = await user.genAuthToken();
 		res.cookie('auth_token', token);
-		res.status(200).send({ user, token });
+		res.status(201).send({ user, token });
 	} catch (err) {
 		res.status(400).send();
 	}

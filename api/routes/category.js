@@ -66,13 +66,18 @@ router.post('/', auth, async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
 	const _id = req.params.id;
 	try {
-		const category = await Category.findOneAndDelete({ _id, owner: req.user._id });
+		const category = await Category.findOneAndDelete({
+			_id,
+			owner: req.user._id,
+		});
 
 		if (!category) {
 			return res.status(404).send();
 		}
-
-		res.send(category);
+		const fullCategory = await req.user
+			.populate('usersCategory')
+			.execPopulate();
+		res.send(fullCategory.usersCategory);
 	} catch (err) {
 		res.status(500).send();
 	}
@@ -102,7 +107,12 @@ router.patch('/:id', auth, async (req, res) => {
 
 		updates.forEach((update) => (category[update] = req.body[update]));
 		await category.save();
-		res.send(category);
+
+		const fullCategory = await req.user
+			.populate('usersCategory')
+			.execPopulate();
+		res.send(fullCategory.usersCategory);
+		
 	} catch (err) {
 		res.status(400).send(err);
 	}

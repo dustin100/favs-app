@@ -4,19 +4,37 @@ import {
 	GET_CATEGORY,
 	CATEGORY_ERROR,
 	PROFILE_ERROR,
-	UPDATE_PROFILE,
+	UPDATE_CATEGORY,
 } from './types';
+
+// Get all categories by user
+export const getCategoryList = () => async (dispatch) => {
+	try {
+		const res = await axios.get(`/category`);
+		dispatch({
+			type: GET_CATEGORY,
+			payload: res.data,
+		});
+	} catch (err) {
+		dispatch({
+			type: CATEGORY_ERROR,
+			payload: err,
+		});
+	}
+};
 
 // Get current category
 export const getCategory = (id, history) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/category/${id}`);
+		console.log(res.data);
 		dispatch({
 			type: GET_CATEGORY,
 			payload: res.data,
 		});
 		history.push('/category');
 	} catch (err) {
+		console.log(err)
 		dispatch({
 			type: CATEGORY_ERROR,
 			payload: err,
@@ -35,7 +53,7 @@ export const createCategory = (formData, history) => async (dispatch) => {
 
 		const res = await axios.post('/category', formData, config);
 		dispatch({
-			type: UPDATE_PROFILE,
+			type: UPDATE_CATEGORY,
 			payload: res.data,
 		});
 
@@ -58,7 +76,7 @@ export const deleteCategory = (id) => async (dispatch) => {
 		const res = await axios.delete(`/category/${id}`);
 
 		dispatch({
-			type: UPDATE_PROFILE,
+			type: UPDATE_CATEGORY,
 			payload: res.data,
 		});
 		dispatch(setAlert('Category Deleted', 'error'));
@@ -70,7 +88,7 @@ export const deleteCategory = (id) => async (dispatch) => {
 	}
 };
 
-// Edit Cat this works in insomnia but waiting to build it out
+// Edit Category
 export const editCategory = (formData, id) => async (dispatch) => {
 	try {
 		const config = {
@@ -78,9 +96,9 @@ export const editCategory = (formData, id) => async (dispatch) => {
 				'Content-Type': 'application/json',
 			},
 		};
-		const res = await axios.put(`/category/${id}`, formData, config);
-		 dispatch({
-			type: UPDATE_PROFILE,
+		const res = await axios.patch(`/category/${id}`, formData, config);
+		dispatch({
+			type: UPDATE_CATEGORY,
 			payload: res.data,
 		});
 

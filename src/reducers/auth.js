@@ -30,7 +30,6 @@ export default (state = initialState, action) => {
 		case LOGIN_SUCCESS:
 			return {
 				...state,
-				user: payload,
 				loading: false,
 			};
 		case REGISTER_FAIL:
@@ -41,6 +40,7 @@ export default (state = initialState, action) => {
 				...state,
 				isAuthenticated: false,
 				loading: false,
+				user: null,
 			};
 
 		default:
