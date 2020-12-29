@@ -66,7 +66,7 @@ router.post('/', auth, async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
 	const _id = req.params.id;
 	try {
-		const category = await Category.findOneAndDelete({
+		const category = await Category.deleteOne({
 			_id,
 			owner: req.user._id,
 		});
