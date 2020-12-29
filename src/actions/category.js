@@ -34,7 +34,7 @@ export const getCategory = (id, history) => async (dispatch) => {
 		});
 		history.push('/category');
 	} catch (err) {
-		console.log(err)
+		console.log(err);
 		dispatch({
 			type: CATEGORY_ERROR,
 			payload: err,
@@ -58,6 +58,7 @@ export const createCategory = (formData, history) => async (dispatch) => {
 		});
 
 		history.push('/dashboard');
+		
 	} catch (err) {
 		const errors = err.response.data.errors;
 		if (errors) {
@@ -73,7 +74,8 @@ export const createCategory = (formData, history) => async (dispatch) => {
 // Delete Category
 export const deleteCategory = (id) => async (dispatch) => {
 	try {
-		const res = await axios.delete(`/category/${id}`);
+		 await axios.delete(`/category/${id}`);
+		 const res = await axios.get('/category')
 
 		dispatch({
 			type: UPDATE_CATEGORY,
@@ -96,7 +98,8 @@ export const editCategory = (formData, id) => async (dispatch) => {
 				'Content-Type': 'application/json',
 			},
 		};
-		const res = await axios.patch(`/category/${id}`, formData, config);
+		await axios.patch(`/category/${id}`, formData, config);
+		const res = await axios.get('/category');
 		dispatch({
 			type: UPDATE_CATEGORY,
 			payload: res.data,

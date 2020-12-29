@@ -13,7 +13,7 @@ const Column = ({ cards }) => {
 						rating={card.rating}
 						note={card.note}
 						date={card.createdAt}
-						catId={card.catId}
+						catId={card.belongsToCat}
 						itemId={card._id}
 					/>
 				</Grid>

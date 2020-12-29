@@ -74,16 +74,13 @@ router.delete('/:id', auth, async (req, res) => {
 		if (!category) {
 			return res.status(404).send();
 		}
-		const fullCategory = await req.user
-			.populate('usersCategory')
-			.execPopulate();
-		res.send(fullCategory.usersCategory);
+		res.json(category);
 	} catch (err) {
 		res.status(500).send();
 	}
 });
 
-// @route PUT /category/:id
+// @route PATCH /category/:id
 // @desc Update Category
 // @access Private
 router.patch('/:id', auth, async (req, res) => {
@@ -108,11 +105,7 @@ router.patch('/:id', auth, async (req, res) => {
 		updates.forEach((update) => (category[update] = req.body[update]));
 		await category.save();
 
-		const fullCategory = await req.user
-			.populate('usersCategory')
-			.execPopulate();
-		res.send(fullCategory.usersCategory);
-		
+		res.json(category);
 	} catch (err) {
 		res.status(400).send(err);
 	}

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { ITEM_ERROR, GET_ITEM, GET_CATEGORY, CATEGORY_ERROR } from './types';
+import { ITEM_ERROR, GET_ITEM, UPDATE_ITEM } from './types';
 
 // Add item to category
 export const addItem = (formData, rating, history, catId) => async (
@@ -13,13 +13,15 @@ export const addItem = (formData, rating, history, catId) => async (
 				'Content-Type': 'application/json',
 			},
 		};
-		const res = await axios.post(`/item/${catId}`, formData, config);
+		await axios.post(`/item/${catId}`, formData, config);
+		const res = await axios.get(`/item/${catId}`);
 		dispatch({
-			type: GET_ITEM,
+			type: UPDATE_ITEM,
 			payload: res.data,
 		});
 
 		history.push('/category');
+		dispatch(setAlert('Item Added', 'success'));
 	} catch (err) {
 		const errors = err.response.data.errors;
 
@@ -50,25 +52,25 @@ export const getItem = (id) => async (dispatch) => {
 };
 
 // Delete item
-export const deleteItem = (catId, itemId) => async (dispatch) => {
+export const deleteItem = (itemId, catId) => async (dispatch) => {
 	try {
-		const res = await axios.delete(`/item/${catId}/${itemId}`);
-
+		await axios.delete(`/item/${itemId}`);
+		const res = await axios.get(`/item/${catId}`);
 		dispatch({
-			type: GET_CATEGORY,
+			type: UPDATE_ITEM,
 			payload: res.data,
 		});
 		dispatch(setAlert('Item Deleted', 'error'));
 	} catch (err) {
 		dispatch({
-			type: CATEGORY_ERROR,
-			payload: { msg: err.response.status.text, status: err.response.status },
+			type: ITEM_ERROR,
+			payload: { err },
 		});
 	}
 };
 
 // Edit item to category
-export const editItem = (formData, rating, catId, itemId) => async (
+export const editItem = (formData, rating, itemId, catId) => async (
 	dispatch
 ) => {
 	try {
@@ -78,20 +80,19 @@ export const editItem = (formData, rating, catId, itemId) => async (
 				'Content-Type': 'application/json',
 			},
 		};
-		const res = await axios.patch(`/item/${catId}/${itemId}`, formData, config);
+
+		await axios.patch(`/item/${itemId}`, formData, config);
+		const res = await axios.get(`/item/${catId}`);
 		dispatch({
-			type: GET_CATEGORY,
+			type: UPDATE_ITEM,
 			payload: res.data,
 		});
+		dispatch(setAlert('Item Updated', 'success'));
 	} catch (err) {
-		const errors = err.response.data.errors;
-
-		if (errors) {
-			errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
-		}
+		console.log(err);
 		dispatch({
 			type: ITEM_ERROR,
-			payload: { msg: err.response.status.text, status: err.response.status },
+			payload: { err },
 		});
 	}
 };

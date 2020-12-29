@@ -8,14 +8,16 @@ const Category = require('../models/Category');
 // @desc add items to categories
 // @access Private
 router.post('/:id', auth, async (req, res) => {
+	const id = req.params.id
 	const item = new Item({
 		...req.body,
-		belongsToCat: req.params.id,
+		belongsToCat: id,
 	});
 
 	try {
 		await item.save();
-		res.send(item);
+		const items = await Item.find({ belongsToCat: id });
+		res.send(items);
 	} catch (err) {
 		console.error(err.message);
 		res.status(500).send('Server Error');
@@ -57,6 +59,7 @@ router.patch('/:id', auth, async (req, res) => {
 	const isValid = updates.every((update) => allowedUpdates.includes(update));
 
 	if (!isValid) {
+		
 		return res.status(400).send({ error: 'Invalid updates' });
 	}
 
@@ -68,7 +71,7 @@ router.patch('/:id', auth, async (req, res) => {
 		if (!item) {
 			return res.status(404).send();
 		}
-
+		console.log(item)
 		updates.forEach((update) => (item[update] = req.body[update]));
 		await item.save();
 		res.send(item);
