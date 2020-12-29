@@ -13,14 +13,16 @@ import {
 	Menu,
 	MenuItem,
 	Popover,
+	Box,
 } from '@material-ui/core';
+import Rating from '@material-ui/lab/Rating';
 import clsx from 'clsx';
 import defaultImg from '../../assets/defaultImg.jpg';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { deleteItem } from '../../actions/item';
-import { format } from 'date-fns';
+import { format, toDate } from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -64,7 +66,6 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 		setAnchorEl(null);
 	};
 
-
 	// For edit button
 	const handleEditClose = () => {
 		setEditAnchorEl(null);
@@ -78,13 +79,12 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 	const openEdit = Boolean(anchorEditEl);
 	const edit = open ? 'simple-popover' : undefined;
 
-	
 	// For Delete Button
 	const handleDelete = () => {
+		
 		setAnchorEl(null);
-		deleteItem(catId, itemId);
+		deleteItem(itemId, catId);
 	};
-	
 
 	return (
 		<Card variant='outlined' className={classes.root}>
@@ -127,11 +127,11 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 								}}>
 								<EditItemForm
 									handleClose={handleEditClose}
-									catId={catId}
 									itemId={itemId}
 									currentName={name}
 									currentRating={rating}
 									currentNote={note}
+									catId={catId}
 								/>
 							</Popover>
 							<MenuItem key='Delete' onClick={handleDelete}>
@@ -146,7 +146,20 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 			<CardMedia className={classes.media} image={defaultImg} title='image' />
 
 			<CardActions disableSpacing>
-				<Typography>Notes</Typography>
+				<Box
+					component='fieldset'
+					mb={3}
+					borderColor='transparent'
+					color='secondary'>
+					<Rating
+						name='item-rating'
+						readOnly
+						color='secondary'
+						value={rating}
+					/>
+					<Typography>Notes</Typography>
+				</Box>
+
 				<IconButton
 					className={clsx(classes.expand, {
 						[classes.expandOpen]: expanded,

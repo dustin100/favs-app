@@ -1,9 +1,14 @@
-import { GET_CATEGORY, CATEGORY_ERROR } from '../actions/types';
+import {
+	GET_CATEGORY,
+	CATEGORY_ERROR,
+	UPDATE_CATEGORY,
+	CLEAR_CATEGORY,
+} from '../actions/types';
 
 const initialState = {
-	catInfo: null,
+	catInfo: [],
 	loading: true,
-	errors: {},
+	errors: null,
 };
 
 export default (state = initialState, action) => {
@@ -11,11 +16,19 @@ export default (state = initialState, action) => {
 
 	switch (type) {
 		case GET_CATEGORY:
+		case UPDATE_CATEGORY:
 			return {
 				...state,
 				catInfo: payload,
 				loading: false,
 			};
+		case CLEAR_CATEGORY:
+			return {
+				...state,
+				catInfo: [],
+				loading: false,
+			};
+
 		case CATEGORY_ERROR:
 			return {
 				...state,

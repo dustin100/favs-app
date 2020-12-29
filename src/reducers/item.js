@@ -1,7 +1,12 @@
-import { GET_ITEM, ITEM_ERROR } from '../actions/types';
+import {
+	GET_ITEM,
+	ITEM_ERROR,
+	CLEAR_ITEM,
+	UPDATE_ITEM,
+} from '../actions/types';
 
 const initialState = {
-	itemInfo: null,
+	itemInfo: [],
 	loading: true,
 	errors: {},
 };
@@ -11,6 +16,7 @@ export default (state = initialState, action) => {
 
 	switch (type) {
 		case GET_ITEM:
+		case UPDATE_ITEM:
 			return {
 				...state,
 				itemInfo: payload,
@@ -20,6 +26,12 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				errors: payload,
+				loading: false,
+			};
+		case CLEAR_ITEM:
+			return {
+				...state,
+				catInfo: [],
 				loading: false,
 			};
 

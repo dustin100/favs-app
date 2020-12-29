@@ -1,29 +1,28 @@
 const mongoose = require('mongoose');
 
-const ItemSchema = new mongoose.Schema({
-	catId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'category',
-	},
-	name: {
-		type: String,
-		required: true,
-	},
-	rating: {
-		type: Number,
-		required: true,
-		min: 1,
-		max: 3,
-	},
+const ItemSchema = new mongoose.Schema(
+	{
+		belongsToCat: {
+			type: mongoose.Schema.Types.ObjectId,
+			required: true,
+			ref: 'Category',
+		},
+		name: {
+			type: String,
+			required: true,
+		},
+		rating: {
+			type: Number,
+			required: true,
+			min: 1,
+			max: 5,
+		},
 
-	note: {
-		type: String,
+		note: {
+			type: String,
+		},
 	},
-
-	date: {
-		type: Date,
-		default: Date.now,
-	},
-});
+	{ timestamps: true }
+);
 
 module.exports = Profile = mongoose.model('item', ItemSchema);

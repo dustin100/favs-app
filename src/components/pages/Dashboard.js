@@ -2,13 +2,11 @@ import React, { useEffect, Fragment } from 'react';
 import Spinner from '../ui/Spinner';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ProfileForm from '../forms/ProfileForm';
 import { Link } from 'react-router-dom';
-import { getCurrentProfile } from '../../actions/profile';
+import { getCategoryList, deleteCategory } from '../../actions/category';
 import CategoryList from '../CategoryList';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles, Fab } from '@material-ui/core';
-
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -26,20 +24,16 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Dashboard = ({
-	getCurrentProfile,
-	auth: { isAuthenticated },
-	profile: { profile, loading },
-}) => {
+const Dashboard = ({ getCategoryList, categories = [], auth }) => {
 	const classes = useStyles();
 
 	useEffect(() => {
-		getCurrentProfile();
-	}, [getCurrentProfile, isAuthenticated]);
+		getCategoryList();
+	}, [getCategoryList, auth.isAuthenticated]);
 
-	if (loading) {
+	if (auth.loading) {
 		return <Spinner />;
-	} else if (profile !== null) {
+	} else {
 		return (
 			<Fragment>
 				<div className={classes.addBox}>
@@ -54,27 +48,25 @@ const Dashboard = ({
 						Category
 					</Fab>
 				</div>
-				<CategoryList profile={profile} />
-			</Fragment>
-		);
-	} else {
-		return (
-			<Fragment>
-				<ProfileForm />
+				{categories.catInfo.length ? (
+					<CategoryList catInfo={categories.catInfo} />
+				) : (
+					<p>Get started by adding some categories</p>
+				)}
 			</Fragment>
 		);
 	}
 };
 
 Dashboard.propTypes = {
-	getCurrentProfile: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
-	profile: PropTypes.object.isRequired,
+	categories: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-	profile: state.profile,
+	categories: state.category,
 	auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, { getCategoryList, deleteCategory })(
+	Dashboard
+);

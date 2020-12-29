@@ -1,19 +1,19 @@
-const mongoose = require('mongoose');
-const ProfileSchema = new mongoose.Schema({
-	user: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'user',
-	},
-	categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'category' }],
+// const mongoose = require('mongoose');
+// const ProfileSchema = new mongoose.Schema({
+// 	user: {
+// 		type: mongoose.Schema.Types.ObjectId,
+// 		ref: 'user',
+// 	},
+// 	categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'category' }],
 
-	name: {
-		type: String,
-	},
+// 	name: {
+// 		type: String,
+// 	},
 
-	theme: {
-		type: String,
-		default: 'dark',
-	},
-});
+// 	theme: {
+// 		type: String,
+// 		default: 'dark',
+// 	},
+// });
 
-module.exports = Profile = mongoose.model('profile', ProfileSchema);
+// module.exports = Profile = mongoose.model('profile', ProfileSchema);

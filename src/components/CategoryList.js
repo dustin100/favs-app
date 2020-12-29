@@ -28,9 +28,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
+const CategoryList = ({ catInfo, deleteCategory, getCategory, history }) => {
 	const classes = useStyles();
-
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [currentName, setCurrentName] = useState(null);
 	const [currentId, setCurrentId] = useState(null);
@@ -48,7 +47,7 @@ const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 	const open = Boolean(anchorEl);
 	const edit = open ? 'simple-popover' : undefined;
 
-	const categoryList = profile.categories.map(
+	const categoryList = catInfo.map(
 		({ catName, catList = [], _id }) => {
 			return (
 				<Grid key={_id} item xs={4}>
@@ -125,7 +124,6 @@ const CategoryList = ({ profile, deleteCategory, getCategory, history }) => {
 
 CategoryList.propTypes = {
 	deleteCategory: PropTypes.func.isRequired,
-	profile: PropTypes.object.isRequired,
 	getCategory: PropTypes.func.isRequired,
 };
 

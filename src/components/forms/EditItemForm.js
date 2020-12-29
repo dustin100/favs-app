@@ -44,16 +44,15 @@ const EditItemForm = ({
 	currentNote,
 	currentRating,
 	currentName,
-	
 }) => {
 	const classes = useStyles();
 	const [rating, setRating] = useState(currentRating);
 
 	const [formData, setFormData] = useState({
 		name: currentName,
-		notes: currentNote,
+		note: currentNote,
 	});
-	const { name, notes } = formData;
+	const { name, note } = formData;
 
 	const onChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -61,7 +60,7 @@ const EditItemForm = ({
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		editItem(formData, rating, catId, itemId);
+		editItem(formData, rating, itemId, catId);
 		handleClose();
 	};
 
@@ -75,7 +74,7 @@ const EditItemForm = ({
 						color='secondary'
 						defaultValue={0}
 						size='large'
-						max={3}
+						max={5}
 						value={rating}
 						onChange={(event, newValue) => {
 							setRating(newValue);
@@ -106,7 +105,7 @@ const EditItemForm = ({
 						type='note'
 						label='Notes'
 						onChange={(e) => onChange(e)}
-						defaultValue={notes}
+						defaultValue={note}
 						margin='normal'
 						name='note'
 						variant='filled'
@@ -117,7 +116,7 @@ const EditItemForm = ({
 						type='submit'
 						variant='outlined'
 						color='secondary'>
-						Add
+						Update
 					</Button>
 				</form>
 			</div>
@@ -128,6 +127,5 @@ const EditItemForm = ({
 EditItemForm.propTypes = {
 	editItem: PropTypes.func.isRequired,
 };
-
 
 export default connect(null, { editItem })(withRouter(EditItemForm));

@@ -74,7 +74,7 @@ const ItemForm = ({ addItem, history, catState: { catInfo } }) => {
 						color='secondary'
 						defaultValue={0}
 						size='large'
-						max={3}
+						max={5}
 						value={rating}
 						onChange={(event, newValue) => {
 							setRating(newValue);

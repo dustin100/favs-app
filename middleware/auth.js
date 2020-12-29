@@ -1,23 +1,25 @@
 const jwt = require('jsonwebtoken');
-const config = require('config');
+const User = require('../api/models/User');
 
-module.exports = function (req, res, next) {
-	// Get the token from the header
-
-	const token = req.header('x-auth-token');
-
-	// Check if there is no token
-	if (!token) {
-		return res.status(401).json({ msg: 'No token, authorization required' });
-	}
-
-	// Verify the token
+const auth = async (req, res, next) => {
 	try {
-		const decoded = jwt.verify(token, config.get('jwtSecret'));
+		const token = req.cookies['auth_token'];
+		const decoded = jwt.verify(token, 'ThisIsTesting!');
+		const user = await User.findOne({
+			_id: decoded._id,
+			'tokens.token': token,
+		});
 
-		req.user = decoded.user;
+		if (!user) {
+			throw new Error();
+		}
+
+		req.token = token;
+		req.user = user;
 		next();
-	} catch (err) {
-		res.status(401).json({ msg: 'Token is not valid' });
+	} catch (e) {
+		res.status(401).send({ error: 'Please authenticate.' });
 	}
 };
+
+module.exports = auth;

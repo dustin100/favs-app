@@ -9,17 +9,13 @@ import {
 	LOGIN_FAIL,
 	LOGIN_SUCCESS,
 	LOGOUT,
-	CLEAR_PROFILE,
+	CLEAR_CATEGORY,
 } from './types';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-	if (localStorage.token) {
-		setAuthToken(localStorage.token);
-	}
-
 	try {
-		const res = await axios.get('/auth');
+		const res = await axios.get('/user/me');
 
 		dispatch({
 			type: USER_LOADED,
@@ -43,18 +39,14 @@ export const register = ({ email, password }) => async (dispatch) => {
 	const body = JSON.stringify({ email, password });
 
 	try {
-		const res = await axios.post('/users', body, config);
+		const res = await axios.post('/user', body, config);
 		dispatch({
 			type: REGISTER_SUCCESS,
 			payload: res.data,
 		});
 		dispatch(loadUser());
 	} catch (err) {
-		const errors = err.response.data.errors;
-
-		if (errors) {
-			errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
-		}
+		console.log(err);
 		dispatch({
 			type: REGISTER_FAIL,
 		});
@@ -72,7 +64,7 @@ export const login = (email, password) => async (dispatch) => {
 	const body = JSON.stringify({ email, password });
 
 	try {
-		const res = await axios.post('/auth', body, config);
+		const res = await axios.post('/user/login', body, config);
 		dispatch({
 			type: LOGIN_SUCCESS,
 			payload: res.data,
@@ -91,7 +83,16 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 // Logout / Clear Profile
-export const logout = () => (dispatch) => {
-	dispatch({ type: CLEAR_PROFILE });
-	dispatch({ type: LOGOUT });
+export const logout = () => async (dispatch) => {
+	try {
+		await axios.post('/user/logout');
+		dispatch({ type: CLEAR_CATEGORY });
+		dispatch({ type: LOGOUT });
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		if (errors) {
+			errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+		}
+	}
 };
