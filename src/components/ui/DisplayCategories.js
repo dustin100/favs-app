@@ -23,7 +23,7 @@ const DisplayCategories = ({ cat, items, getItem }) => {
 	useEffect(() => {
 		getItem(cat.catInfo._id);
 	}, []);
-	console.log(items.itemInfo, 'item info');
+	
 	if (items.loading) {
 		return <Spinner />;
 	} else {
@@ -54,12 +54,7 @@ const DisplayCategories = ({ cat, items, getItem }) => {
 					</Tooltip>
 				</Grid>
 				<CategoryTitle category={cat.catInfo.catName} />
-				<Grid
-					container
-					className={classes.root}
-					justify='space-center'
-					direction='row'
-					spacing={2}>
+				<Grid container className={classes.root} direction='row' spacing={2}>
 					<Column cards={items.itemInfo} />
 				</Grid>
 			</Fragment>

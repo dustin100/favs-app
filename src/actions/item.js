@@ -38,7 +38,6 @@ export const addItem = (formData, rating, history, catId) => async (
 export const getItem = (id) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/item/${id}`);
-		console.log(res.data);
 		dispatch({
 			type: GET_ITEM,
 			payload: res.data,

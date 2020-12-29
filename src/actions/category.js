@@ -27,7 +27,6 @@ export const getCategoryList = () => async (dispatch) => {
 export const getCategory = (id, history) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/category/${id}`);
-		console.log(res.data);
 		dispatch({
 			type: GET_CATEGORY,
 			payload: res.data,
