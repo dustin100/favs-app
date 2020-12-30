@@ -38,6 +38,12 @@ router.get('/', auth, async (req, res) => {
 		case 'tv':
 			match.catType = 'tv';
 			break;
+		case 'music':
+			match.catType = 'music';
+			break;
+		case 'places':
+			match.catType = 'places';
+			break;
 		default:
 			match;
 	}
