@@ -5,19 +5,61 @@ const { check, validationResult } = require('express-validator');
 const Profile = require('../models/Profile');
 const User = require('../models/User');
 const Category = require('../models/Category');
+const { parse } = require('date-fns');
 
 // @route GET /category
+// @route GET /category?catType=type
+// @route GET /category?limit=10&skip=10
+// @route GET /category?sortBy=createdAt:desc
 // @desc Get  categories
 // @access Private
 router.get('/', auth, async (req, res) => {
-	// const sort = {};
+	const match = {};
 
-	// if (req.query.sortBy) {
-	// 	const parts = req.query.sortBy.split(':');
-	// 	sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
-	// }
+	switch (req.query.catType) {
+		case 'foods':
+			match.catType = 'foods';
+			break;
+		case 'restaurants':
+			match.catType = 'restaurants';
+			break;
+		case 'businesses':
+			match.catType = 'businesses';
+			break;
+		case 'drinks':
+			match.catType = 'drinks';
+			break;
+		case 'products':
+			match.catType = 'products';
+			break;
+		case 'movies':
+			match.catType = 'movies';
+			break;
+		case 'tv':
+			match.catType = 'tv';
+			break;
+		default:
+			match;
+	}
+
+	const sort = {};
+
+	if (req.query.sortBy) {
+		const parts = req.query.sortBy.split(':');
+		sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
+	}
 	try {
-		await req.user.populate('usersCategory').execPopulate();
+		await req.user
+			.populate({
+				path: 'usersCategory',
+				match,
+				options: {
+					limit: parseInt(req.query.limit),
+					skip: parseInt(req.query.skip),
+					sort,
+				},
+			})
+			.execPopulate();
 		res.send(req.user.usersCategory);
 	} catch (err) {
 		res.status(500);
