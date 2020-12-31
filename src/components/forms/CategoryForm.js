@@ -10,6 +10,13 @@ import {
 	Container,
 	makeStyles,
 	Grid,
+	FormControl,
+	Select,
+	MenuItem,
+	ListItemText,
+	InputLabel,
+	FormControlLabel,
+	Checkbox,
 } from '@material-ui/core';
 
 // Styles
@@ -36,12 +43,15 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoryForm = ({ createCategory, history }) => {
 	const classes = useStyles();
-
+	const [open, setOpen] = useState(false); //for dropdown
 	const [formData, setFormData] = useState({
 		catName: '',
 		catType: '',
+		isPublic: true,
 	});
-	const { catName, catType } = formData;
+
+	
+	const { catName, catType, isPublic } = formData;
 
 	const onChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,6 +61,27 @@ const CategoryForm = ({ createCategory, history }) => {
 		e.preventDefault();
 		createCategory(formData, history);
 	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
+	const catTypes = [
+		'foods',
+		'restaurants ',
+		'businesses',
+		'drinks  ',
+		'products ',
+		'movies',
+		'tv',
+		'music',
+		'places',
+		'other',
+	];
 
 	return (
 		<Container component='main' maxWidth='xs'>
@@ -69,17 +100,42 @@ const CategoryForm = ({ createCategory, history }) => {
 						name='catName'
 						autoFocus
 					/>
-					<TextField
-						required
-						fullWidth
-						color='secondary'
-						placeholder='Category Type'
-						type='type'
-						label='Type'
-						onChange={(e) => onChange(e)}
-						defaultValue={catType}
-						margin='normal'
-						name='catType'
+
+					<FormControl fullWidth>
+						<InputLabel id='category-type-select-label'>
+							Category Type
+						</InputLabel>
+						<Select
+							labelId='category-type-select-label'
+							id='category-type-controlled-open-select'
+							required
+							color='secondary'
+							onChange={(e) => onChange(e)}
+							name='catType'
+							open={open}
+							value={catType}
+							onClose={handleClose}
+							onOpen={handleOpen}>
+							{catTypes.map((cat) => (
+								<MenuItem key={cat} value={cat}>
+									<ListItemText primary={cat} />
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+					<FormControlLabel
+						control={
+							<Checkbox
+								checked={isPublic}
+								onChange={(e) => {
+									setFormData({ ...formData, isPublic: !isPublic });
+								}}
+								name='isPublic'
+								value={isPublic}
+								color='secondary'
+							/>
+						}
+						label='Make Public'
 					/>
 					<Grid container justify='space-between'>
 						<Button

@@ -44,8 +44,15 @@ router.get('/', auth, async (req, res) => {
 		case 'places':
 			match.catType = 'places';
 			break;
+		case 'other':
+			match.catType = 'other';
+			break;
 		default:
 			match;
+	}
+
+	if (req.query.isPublic) {
+		match.isPublic = req.query.isPublic === 'true';
 	}
 
 	const sort = {};
@@ -133,7 +140,7 @@ router.delete('/:id', auth, async (req, res) => {
 // @access Private
 router.patch('/:id', auth, async (req, res) => {
 	const updates = Object.keys(req.body);
-	const allowedUpdates = ['catName', 'catType, isPublic'];
+	const allowedUpdates = ['catName', 'catType', 'isPublic'];
 	const isValid = updates.every((update) => allowedUpdates.includes(update));
 
 	if (!isValid) {
