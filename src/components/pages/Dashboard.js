@@ -49,7 +49,11 @@ const Dashboard = ({ getCategoryList, categories = [], auth }) => {
 					</Fab>
 				</div>
 				{categories.catInfo.length ? (
-					<CategoryList catInfo={categories.catInfo} />
+					<CategoryList
+						catInfo={categories.catInfo}
+						offset={categories.offset}
+						totalPages={categories.totalPages}
+					/>
 				) : (
 					<p>Get started by adding some categories</p>
 				)}

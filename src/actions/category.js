@@ -5,14 +5,21 @@ import {
 	CATEGORY_ERROR,
 	PROFILE_ERROR,
 	UPDATE_CATEGORY,
+	GET_ALL_CATEGORY_DATA,
 } from './types';
 
 // Get all categories by user
-export const getCategoryList = () => async (dispatch) => {
+export const getCategoryList = (id, offset) => async (dispatch) => {
+	const params = {
+		limit: 3,
+		skip: offset,
+		sortBy: 'createdAt:desc',
+	};
 	try {
-		const res = await axios.get(`/category`);
+		const res = await axios.get(`/category`, { params });
+		console.log(res.data);
 		dispatch({
-			type: GET_CATEGORY,
+			type: GET_ALL_CATEGORY_DATA,
 			payload: res.data,
 		});
 	} catch (err) {
@@ -57,7 +64,6 @@ export const createCategory = (formData, history) => async (dispatch) => {
 		});
 
 		history.push('/dashboard');
-		
 	} catch (err) {
 		const errors = err.response.data.errors;
 		if (errors) {
@@ -71,14 +77,19 @@ export const createCategory = (formData, history) => async (dispatch) => {
 };
 
 // Delete Category
-export const deleteCategory = (id) => async (dispatch) => {
+export const deleteCategory = (id, offset) => async (dispatch) => {
+	const params = {
+		limit: 3,
+		skip: offset,
+		sortBy: 'createdAt:desc',
+	};
 	try {
-		 await axios.delete(`/category/${id}`);
-		 const res = await axios.get('/category')
+		await axios.delete(`/category/${id}`);
+		const res = await axios.get('/category', {params});
 
 		dispatch({
 			type: UPDATE_CATEGORY,
-			payload: res.data,
+			payload: res.data.data,
 		});
 		dispatch(setAlert('Category Deleted', 'error'));
 	} catch (err) {
@@ -90,7 +101,12 @@ export const deleteCategory = (id) => async (dispatch) => {
 };
 
 // Edit Category
-export const editCategory = (formData, id) => async (dispatch) => {
+export const editCategory = (formData, id, offset) => async (dispatch) => {
+	const params = {
+		limit: 3,
+		skip: offset,
+		sortBy: 'createdAt:desc',
+	};
 	try {
 		const config = {
 			headers: {
@@ -98,17 +114,18 @@ export const editCategory = (formData, id) => async (dispatch) => {
 			},
 		};
 		await axios.patch(`/category/${id}`, formData, config);
-		const res = await axios.get('/category');
+		const res = await axios.get('/category', { params });
+
 		dispatch({
 			type: UPDATE_CATEGORY,
-			payload: res.data,
+			payload: res.data.data,
 		});
 
 		dispatch(setAlert('Category Updated', 'success'));
 	} catch (err) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: { msg: err.response.status.text, status: err.response.status },
+			payload: err,
 		});
 	}
 };

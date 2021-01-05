@@ -47,7 +47,16 @@ const useStyles = makeStyles((theme) => ({
 
 const ITEM_HEIGHT = 48;
 
-const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
+const MyCard = ({
+	name,
+	note,
+	date,
+	deleteItem,
+	catId,
+	itemId,
+	rating,
+	offset,
+}) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -81,9 +90,8 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 
 	// For Delete Button
 	const handleDelete = () => {
-		
 		setAnchorEl(null);
-		deleteItem(itemId, catId);
+		deleteItem(itemId, catId, offset);
 	};
 
 	return (
@@ -132,6 +140,7 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 									currentRating={rating}
 									currentNote={note}
 									catId={catId}
+									offset={offset}
 								/>
 							</Popover>
 							<MenuItem key='Delete' onClick={handleDelete}>
@@ -179,4 +188,8 @@ const MyCard = ({ name, note, date, deleteItem, catId, itemId, rating }) => {
 	);
 };
 
-export default connect(null, { deleteItem })(MyCard);
+const mapStateToProps = (state) => ({
+	offset: state.item.offset,
+});
+
+export default connect(mapStateToProps, { deleteItem })(MyCard);

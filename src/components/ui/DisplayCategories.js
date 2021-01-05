@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import Column from './Column';
 import Spinner from './Spinner';
 import CategoryTitle from './CategoryTitle';
+import DisplayPagination from './pagination/DisplayPagination'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Grid, makeStyles, Fab, Tooltip } from '@material-ui/core';
@@ -21,9 +22,9 @@ const DisplayCategories = ({ cat, items, getItem }) => {
 	const classes = useStyles();
 
 	useEffect(() => {
-		getItem(cat.catInfo._id);
+		getItem(cat.catInfo._id, items.offset);
 	}, []);
-	
+
 	if (items.loading) {
 		return <Spinner />;
 	} else {
@@ -57,6 +58,12 @@ const DisplayCategories = ({ cat, items, getItem }) => {
 				<Grid container className={classes.root} direction='row' spacing={2}>
 					<Column cards={items.itemInfo} />
 				</Grid>
+				<DisplayPagination
+					offset={items.offset}
+					totalPages={items.totalPages}
+					updatePage={getItem}
+					catId={cat.catInfo._id}
+				/>
 			</Fragment>
 		);
 	}

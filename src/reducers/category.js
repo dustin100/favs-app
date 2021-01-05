@@ -3,12 +3,15 @@ import {
 	CATEGORY_ERROR,
 	UPDATE_CATEGORY,
 	CLEAR_CATEGORY,
+	GET_ALL_CATEGORY_DATA,
 } from '../actions/types';
 
 const initialState = {
 	catInfo: [],
 	loading: true,
 	errors: null,
+	offset: 0,
+	totalPages: null,
 };
 
 export default (state = initialState, action) => {
@@ -20,6 +23,14 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				catInfo: payload,
+				loading: false,
+			};
+		case GET_ALL_CATEGORY_DATA:
+			return {
+				...state,
+				catInfo: payload.data,
+				offset: payload.offset,
+				totalPages: payload.totalPages,
 				loading: false,
 			};
 		case CLEAR_CATEGORY:

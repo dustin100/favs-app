@@ -35,9 +35,14 @@ export const addItem = (formData, rating, history, catId) => async (
 	}
 };
 
-export const getItem = (id) => async (dispatch) => {
+export const getItem = (id, offset) => async (dispatch) => {
+	const params = {
+		limit: 3,
+		skip: offset,
+		sortBy: 'createdAt:desc',
+	};
 	try {
-		const res = await axios.get(`/item/${id}`);
+		const res = await axios.get(`/item/${id}`, { params });
 		dispatch({
 			type: GET_ITEM,
 			payload: res.data,
@@ -51,10 +56,15 @@ export const getItem = (id) => async (dispatch) => {
 };
 
 // Delete item
-export const deleteItem = (itemId, catId) => async (dispatch) => {
+export const deleteItem = (itemId, catId, offset) => async (dispatch) => {
+	const params = {
+		limit: 3,
+		skip: offset,
+		sortBy: 'createdAt:desc',
+	};
 	try {
 		await axios.delete(`/item/${itemId}`);
-		const res = await axios.get(`/item/${catId}`);
+		const res = await axios.get(`/item/${catId}`, {params});
 		dispatch({
 			type: UPDATE_ITEM,
 			payload: res.data,
@@ -69,9 +79,14 @@ export const deleteItem = (itemId, catId) => async (dispatch) => {
 };
 
 // Edit item to category
-export const editItem = (formData, rating, itemId, catId) => async (
+export const editItem = (formData, rating, itemId, catId, offset) => async (
 	dispatch
 ) => {
+	const params = {
+		limit: 3,
+		skip: offset,
+		sortBy: 'createdAt:desc',
+	};
 	try {
 		formData.rating = rating;
 		const config = {
@@ -81,7 +96,7 @@ export const editItem = (formData, rating, itemId, catId) => async (
 		};
 
 		await axios.patch(`/item/${itemId}`, formData, config);
-		const res = await axios.get(`/item/${catId}`);
+		const res = await axios.get(`/item/${catId}`, {params});
 		dispatch({
 			type: UPDATE_ITEM,
 			payload: res.data,

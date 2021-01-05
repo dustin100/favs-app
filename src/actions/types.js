@@ -17,6 +17,8 @@ export const GET_CATEGORY = 'GET_CATEGORY,';
 export const CATEGORY_ERROR = 'CATEGORY_ERROR,';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 export const CLEAR_CATEGORY = 'CLEAR_CATEGORY';
+export const GET_ALL_CATEGORY_DATA = 'GET_ALL_CATEGORY_DATA';
+
 
 export const GET_ITEM = 'GET_ITEM,';
 export const ITEM_ERROR = 'ITEM_ERROR,';

@@ -5,20 +5,81 @@ const { check, validationResult } = require('express-validator');
 const Profile = require('../models/Profile');
 const User = require('../models/User');
 const Category = require('../models/Category');
+const { parse } = require('date-fns');
 
 // @route GET /category
+// @route GET /category?catType=type
+// @route GET /category?limit=10&skip=10
+// @route GET /category?sortBy=createdAt:desc
 // @desc Get  categories
 // @access Private
 router.get('/', auth, async (req, res) => {
-	// const sort = {};
+	const match = {};
 
-	// if (req.query.sortBy) {
-	// 	const parts = req.query.sortBy.split(':');
-	// 	sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
-	// }
+	switch (req.query.catType) {
+		case 'foods':
+			match.catType = 'foods';
+			break;
+		case 'restaurants':
+			match.catType = 'restaurants';
+			break;
+		case 'businesses':
+			match.catType = 'businesses';
+			break;
+		case 'drinks':
+			match.catType = 'drinks';
+			break;
+		case 'products':
+			match.catType = 'products';
+			break;
+		case 'movies':
+			match.catType = 'movies';
+			break;
+		case 'tv':
+			match.catType = 'tv';
+			break;
+		case 'music':
+			match.catType = 'music';
+			break;
+		case 'places':
+			match.catType = 'places';
+			break;
+		case 'other':
+			match.catType = 'other';
+			break;
+		default:
+			match;
+	}
+
+	if (req.query.isPublic) {
+		match.isPublic = req.query.isPublic === 'true';
+	}
+
+	const sort = {};
+
+	if (req.query.sortBy) {
+		const parts = req.query.sortBy.split(':');
+		sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
+	}
+
+	const results = {};
 	try {
-		await req.user.populate('usersCategory').execPopulate();
-		res.send(req.user.usersCategory);
+		await req.user
+			.populate({
+				path: 'usersCategory',
+				match,
+				options: {
+					limit: parseInt(req.query.limit),
+					skip: parseInt(req.query.skip),
+					sort,
+				},
+			})
+			.execPopulate();
+		results.count = await Category.countDocuments({ owner: req.user._id });
+		results.data = await req.user.usersCategory;
+		results.offset = parseInt(req.query.skip) ;
+		results.totalPages = Math.ceil(results.count / parseInt(req.query.limit));
+		res.send(results);
 	} catch (err) {
 		res.status(500);
 	}
@@ -85,7 +146,7 @@ router.delete('/:id', auth, async (req, res) => {
 // @access Private
 router.patch('/:id', auth, async (req, res) => {
 	const updates = Object.keys(req.body);
-	const allowedUpdates = ['catName', 'catType, isPublic'];
+	const allowedUpdates = ['catName', 'catType', 'isPublic'];
 	const isValid = updates.every((update) => allowedUpdates.includes(update));
 
 	if (!isValid) {

@@ -34,7 +34,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoryForm = ({ editCategory, catId, currentName, handleClose }) => {
+const CategoryForm = ({
+	editCategory,
+	catId,
+	currentName,
+	handleClose,
+	offset,
+}) => {
 	const classes = useStyles();
 
 	const [formData, setFormData] = useState({
@@ -48,7 +54,7 @@ const CategoryForm = ({ editCategory, catId, currentName, handleClose }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		await editCategory(formData, catId);
+		await editCategory(formData, catId, offset);
 		handleClose();
 	};
 
@@ -88,4 +94,8 @@ CategoryForm.propTypes = {
 	editCategory: PropTypes.func.isRequired,
 };
 
-export default connect(null, { editCategory })(withRouter(CategoryForm));
+const mapStateToProps = (state) => ({
+	offset: state.category.offset,
+});
+
+export default connect(mapStateToProps, { editCategory })(withRouter(CategoryForm));
