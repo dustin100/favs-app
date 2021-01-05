@@ -9,7 +9,7 @@ import {
 } from './types';
 
 // Get all categories by user
-export const getCategoryList = (offset) => async (dispatch) => {
+export const getCategoryList = (id, offset) => async (dispatch) => {
 	const params = {
 		limit: 3,
 		skip: offset,

@@ -58,6 +58,8 @@ router.get('/:id', auth, async (req, res) => {
 		sortByParam[parts[0]] = parts[1] === 'desc' ? -1 : 1;
 	}
 
+	const results = {};
+
 	try {
 		const item = await Item.find({
 			belongsToCat: id,
@@ -67,7 +69,12 @@ router.get('/:id', auth, async (req, res) => {
 			.limit(parseInt(req.query.limit))
 			.skip(parseInt(req.query.skip));
 
-		res.send(item);
+			results.count = await Item.countDocuments({ belongsToCat: id });
+			results.data = await item
+			results.offset = parseInt(req.query.skip);
+			results.totalPages = Math.ceil(results.count / parseInt(req.query.limit));
+
+		res.send(results);
 	} catch (err) {
 		res.status(500);
 	}

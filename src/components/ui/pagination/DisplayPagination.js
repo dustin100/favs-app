@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 
 const useStyles = makeStyles((theme) => ({
@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(5),
 	},
 }));
-const DisplayPagination = ({ updatePage, totalPages }) => {
+const DisplayPagination = ({ updatePage, totalPages, catId }) => {
 	const classes = useStyles();
 	const [page, setPage] = useState(1);
 
@@ -15,7 +15,7 @@ const DisplayPagination = ({ updatePage, totalPages }) => {
 		setPage(value);
 		const skip = (value - 1) * 3;
 
-		updatePage(skip);
+		updatePage(catId,skip);
 	};
 
 	return (

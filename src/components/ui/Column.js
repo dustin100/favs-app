@@ -6,9 +6,8 @@ const Column = ({ cards }) => {
 	if (cards) {
 		return cards.map((card) => {
 			return (
-				<Grid item xs>
+				<Grid item xs key={card._id}>
 					<MyCard
-						key={card._id}
 						name={card.name}
 						rating={card.rating}
 						note={card.note}

@@ -9,6 +9,8 @@ const initialState = {
 	itemInfo: [],
 	loading: true,
 	errors: {},
+	offset: 0,
+	totalPages: null,
 };
 
 export default (state = initialState, action) => {
@@ -19,7 +21,15 @@ export default (state = initialState, action) => {
 		case UPDATE_ITEM:
 			return {
 				...state,
-				itemInfo: payload,
+				itemInfo: payload.data,
+				loading: false,
+				offset: payload.offset,
+				totalPages: payload.totalPages,
+			};
+		case UPDATE_ITEM:
+			return {
+				...state,
+				itemInfo: payload.data,
 				loading: false,
 			};
 		case ITEM_ERROR:

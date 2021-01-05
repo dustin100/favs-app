@@ -133,6 +133,7 @@ const CategoryList = ({
 				offset={offset}
 				totalPages={totalPages}
 				updatePage={getCategoryList}
+				catId={null}
 			/>
 		</Fragment>
 	);
