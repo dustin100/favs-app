@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import DisplayPagination from './ui/pagination/DisplayPagination';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
@@ -28,7 +29,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoryList = ({ catInfo, deleteCategory, getCategory, history }) => {
+const CategoryList = ({
+	catInfo,
+	offset,
+	totalPages,
+	deleteCategory,
+	getCategory,
+	history,
+}) => {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [currentName, setCurrentName] = useState(null);
@@ -47,77 +55,76 @@ const CategoryList = ({ catInfo, deleteCategory, getCategory, history }) => {
 	const open = Boolean(anchorEl);
 	const edit = open ? 'simple-popover' : undefined;
 
-	const categoryList = catInfo.map(
-		({ catName, catList = [], _id }) => {
-			return (
-				<Grid key={_id} item xs={4}>
-					<Card variant='outlined'>
-						<CardContent>
-							<Typography className={classes.title} variant='h4' component='h2'>
-								{catName}
-							</Typography>
-							<Typography variant='body2' component='p'>
-								You have {catList.length} items in this category
-							</Typography>
-						</CardContent>
-						<CardActions>
-							<Button
-								onClick={() => getCategory(_id, history)}
-								variant='outlined'
-								color='secondary'
-								size='small'
-								startIcon={<VisibilityIcon />}>
-								View
-							</Button>
+	const categoryList = catInfo.map(({ catName, catList = [], _id }) => {
+		return (
+			<Grid key={_id} item xs={4}>
+				<Card variant='outlined'>
+					<CardContent>
+						<Typography className={classes.title} variant='h4' component='h2'>
+							{catName}
+						</Typography>
+						<Typography variant='body2' component='p'>
+							You have {catList.length} items in this category
+						</Typography>
+					</CardContent>
+					<CardActions>
+						<Button
+							onClick={() => getCategory(_id, history)}
+							variant='outlined'
+							color='secondary'
+							size='small'
+							startIcon={<VisibilityIcon />}>
+							View
+						</Button>
 
-							<Button
-								color='secondary'
-								size='small'
-								variant='outlined'
-								aria-describedby={edit}
-								onClick={(e) => handleClick(e, catName, _id)}
-								startIcon={<EditIcon />}>
-								Edit
-							</Button>
-							<Popover
-								id={edit}
-								open={open}
-								anchorEl={anchorEl}
-								onClose={handleClose}
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'center',
-								}}
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'center',
-								}}>
-								<EditCategoryForm
-									currentName={currentName}
-									catId={currentId}
-									handleClose={handleClose}
-								/>
-							</Popover>
-							<Button
-								onClick={() => deleteCategory(_id)}
-								variant='outlined'
-								color='secondary'
-								size='small'
-								startIcon={<DeleteIcon />}>
-								Delete
-							</Button>
-						</CardActions>
-					</Card>
-				</Grid>
-			);
-		}
-	);
+						<Button
+							color='secondary'
+							size='small'
+							variant='outlined'
+							aria-describedby={edit}
+							onClick={(e) => handleClick(e, catName, _id)}
+							startIcon={<EditIcon />}>
+							Edit
+						</Button>
+						<Popover
+							id={edit}
+							open={open}
+							anchorEl={anchorEl}
+							onClose={handleClose}
+							anchorOrigin={{
+								vertical: 'bottom',
+								horizontal: 'center',
+							}}
+							transformOrigin={{
+								vertical: 'top',
+								horizontal: 'center',
+							}}>
+							<EditCategoryForm
+								currentName={currentName}
+								catId={currentId}
+								handleClose={handleClose}
+							/>
+						</Popover>
+						<Button
+							onClick={() => deleteCategory(_id, offset)}
+							variant='outlined'
+							color='secondary'
+							size='small'
+							startIcon={<DeleteIcon />}>
+							Delete
+						</Button>
+					</CardActions>
+				</Card>
+			</Grid>
+		);
+	});
 
 	return (
 		<Fragment>
 			<Grid container justify='flex-start' spacing={2} className={classes.root}>
 				{categoryList}
 			</Grid>
+			<DisplayPagination offset={offset} totalPages={totalPages} />
 		</Fragment>
 	);
 };

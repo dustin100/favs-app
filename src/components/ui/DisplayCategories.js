@@ -23,7 +23,7 @@ const DisplayCategories = ({ cat, items, getItem }) => {
 	useEffect(() => {
 		getItem(cat.catInfo._id);
 	}, []);
-	
+
 	if (items.loading) {
 		return <Spinner />;
 	} else {

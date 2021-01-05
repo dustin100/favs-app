@@ -61,6 +61,8 @@ router.get('/', auth, async (req, res) => {
 		const parts = req.query.sortBy.split(':');
 		sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
 	}
+
+	const results = {};
 	try {
 		await req.user
 			.populate({
@@ -73,7 +75,11 @@ router.get('/', auth, async (req, res) => {
 				},
 			})
 			.execPopulate();
-		res.send(req.user.usersCategory);
+		results.count = await Category.countDocuments({ owner: req.user._id });
+		results.data = await req.user.usersCategory;
+		results.offset = parseInt(req.query.skip) ;
+		results.totalPages = Math.ceil(results.count / parseInt(req.query.limit));
+		res.send(results);
 	} catch (err) {
 		res.status(500);
 	}
