@@ -6,7 +6,11 @@ import DisplayPagination from './ui/pagination/DisplayPagination';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
-import { deleteCategory, getCategory } from '../actions/category';
+import {
+	deleteCategory,
+	getCategory,
+	getCategoryList,
+} from '../actions/category';
 import EditCategoryForm from './forms/EditCategoryForm';
 import {
 	makeStyles,
@@ -35,6 +39,7 @@ const CategoryList = ({
 	totalPages,
 	deleteCategory,
 	getCategory,
+	getCategoryList,
 	history,
 }) => {
 	const classes = useStyles();
@@ -124,7 +129,11 @@ const CategoryList = ({
 			<Grid container justify='flex-start' spacing={2} className={classes.root}>
 				{categoryList}
 			</Grid>
-			<DisplayPagination offset={offset} totalPages={totalPages} />
+			<DisplayPagination
+				offset={offset}
+				totalPages={totalPages}
+				updatePage={getCategoryList}
+			/>
 		</Fragment>
 	);
 };
@@ -134,6 +143,6 @@ CategoryList.propTypes = {
 	getCategory: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteCategory, getCategory })(
+export default connect(null, { getCategoryList, deleteCategory, getCategory })(
 	withRouter(CategoryList)
 );
