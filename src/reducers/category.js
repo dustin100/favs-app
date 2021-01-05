@@ -31,6 +31,7 @@ export default (state = initialState, action) => {
 				catInfo: payload.data,
 				offset: payload.offset,
 				totalPages: payload.totalPages,
+				loading: false,
 			};
 		case CLEAR_CATEGORY:
 			return {
