@@ -13,11 +13,7 @@ import {
 
 // Get all categories by user
 export const getCategoryList = (params) => async (dispatch) => {
-	// const params = {
-	// 	limit: 3,
-	// 	skip: page.skip,
-	// 	sortBy: 'createdAt:desc',
-	// };
+
 	try {
 		const res = await axios.get(`/category`, { params });
 		console.log(res.data);
@@ -137,7 +133,7 @@ export const filterCategoryList = (params) => async (dispatch) => {
 	});
 };
 
-// Filter Category
+// Pagination
 export const updatePage = (page) => async (dispatch) => {
 	dispatch({
 		type: UPDATE_PAGE,

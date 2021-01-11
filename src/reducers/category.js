@@ -45,7 +45,6 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				catInfo: payload.data,
-				offset: payload.offset,
 				totalPages: payload.totalPages,
 				loading: false,
 			};
@@ -62,7 +61,7 @@ export default (state = initialState, action) => {
 		case UPDATE_PAGE:
 			return {
 				...state,
-				currentPage: payload.number,
+				currentPage: payload.currentPage,
 				offset: payload.skip,
 				loading: false,
 			};

@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
 const DisplayPagination = ({
 	updatePage,
 	totalPages,
-	catId,
 	currentPage,
 	filters,
 	getCategoryList,
@@ -19,15 +18,18 @@ const DisplayPagination = ({
 
 	const handleChange = (e, value) => {
 		const page = {
-			number: value,
+			currentPage: value,
 			skip: (value - 1) * 3,
 			limit: 3,
 		};
 		updatePage(page);
-
-		console.log({ ...filters, ...page });
 		getCategoryList({ ...filters, ...page });
 	};
+
+	// hides pagination controls
+	if (currentPage < 1) {
+		return;
+	}
 
 	return (
 		<div className={classes.root}>

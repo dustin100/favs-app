@@ -37,15 +37,15 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoryFilters = ({ catState, filterCategoryList, getCategoryList }) => {
 	const classes = useStyles();
-	const [dateFilter, setDateFilter] = useState('desc');
-	const [typeFilter, setTypeFilter] = useState('all');
-	const [publicFilter, setPublicFilter] = useState('all');
+	const [dateFilter, setDateFilter] = useState(catState.filters.sortBy);
+	const [typeFilter, setTypeFilter] = useState(catState.filters.catType);
+	const [publicFilter, setPublicFilter] = useState(catState.filters.isPublic);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
 		const params = {
 			limit: 3,
-			sortBy: `createdAt:${dateFilter}`,
+			sortBy: dateFilter,
 		};
 
 		if (publicFilter !== 'all') {
@@ -64,7 +64,7 @@ const CategoryFilters = ({ catState, filterCategoryList, getCategoryList }) => {
 		'foods',
 		'restaurants',
 		'businesses',
-		'drinks ',
+		'drinks',
 		'products',
 		'movies',
 		'tv',
@@ -99,10 +99,10 @@ const CategoryFilters = ({ catState, filterCategoryList, getCategoryList }) => {
 					color='secondary'
 					onChange={(e) => setDateFilter(e.target.value)}
 					value={dateFilter}>
-					<MenuItem name='desc' value='desc'>
+					<MenuItem name='createdAt:desc' value='createdAt:desc'>
 						newest to oldest
 					</MenuItem>
-					<MenuItem name='asc' value='asc'>
+					<MenuItem name='createdAt:asc' value='createdAt:asc'>
 						oldest to newest
 					</MenuItem>
 				</Select>
