@@ -39,7 +39,7 @@ const CategoryForm = ({
 	catId,
 	currentName,
 	handleClose,
-	offset,
+	filters,
 }) => {
 	const classes = useStyles();
 
@@ -54,7 +54,7 @@ const CategoryForm = ({
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		await editCategory(formData, catId, offset);
+		await editCategory(formData, catId, filters);
 		handleClose();
 	};
 
@@ -95,7 +95,7 @@ CategoryForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	offset: state.category.offset,
+	filters: state.category.filters,
 });
 
 export default connect(mapStateToProps, { editCategory })(withRouter(CategoryForm));

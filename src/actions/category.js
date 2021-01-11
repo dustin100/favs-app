@@ -13,7 +13,6 @@ import {
 
 // Get all categories by user
 export const getCategoryList = (params) => async (dispatch) => {
-
 	try {
 		const res = await axios.get(`/category`, { params });
 		console.log(res.data);
@@ -80,8 +79,8 @@ export const deleteCategory = (id, params) => async (dispatch) => {
 	try {
 		await axios.delete(`/category/${id}`);
 		const res = await axios.get('/category', { params });
-			console.log(res.data, 'data')
-			console.log(res.data.data, 'data data')
+		console.log(res.data, 'data');
+		console.log(res.data.data, 'data data');
 		dispatch({
 			type: DELETE_CATEGORY,
 			payload: res.data,
@@ -96,12 +95,7 @@ export const deleteCategory = (id, params) => async (dispatch) => {
 };
 
 // Edit Category
-export const editCategory = (formData, id, offset) => async (dispatch) => {
-	const params = {
-		limit: 3,
-		skip: offset,
-		sortBy: 'createdAt:desc',
-	};
+export const editCategory = (formData, id, params) => async (dispatch) => {
 	try {
 		const config = {
 			headers: {
