@@ -7,21 +7,35 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(5),
 	},
 }));
-const DisplayPagination = ({ updatePage, totalPages, catId }) => {
+const DisplayPagination = ({
+	updatePage,
+	totalPages,
+	catId,
+	currentPage,
+	filters,
+	getCategoryList,
+}) => {
 	const classes = useStyles();
-	const [page, setPage] = useState(1);
 
 	const handleChange = (e, value) => {
-		setPage(value);
-		const skip = (value - 1) * 3;
+		const page = {
+			number: value,
+			skip: (value - 1) * 3,
+			limit: 3,
+		};
+		updatePage(page);
 
-		updatePage(catId,skip);
+		console.log({ ...filters, ...page });
+		getCategoryList({ ...filters, ...page });
 	};
 
 	return (
 		<div className={classes.root}>
-			
-			<Pagination count={totalPages} page={page} onChange={handleChange} />
+			<Pagination
+				count={totalPages}
+				page={currentPage}
+				onChange={handleChange}
+			/>
 		</div>
 	);
 };

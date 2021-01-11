@@ -54,6 +54,7 @@ const DisplayCategories = ({ cat, items, getItem }) => {
 						</Fab>
 					</Tooltip>
 				</Grid>
+				
 				<CategoryTitle category={cat.catInfo.catName} />
 				<Grid container className={classes.root} direction='row' spacing={2}>
 					<Column cards={items.itemInfo} />

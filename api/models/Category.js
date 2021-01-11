@@ -28,6 +28,7 @@ categorySchema.virtual('categoryItems', {
 	ref: 'item',
 	localField: '_id',
 	foreignField: 'belongsToCat',
+	count: true,
 });
 
 // Delete all items when category is removed
