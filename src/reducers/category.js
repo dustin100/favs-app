@@ -20,6 +20,7 @@ const initialState = {
 		limit: 3,
 		skip: 0,
 		sortBy: `createdAt:desc`,
+
 	},
 };
 

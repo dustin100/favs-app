@@ -107,7 +107,7 @@ export const editCategory = (formData, id, params) => async (dispatch) => {
 
 		dispatch({
 			type: UPDATE_CATEGORY,
-			payload: res.data.data,
+			payload: res.data.data
 		});
 
 		dispatch(setAlert('Category Updated', 'success'));

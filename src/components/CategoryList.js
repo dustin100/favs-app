@@ -11,7 +11,7 @@ import {
 	deleteCategory,
 	getCategory,
 	getCategoryList,
-	updatePage
+	updatePage,
 } from '../actions/category';
 import EditCategoryForm from './forms/EditCategoryForm';
 import {
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoryList = ({
 	catInfo,
-	categories: { filters, totalPages, offset, currentPage },
+	categories: { filters, totalPages, currentPage },
 	deleteCategory,
 	getCategory,
 	getCategoryList,
@@ -48,11 +48,15 @@ const CategoryList = ({
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [currentName, setCurrentName] = useState(null);
 	const [currentId, setCurrentId] = useState(null);
+	const [currentPublic, setCurrentPublic] = useState(null);
+	const [currentType, setCurrentType] = useState(null);
 
-	const handleClick = (event, name, id) => {
+	const handleClick = (event, name, id, catType, isPublic) => {
 		setAnchorEl(event.currentTarget);
 		setCurrentName(name);
 		setCurrentId(id);
+		setCurrentType(catType);
+		setCurrentPublic(isPublic);
 	};
 
 	const handleClose = () => {
@@ -62,7 +66,7 @@ const CategoryList = ({
 	const open = Boolean(anchorEl);
 	const edit = open ? 'simple-popover' : undefined;
 
-	const categoryList = catInfo.map(({ catName, _id }) => {
+	const categoryList = catInfo.map(({ catName, _id, catType, isPublic }) => {
 		return (
 			<Grid key={_id} item xs={4}>
 				<Card variant='outlined'>
@@ -86,7 +90,7 @@ const CategoryList = ({
 							size='small'
 							variant='outlined'
 							aria-describedby={edit}
-							onClick={(e) => handleClick(e, catName, _id)}
+							onClick={(e) => handleClick(e, catName, _id, catType, isPublic)}
 							startIcon={<EditIcon />}>
 							Edit
 						</Button>
@@ -107,6 +111,8 @@ const CategoryList = ({
 								currentName={currentName}
 								catId={currentId}
 								handleClose={handleClose}
+								currentPublic={currentPublic}
+								currentType={currentType}
 							/>
 						</Popover>
 						<Button
@@ -131,7 +137,6 @@ const CategoryList = ({
 			</Grid>
 			<DisplayPagination
 				filters={filters}
-				offset={offset}
 				totalPages={totalPages}
 				getData={getCategoryList}
 				currentPage={currentPage}
