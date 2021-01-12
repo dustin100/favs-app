@@ -15,7 +15,6 @@ import {
 export const getCategoryList = (params) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/category`, { params });
-		console.log(res.data);
 		dispatch({
 			type: GET_ALL_CATEGORY_DATA,
 			payload: res.data,
@@ -79,8 +78,6 @@ export const deleteCategory = (id, params) => async (dispatch) => {
 	try {
 		await axios.delete(`/category/${id}`);
 		const res = await axios.get('/category', { params });
-		console.log(res.data, 'data');
-		console.log(res.data.data, 'data data');
 		dispatch({
 			type: DELETE_CATEGORY,
 			payload: res.data,
@@ -107,7 +104,7 @@ export const editCategory = (formData, id, params) => async (dispatch) => {
 
 		dispatch({
 			type: UPDATE_CATEGORY,
-			payload: res.data.data
+			payload: res.data.data,
 		});
 
 		dispatch(setAlert('Category Updated', 'success'));

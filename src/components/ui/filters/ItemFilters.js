@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { filterCategoryList, getCategoryList } from '../../actions/category';
+import Rating from '@material-ui/lab/Rating';
+import { filterItemList, getItem } from '../../../actions/item';
 import {
 	FormControl,
 	Select,
 	MenuItem,
-	ListItemText,
 	InputLabel,
 	makeStyles,
 	Button,
@@ -35,11 +35,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoryFilters = ({ catState, filterCategoryList, getCategoryList }) => {
+const ItemFilters = ({ items, filterItemList, getItem }) => {
 	const classes = useStyles();
-	const [dateFilter, setDateFilter] = useState(catState.filters.sortBy);
-	const [typeFilter, setTypeFilter] = useState(catState.filters.catType);
-	const [publicFilter, setPublicFilter] = useState(catState.filters.isPublic);
+	const [dateFilter, setDateFilter] = useState(items.filters.sortBy);
+	const [ratingFilter, setRatingFilter] = useState(items.filters.rating);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -48,47 +47,42 @@ const CategoryFilters = ({ catState, filterCategoryList, getCategoryList }) => {
 			sortBy: dateFilter,
 		};
 
-		if (publicFilter !== 'all') {
-			params.isPublic = publicFilter;
+		if (ratingFilter !== 'all') {
+			params.rating = ratingFilter;
 		}
 
-		if (typeFilter !== 'all') {
-			params.catType = typeFilter;
-		}
-
-		filterCategoryList(params);
+		filterItemList(params);
 	};
-
-	const catTypes = [
-		'all',
-		'foods',
-		'restaurants',
-		'businesses',
-		'drinks',
-		'products',
-		'movies',
-		'tv',
-		'music',
-		'places',
-		'other',
-	];
 
 	return (
 		<form className={classes.form} onSubmit={(e) => onSubmit(e)}>
 			<FormControl className={classes.formControl}>
-				<InputLabel id='category-type-select-label'>Category Type</InputLabel>
+				<InputLabel id='category-type-select-label'>Rating</InputLabel>
 				<Select
 					labelId='category-type-select-label'
 					id='category-type'
 					color='secondary'
-					onChange={(e) => setTypeFilter(e.target.value)}
+					onChange={(e) => setRatingFilter(e.target.value)}
 					name='catType'
-					value={typeFilter}>
-					{catTypes.map((cat) => (
-						<MenuItem key={cat} value={cat} name={cat}>
-							<ListItemText primary={cat} />
-						</MenuItem>
-					))}
+					value={ratingFilter}>
+					<MenuItem value='all' name='all '>
+						All
+					</MenuItem>
+					<MenuItem value={1} name={1}>
+						<Rating name='rating-filter' value={1} readOnly />
+					</MenuItem>
+					<MenuItem value={2} name={2}>
+						<Rating name='rating-filter' value={2} readOnly />
+					</MenuItem>
+					<MenuItem value={3} name={3}>
+						<Rating name='rating-filter' value={3} readOnly />
+					</MenuItem>
+					<MenuItem value={4} name={4}>
+						<Rating name='rating-filter' value={4} readOnly />
+					</MenuItem>
+					<MenuItem value={5} name={5}>
+						<Rating name='rating-filter' value={5} readOnly />
+					</MenuItem>
 				</Select>
 			</FormControl>
 			<FormControl className={classes.formControl}>
@@ -108,26 +102,6 @@ const CategoryFilters = ({ catState, filterCategoryList, getCategoryList }) => {
 				</Select>
 			</FormControl>
 
-			<FormControl className={classes.formControl}>
-				<InputLabel id='public-select-label'>Public</InputLabel>
-				<Select
-					labelId='public-select-label'
-					id='public'
-					color='secondary'
-					onChange={(e) => setPublicFilter(e.target.value)}
-					name='isPublic'
-					value={publicFilter}>
-					<MenuItem name='all' value='all'>
-						All
-					</MenuItem>
-					<MenuItem name='public' value='true'>
-						Show Public Only
-					</MenuItem>
-					<MenuItem name='private' value='false'>
-						Show Private Only
-					</MenuItem>
-				</Select>
-			</FormControl>
 			<Button
 				className={classes.submit}
 				type='submit'
@@ -139,9 +113,9 @@ const CategoryFilters = ({ catState, filterCategoryList, getCategoryList }) => {
 	);
 };
 const mapStateToProps = (state) => ({
-	catState: state.category,
+	items: state.item,
 });
 export default connect(mapStateToProps, {
-	filterCategoryList,
-	getCategoryList,
-})(CategoryFilters);
+	filterItemList,
+	getItem,
+})(ItemFilters);

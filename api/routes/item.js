@@ -69,10 +69,10 @@ router.get('/:id', auth, async (req, res) => {
 			.limit(parseInt(req.query.limit))
 			.skip(parseInt(req.query.skip));
 
-			results.count = await Item.countDocuments({ belongsToCat: id });
-			results.data = await item
-			results.offset = parseInt(req.query.skip);
-			results.totalPages = Math.ceil(results.count / parseInt(req.query.limit));
+		results.count = await Item.countDocuments({ ...match, belongsToCat: id });
+		results.data = await item;
+		results.offset = parseInt(req.query.skip);
+		results.totalPages = Math.ceil(results.count / parseInt(req.query.limit));
 
 		res.send(results);
 	} catch (err) {

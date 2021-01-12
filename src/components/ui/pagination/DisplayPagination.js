@@ -13,6 +13,7 @@ const DisplayPagination = ({
 	currentPage,
 	filters,
 	getCategoryList,
+	catId,
 }) => {
 	const classes = useStyles();
 
@@ -23,13 +24,10 @@ const DisplayPagination = ({
 			limit: 3,
 		};
 		updatePage(page);
-		getCategoryList({ ...filters, ...page });
+		getCategoryList({ ...filters, ...page }, catId);
 	};
 
-	// hides pagination controls
-	if (currentPage < 1) {
-		return;
-	}
+	
 
 	return (
 		<div className={classes.root}>
