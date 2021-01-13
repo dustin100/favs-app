@@ -37,4 +37,4 @@ categorySchema.pre('deleteOne', async function (next) {
 	await Item.deleteMany({ belongsToCat: id });
 	next();
 });
-module.exports = Profile = mongoose.model('category', categorySchema);
+module.exports = Category = mongoose.model('category', categorySchema);

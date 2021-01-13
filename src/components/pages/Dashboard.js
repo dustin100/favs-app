@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getCategoryList, deleteCategory } from '../../actions/category';
-import CategoryList from '../CategoryList';
+import CategoryList from '../ui/CategoryList';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles, Fab } from '@material-ui/core';
 

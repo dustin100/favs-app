@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import DisplayPagination from './ui/pagination/DisplayPagination';
+import DisplayPagination from './pagination/DisplayPagination';
 import CategoryFilter from './filters/CategoryFilter';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -12,8 +12,8 @@ import {
 	getCategory,
 	getCategoryList,
 	updatePage,
-} from '../actions/category';
-import EditCategoryForm from './forms/EditCategoryForm';
+} from '../../actions/category';
+import EditCategoryForm from '../forms/EditCategoryForm';
 import {
 	makeStyles,
 	Card,

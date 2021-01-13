@@ -25,4 +25,4 @@ const ItemSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-module.exports = Profile = mongoose.model('item', ItemSchema);
+module.exports = Item = mongoose.model('item', ItemSchema);
