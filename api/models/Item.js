@@ -21,6 +21,10 @@ const ItemSchema = new mongoose.Schema(
 		note: {
 			type: String,
 		},
+
+		itemImage: {
+			type: Buffer,
+		},
 	},
 	{ timestamps: true }
 );

@@ -3,6 +3,8 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const Item = require('../models/Item');
 const Category = require('../models/Category');
+const multer = require('multer');
+const sharp = require('sharp');
 
 // @route POST /item/:cat_id
 // @desc add items to categories
@@ -117,6 +119,89 @@ router.patch('/:id', auth, async (req, res) => {
 		res.send(item);
 	} catch (err) {
 		res.status(400).send(err);
+	}
+});
+
+const upload = multer({
+	limits: {
+		fileSize: 1000000,
+	},
+	fileFilter(req, file, cb) {
+		if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+			cb(new Error('Please upload an image that is a jpg, jpeg, or png'));
+		}
+
+		cb(undefined, true);
+	},
+});
+
+// @route POST /item/:id/image
+// @desc Adds image to itemImage field
+// @access Private
+router.post(
+	'/:id/image',
+	auth,
+	upload.single('itemImage'),
+	async (req, res) => {
+		try {
+			const item = await Item.findById(req.params.id);
+
+			if (!item) {
+				return res.status(404).send();
+			}
+			const buffer = await sharp(req.file.buffer)
+				.resize({ width: 500, height: 500 })
+				.png()
+				.toBuffer();
+
+			item.itemImage = buffer;
+
+			await item.save();
+			res.send();
+		} catch (error) {
+			console.log(error);
+			res.status(500);
+		}
+	},
+	(error, req, res, next) => {
+		res.status(400).send({ error: error.message });
+	}
+);
+// @route Delete /item/:id/image
+// @desc Deletes image from item
+// @access Private
+router.delete('/:id/image', auth, async (req, res) => {
+	try {
+		const item = await Item.findById(req.params.id);
+
+		if (!item) {
+			return res.status(404).send();
+		}
+		item.itemImage = undefined;
+		await item.save();
+		res.send();
+	} catch (error) {
+		console.log(error);
+		res.status(500);
+	}
+});
+
+// @route GET /item/:id/image
+// @desc gets image
+// @access Private
+router.get('/:id/image', auth, async (req, res) => {
+	try {
+		const item = await Item.findById(req.params.id);
+
+		if (!item || !item.itemImage) {
+			throw new Error();
+		}
+
+		res.set('Content-Type', 'image/png');
+		res.send(item.itemImage);
+	} catch (err) {
+		console.log(err);
+		res.status(404).send;
 	}
 });
 
