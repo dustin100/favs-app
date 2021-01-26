@@ -55,7 +55,7 @@ const MyCard = ({
 	catId,
 	itemId,
 	rating,
-	offset,
+	filters,
 }) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
@@ -91,7 +91,7 @@ const MyCard = ({
 	// For Delete Button
 	const handleDelete = () => {
 		setAnchorEl(null);
-		deleteItem(itemId, catId, offset);
+		deleteItem(itemId, catId, filters);
 	};
 
 	return (
@@ -140,7 +140,7 @@ const MyCard = ({
 									currentRating={rating}
 									currentNote={note}
 									catId={catId}
-									offset={offset}
+									filters={filters}
 								/>
 							</Popover>
 							<MenuItem key='Delete' onClick={handleDelete}>
@@ -189,7 +189,7 @@ const MyCard = ({
 };
 
 const mapStateToProps = (state) => ({
-	offset: state.item.offset,
+	filters: state.item.filters,
 });
 
 export default connect(mapStateToProps, { deleteItem })(MyCard);

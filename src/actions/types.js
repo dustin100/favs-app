@@ -16,11 +16,15 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE,';
 export const GET_CATEGORY = 'GET_CATEGORY,';
 export const CATEGORY_ERROR = 'CATEGORY_ERROR,';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const CLEAR_CATEGORY = 'CLEAR_CATEGORY';
 export const GET_ALL_CATEGORY_DATA = 'GET_ALL_CATEGORY_DATA';
-
+export const UPDATE_PARAMS = 'UPDATE_PARAMS';
+export const UPDATE_PAGE = 'UPDATE_PAGE';
 
 export const GET_ITEM = 'GET_ITEM,';
 export const ITEM_ERROR = 'ITEM_ERROR,';
 export const UPDATE_ITEM = 'UPDATE_ITEM,';
 export const CLEAR_ITEM = 'CLEAR_ITEM';
+export const UPDATE_ITEM_PAGE = 'UPDATE_ITEM_PAGE,';
+export const UPDATE_ITEM_PARAMS = 'UPDATE_ITEM_PARAMS';

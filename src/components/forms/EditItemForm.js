@@ -44,7 +44,7 @@ const EditItemForm = ({
 	currentNote,
 	currentRating,
 	currentName,
-	offset,
+	filters,
 }) => {
 	const classes = useStyles();
 	const [rating, setRating] = useState(currentRating);
@@ -61,7 +61,7 @@ const EditItemForm = ({
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		editItem(formData, rating, itemId, catId, offset);
+		editItem(formData, rating, itemId, catId, filters);
 		handleClose();
 	};
 

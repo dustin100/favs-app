@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getCategoryList, deleteCategory } from '../../actions/category';
-import CategoryList from '../CategoryList';
+import CategoryList from '../ui/CategoryList';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles, Fab } from '@material-ui/core';
 
@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Dashboard = ({ getCategoryList, categories = [], auth }) => {
+const Dashboard = ({ getCategoryList, categories, auth }) => {
 	const classes = useStyles();
 
 	useEffect(() => {
-		getCategoryList();
-	}, [getCategoryList, auth.isAuthenticated]);
+		getCategoryList(categories.filters);
+	}, [getCategoryList, auth.isAuthenticated, categories.filters]);
 
 	if (auth.loading) {
 		return <Spinner />;
@@ -49,11 +49,7 @@ const Dashboard = ({ getCategoryList, categories = [], auth }) => {
 					</Fab>
 				</div>
 				{categories.catInfo.length ? (
-					<CategoryList
-						catInfo={categories.catInfo}
-						offset={categories.offset}
-						totalPages={categories.totalPages}
-					/>
+					<CategoryList catInfo={categories.catInfo} />
 				) : (
 					<p>Get started by adding some categories</p>
 				)}

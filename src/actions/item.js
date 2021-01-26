@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { ITEM_ERROR, GET_ITEM, UPDATE_ITEM } from './types';
+import {
+	ITEM_ERROR,
+	GET_ITEM,
+	UPDATE_ITEM,
+	UPDATE_ITEM_PAGE,
+	UPDATE_ITEM_PARAMS,
+} from './types';
 
 // Add item to category
 export const addItem = (formData, rating, history, catId) => async (
@@ -25,22 +31,14 @@ export const addItem = (formData, rating, history, catId) => async (
 	} catch (err) {
 		const errors = err.response.data.errors;
 
-		if (errors) {
-			errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
-		}
 		dispatch({
 			type: ITEM_ERROR,
-			payload: { msg: err.response.status.text, status: err.response.status },
+			payload: { err },
 		});
 	}
 };
 
-export const getItem = (id, offset) => async (dispatch) => {
-	const params = {
-		limit: 3,
-		skip: offset,
-		sortBy: 'createdAt:desc',
-	};
+export const getItem = (params, id) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/item/${id}`, { params });
 		dispatch({
@@ -50,21 +48,17 @@ export const getItem = (id, offset) => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: ITEM_ERROR,
-			payload: { msg: err.response.status.text, status: err.response.status },
+			payload: { err },
 		});
 	}
 };
 
 // Delete item
-export const deleteItem = (itemId, catId, offset) => async (dispatch) => {
-	const params = {
-		limit: 3,
-		skip: offset,
-		sortBy: 'createdAt:desc',
-	};
+export const deleteItem = (itemId, catId, params) => async (dispatch) => {
+
 	try {
 		await axios.delete(`/item/${itemId}`);
-		const res = await axios.get(`/item/${catId}`, {params});
+		const res = await axios.get(`/item/${catId}`, { params });
 		dispatch({
 			type: UPDATE_ITEM,
 			payload: res.data,
@@ -79,14 +73,9 @@ export const deleteItem = (itemId, catId, offset) => async (dispatch) => {
 };
 
 // Edit item to category
-export const editItem = (formData, rating, itemId, catId, offset) => async (
+export const editItem = (formData, rating, itemId, catId, params) => async (
 	dispatch
 ) => {
-	const params = {
-		limit: 3,
-		skip: offset,
-		sortBy: 'createdAt:desc',
-	};
 	try {
 		formData.rating = rating;
 		const config = {
@@ -96,7 +85,7 @@ export const editItem = (formData, rating, itemId, catId, offset) => async (
 		};
 
 		await axios.patch(`/item/${itemId}`, formData, config);
-		const res = await axios.get(`/item/${catId}`, {params});
+		const res = await axios.get(`/item/${catId}`, { params });
 		dispatch({
 			type: UPDATE_ITEM,
 			payload: res.data,
@@ -109,4 +98,20 @@ export const editItem = (formData, rating, itemId, catId, offset) => async (
 			payload: { err },
 		});
 	}
+};
+
+// Pagination
+export const updatePage = (page) => async (dispatch) => {
+	dispatch({
+		type: UPDATE_ITEM_PAGE,
+		payload: page,
+	});
+};
+
+// Filter Category
+export const filterItemList = (params) => async (dispatch) => {
+	dispatch({
+		type: UPDATE_ITEM_PARAMS,
+		payload: params,
+	});
 };

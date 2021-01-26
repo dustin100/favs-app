@@ -2,7 +2,8 @@ import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import DisplayPagination from './ui/pagination/DisplayPagination';
+import DisplayPagination from './pagination/DisplayPagination';
+import CategoryFilter from './filters/CategoryFilter';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
@@ -10,8 +11,9 @@ import {
 	deleteCategory,
 	getCategory,
 	getCategoryList,
-} from '../actions/category';
-import EditCategoryForm from './forms/EditCategoryForm';
+	updatePage,
+} from '../../actions/category';
+import EditCategoryForm from '../forms/EditCategoryForm';
 import {
 	makeStyles,
 	Card,
@@ -35,22 +37,26 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoryList = ({
 	catInfo,
-	offset,
-	totalPages,
+	categories: { filters, totalPages, currentPage },
 	deleteCategory,
 	getCategory,
 	getCategoryList,
+	updatePage,
 	history,
 }) => {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [currentName, setCurrentName] = useState(null);
 	const [currentId, setCurrentId] = useState(null);
+	const [currentPublic, setCurrentPublic] = useState(null);
+	const [currentType, setCurrentType] = useState(null);
 
-	const handleClick = (event, name, id) => {
+	const handleClick = (event, name, id, catType, isPublic) => {
 		setAnchorEl(event.currentTarget);
 		setCurrentName(name);
 		setCurrentId(id);
+		setCurrentType(catType);
+		setCurrentPublic(isPublic);
 	};
 
 	const handleClose = () => {
@@ -60,16 +66,13 @@ const CategoryList = ({
 	const open = Boolean(anchorEl);
 	const edit = open ? 'simple-popover' : undefined;
 
-	const categoryList = catInfo.map(({ catName, catList = [], _id }) => {
+	const categoryList = catInfo.map(({ catName, _id, catType, isPublic }) => {
 		return (
 			<Grid key={_id} item xs={4}>
 				<Card variant='outlined'>
 					<CardContent>
 						<Typography className={classes.title} variant='h4' component='h2'>
 							{catName}
-						</Typography>
-						<Typography variant='body2' component='p'>
-							You have {catList.length} items in this category
 						</Typography>
 					</CardContent>
 					<CardActions>
@@ -87,7 +90,7 @@ const CategoryList = ({
 							size='small'
 							variant='outlined'
 							aria-describedby={edit}
-							onClick={(e) => handleClick(e, catName, _id)}
+							onClick={(e) => handleClick(e, catName, _id, catType, isPublic)}
 							startIcon={<EditIcon />}>
 							Edit
 						</Button>
@@ -108,10 +111,12 @@ const CategoryList = ({
 								currentName={currentName}
 								catId={currentId}
 								handleClose={handleClose}
+								currentPublic={currentPublic}
+								currentType={currentType}
 							/>
 						</Popover>
 						<Button
-							onClick={() => deleteCategory(_id, offset)}
+							onClick={() => deleteCategory(_id, filters)}
 							variant='outlined'
 							color='secondary'
 							size='small'
@@ -126,14 +131,17 @@ const CategoryList = ({
 
 	return (
 		<Fragment>
+			<CategoryFilter />
 			<Grid container justify='flex-start' spacing={2} className={classes.root}>
 				{categoryList}
 			</Grid>
 			<DisplayPagination
-				offset={offset}
+				filters={filters}
 				totalPages={totalPages}
-				updatePage={getCategoryList}
-				catId={null}
+				getData={getCategoryList}
+				currentPage={currentPage}
+				updatePage={updatePage}
+				getCategoryList={getCategoryList}
 			/>
 		</Fragment>
 	);
@@ -144,6 +152,13 @@ CategoryList.propTypes = {
 	getCategory: PropTypes.func.isRequired,
 };
 
-export default connect(null, { getCategoryList, deleteCategory, getCategory })(
-	withRouter(CategoryList)
-);
+const mapStateToProps = (state) => ({
+	categories: state.category,
+});
+
+export default connect(mapStateToProps, {
+	getCategoryList,
+	deleteCategory,
+	getCategory,
+	updatePage,
+})(withRouter(CategoryList));

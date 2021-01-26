@@ -75,10 +75,15 @@ router.get('/', auth, async (req, res) => {
 				},
 			})
 			.execPopulate();
-		results.count = await Category.countDocuments({ owner: req.user._id });
+
+		results.count = await Category.countDocuments({
+			...match,
+			owner: req.user._id,
+		});
 		results.data = await req.user.usersCategory;
-		results.offset = parseInt(req.query.skip) ;
+		results.offset = parseInt(req.query.skip);
 		results.totalPages = Math.ceil(results.count / parseInt(req.query.limit));
+		
 		res.send(results);
 	} catch (err) {
 		res.status(500);

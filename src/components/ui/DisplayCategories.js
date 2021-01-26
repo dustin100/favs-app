@@ -2,12 +2,13 @@ import React, { Fragment, useEffect } from 'react';
 import Column from './Column';
 import Spinner from './Spinner';
 import CategoryTitle from './CategoryTitle';
-import DisplayPagination from './pagination/DisplayPagination'
+import ItemFilters from './filters/ItemFilters';
+import DisplayPagination from './pagination/DisplayPagination';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Grid, makeStyles, Fab, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { getItem } from '../../actions/item';
+import { getItem, updatePage } from '../../actions/item';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -18,18 +19,19 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DisplayCategories = ({ cat, items, getItem }) => {
+const DisplayCategories = ({ cat, items, getItem, updatePage }) => {
 	const classes = useStyles();
 
 	useEffect(() => {
-		getItem(cat.catInfo._id, items.offset);
-	}, []);
+		getItem(items.filters, cat.catInfo._id);
+	}, [items.filters]);
 
 	if (items.loading) {
 		return <Spinner />;
 	} else {
 		return (
 			<Fragment>
+				<ItemFilters />
 				<Grid container justify='space-between' className={classes.container}>
 					<Tooltip title='Back To Categories' arrow>
 						<Fab
@@ -54,15 +56,18 @@ const DisplayCategories = ({ cat, items, getItem }) => {
 						</Fab>
 					</Tooltip>
 				</Grid>
+
 				<CategoryTitle category={cat.catInfo.catName} />
 				<Grid container className={classes.root} direction='row' spacing={2}>
 					<Column cards={items.itemInfo} />
 				</Grid>
 				<DisplayPagination
-					offset={items.offset}
 					totalPages={items.totalPages}
-					updatePage={getItem}
+					updatePage={updatePage}
 					catId={cat.catInfo._id}
+					currentPage={items.currentPage}
+					getCategoryList={getItem}
+					filters={items.filters}
 				/>
 			</Fragment>
 		);
@@ -74,4 +79,6 @@ const mapStateToProps = (state) => ({
 	items: state.item,
 });
 
-export default connect(mapStateToProps, { getItem })(DisplayCategories);
+export default connect(mapStateToProps, { getItem, updatePage })(
+	DisplayCategories
+);

@@ -50,7 +50,6 @@ const CategoryForm = ({ createCategory, history }) => {
 		isPublic: true,
 	});
 
-	
 	const { catName, catType, isPublic } = formData;
 
 	const onChange = (e) => {
@@ -72,10 +71,10 @@ const CategoryForm = ({ createCategory, history }) => {
 
 	const catTypes = [
 		'foods',
-		'restaurants ',
+		'restaurants',
 		'businesses',
-		'drinks  ',
-		'products ',
+		'drinks',
+		'products',
 		'movies',
 		'tv',
 		'music',

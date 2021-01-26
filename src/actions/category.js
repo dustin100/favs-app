@@ -5,19 +5,16 @@ import {
 	CATEGORY_ERROR,
 	PROFILE_ERROR,
 	UPDATE_CATEGORY,
+	DELETE_CATEGORY,
 	GET_ALL_CATEGORY_DATA,
+	UPDATE_PARAMS,
+	UPDATE_PAGE,
 } from './types';
 
 // Get all categories by user
-export const getCategoryList = (id, offset) => async (dispatch) => {
-	const params = {
-		limit: 3,
-		skip: offset,
-		sortBy: 'createdAt:desc',
-	};
+export const getCategoryList = (params) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/category`, { params });
-		console.log(res.data);
 		dispatch({
 			type: GET_ALL_CATEGORY_DATA,
 			payload: res.data,
@@ -77,19 +74,13 @@ export const createCategory = (formData, history) => async (dispatch) => {
 };
 
 // Delete Category
-export const deleteCategory = (id, offset) => async (dispatch) => {
-	const params = {
-		limit: 3,
-		skip: offset,
-		sortBy: 'createdAt:desc',
-	};
+export const deleteCategory = (id, params) => async (dispatch) => {
 	try {
 		await axios.delete(`/category/${id}`);
-		const res = await axios.get('/category', {params});
-
+		const res = await axios.get('/category', { params });
 		dispatch({
-			type: UPDATE_CATEGORY,
-			payload: res.data.data,
+			type: DELETE_CATEGORY,
+			payload: res.data,
 		});
 		dispatch(setAlert('Category Deleted', 'error'));
 	} catch (err) {
@@ -101,12 +92,7 @@ export const deleteCategory = (id, offset) => async (dispatch) => {
 };
 
 // Edit Category
-export const editCategory = (formData, id, offset) => async (dispatch) => {
-	const params = {
-		limit: 3,
-		skip: offset,
-		sortBy: 'createdAt:desc',
-	};
+export const editCategory = (formData, id, params) => async (dispatch) => {
 	try {
 		const config = {
 			headers: {
@@ -128,4 +114,20 @@ export const editCategory = (formData, id, offset) => async (dispatch) => {
 			payload: err,
 		});
 	}
+};
+
+// Filter Category
+export const filterCategoryList = (params) => async (dispatch) => {
+	dispatch({
+		type: UPDATE_PARAMS,
+		payload: params,
+	});
+};
+
+// Pagination
+export const updatePage = (page) => async (dispatch) => {
+	dispatch({
+		type: UPDATE_PAGE,
+		payload: page,
+	});
 };
