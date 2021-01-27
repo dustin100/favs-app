@@ -17,7 +17,6 @@ import {
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import clsx from 'clsx';
-import defaultImg from '../../assets/defaultImg.jpg';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
@@ -56,6 +55,7 @@ const MyCard = ({
 	itemId,
 	rating,
 	filters,
+	image
 }) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
@@ -93,7 +93,7 @@ const MyCard = ({
 		setAnchorEl(null);
 		deleteItem(itemId, catId, filters);
 	};
-
+	
 	return (
 		<Card variant='outlined' className={classes.root}>
 			<CardHeader
@@ -152,7 +152,7 @@ const MyCard = ({
 				title={name}
 				subheader={`Created on ${format(new Date(date), 'MMM-do-yyyy')}`}
 			/>
-			<CardMedia className={classes.media} image={defaultImg} title='image' />
+			<CardMedia className={classes.media} image={image} title='image' />
 
 			<CardActions disableSpacing>
 				<Box

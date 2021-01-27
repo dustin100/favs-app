@@ -155,7 +155,6 @@ router.post(
 				.toBuffer();
 
 			item.itemImage = buffer;
-
 			await item.save();
 			res.send();
 		} catch (error) {
@@ -197,8 +196,8 @@ router.get('/:id/image', auth, async (req, res) => {
 			throw new Error();
 		}
 
-		res.set('Content-Type', 'image/png');
-		res.send(item.itemImage);
+		res.set('Content-Type', 'image/jpg');
+		res.send(itemImage);
 	} catch (err) {
 		console.log(err);
 		res.status(404).send;
