@@ -17,12 +17,12 @@ import {
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import clsx from 'clsx';
-import defaultImg from '../../assets/defaultImg.jpg';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { deleteItem } from '../../actions/item';
 import { format, toDate } from 'date-fns';
+import AddImage from '../forms/AddImage';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -56,12 +56,14 @@ const MyCard = ({
 	itemId,
 	rating,
 	filters,
+	image,
 }) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 	const [anchorEditEl, setEditAnchorEl] = useState(null);
+	const [anchorImageEl, setImageAnchorEl] = useState(null);
 
 	// For 3 dots menu
 	const handleExpandClick = () => {
@@ -87,6 +89,19 @@ const MyCard = ({
 
 	const openEdit = Boolean(anchorEditEl);
 	const edit = open ? 'simple-popover' : undefined;
+
+	// For Image button
+	const handleImageClose = () => {
+		setImageAnchorEl(null);
+		handleClose();
+	};
+
+	const handleImage = (e) => {
+		setImageAnchorEl(e.currentTarget);
+	};
+
+	const openImage = Boolean(anchorImageEl);
+	const addimage = open ? 'simple-popover' : undefined;
 
 	// For Delete Button
 	const handleDelete = () => {
@@ -143,6 +158,29 @@ const MyCard = ({
 									filters={filters}
 								/>
 							</Popover>
+
+							<MenuItem key='addimage' onClick={handleImage}>
+								Add Image
+							</MenuItem>
+							<Popover
+								id={addimage}
+								open={openImage}
+								anchorEl={anchorImageEl}
+								onClose={handleImageClose}
+								anchorOrigin={{
+									vertical: 'bottom',
+									horizontal: 'center',
+								}}
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'center',
+								}}>
+								<AddImage
+									handleClose={handleImageClose}
+									itemId={itemId}
+									catId={catId}
+								/>
+							</Popover>
 							<MenuItem key='Delete' onClick={handleDelete}>
 								Delete
 							</MenuItem>
@@ -152,7 +190,7 @@ const MyCard = ({
 				title={name}
 				subheader={`Created on ${format(new Date(date), 'MMM-do-yyyy')}`}
 			/>
-			<CardMedia className={classes.media} image={defaultImg} title='image' />
+			<CardMedia className={classes.media} image={image} title={name} />
 
 			<CardActions disableSpacing>
 				<Box

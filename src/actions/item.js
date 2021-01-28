@@ -38,6 +38,33 @@ export const addItem = (formData, rating, history, catId) => async (
 	}
 };
 
+// Add item Image
+export const addItemImage = (itemId, image, catId, params) => async (
+	dispatch
+) => {
+	try {
+		const config = {
+			headers: {
+				'Content-Type': 'imageFile',
+			},
+		};
+		await axios.post(`/item/${itemId}/image`, image, config);
+		const res = await axios.get(`/item/${catId}`, { params });
+		dispatch({
+			type: UPDATE_ITEM,
+			payload: res.data,
+		});
+
+		dispatch(setAlert('Item Added', 'success'));
+	} catch (err) {
+		dispatch(setAlert(err.response.data.error, 'error'));
+		dispatch({
+			type: ITEM_ERROR,
+			payload: err.response.data.error,
+		});
+	}
+};
+
 export const getItem = (params, id) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/item/${id}`, { params });
@@ -55,7 +82,6 @@ export const getItem = (params, id) => async (dispatch) => {
 
 // Delete item
 export const deleteItem = (itemId, catId, params) => async (dispatch) => {
-
 	try {
 		await axios.delete(`/item/${itemId}`);
 		const res = await axios.get(`/item/${catId}`, { params });
