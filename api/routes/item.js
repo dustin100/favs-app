@@ -149,6 +149,7 @@ router.post(
 			if (!item) {
 				return res.status(404).send();
 			}
+			console.log(req.file);
 			const buffer = await sharp(req.file.buffer)
 				.resize({ width: 500, height: 500 })
 				.png()
