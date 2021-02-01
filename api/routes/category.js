@@ -83,10 +83,79 @@ router.get('/', auth, async (req, res) => {
 		results.data = await req.user.usersCategory;
 		results.offset = parseInt(req.query.skip);
 		results.totalPages = Math.ceil(results.count / parseInt(req.query.limit));
-		
+
 		res.send(results);
 	} catch (err) {
 		res.status(500);
+	}
+});
+
+// Public
+router.get('/public', async (req, res) => {
+	const match = {};
+
+	switch (req.query.catType) {
+		case 'foods':
+			match.catType = 'foods';
+			break;
+		case 'restaurants':
+			match.catType = 'restaurants';
+			break;
+		case 'businesses':
+			match.catType = 'businesses';
+			break;
+		case 'drinks':
+			match.catType = 'drinks';
+			break;
+		case 'products':
+			match.catType = 'products';
+			break;
+		case 'movies':
+			match.catType = 'movies';
+			break;
+		case 'tv':
+			match.catType = 'tv';
+			break;
+		case 'music':
+			match.catType = 'music';
+			break;
+		case 'places':
+			match.catType = 'places';
+			break;
+		case 'other':
+			match.catType = 'other';
+			break;
+		default:
+			match;
+	}
+
+	const sort = {};
+
+	if (req.query.sortBy) {
+		const parts = req.query.sortBy.split(':');
+		sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
+	}
+
+	const results = {};
+	try {
+		const pubCats = await Category.find({
+			isPublic: true,
+			...match,
+		})
+			.sort({ ...sort })
+			.limit(parseInt(req.query.limit))
+			.skip(parseInt(req.query.skip));
+
+		results.count = await Category.countDocuments({
+			...match,
+		});
+
+		results.data = pubCats;
+		results.offset = parseInt(req.query.skip);
+		results.totalPages = Math.ceil(results.count / parseInt(req.query.limit));
+		res.send(results);
+	} catch (err) {
+		res.status(500).send(err);
 	}
 });
 
