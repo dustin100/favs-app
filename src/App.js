@@ -14,6 +14,7 @@ import Category from './components/pages/Category';
 import ItemForm from './components/forms/ItemForm';
 import EditItemForm from './components/forms/EditItemForm';
 import Dashboard from './components/pages/Dashboard';
+import Public from './components/pages/Public';
 import CategoryForm from './components/forms/CategoryForm';
 import { loadUser } from './actions/auth';
 import { Provider } from 'react-redux';
@@ -35,6 +36,7 @@ const App = () => {
 							<Alert />
 							<Switch>
 								<Route exact path='/' component={Landing} />
+								<Route exact path='/public' component={Public} />
 								<PrivateRoute exact path='/dashboard' component={Dashboard} />
 								<PrivateRoute
 									exact

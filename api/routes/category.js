@@ -147,6 +147,7 @@ router.get('/public', async (req, res) => {
 			.skip(parseInt(req.query.skip));
 
 		results.count = await Category.countDocuments({
+			isPublic: true,
 			...match,
 		});
 

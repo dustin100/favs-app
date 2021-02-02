@@ -27,6 +27,23 @@ export const getCategoryList = (params) => async (dispatch) => {
 	}
 };
 
+// Get all categories by user
+export const getPublicCategoryList = (params) => async (dispatch) => {
+	console.log(params)
+	try {
+		const res = await axios.get(`/category/public`, { params });
+		dispatch({
+			type: GET_ALL_CATEGORY_DATA,
+			payload: res.data,
+		});
+	} catch (err) {
+		dispatch({
+			type: CATEGORY_ERROR,
+			payload: err,
+		});
+	}
+};
+
 // Get current category
 export const getCategory = (id, history) => async (dispatch) => {
 	try {
