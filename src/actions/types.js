@@ -21,6 +21,8 @@ export const CLEAR_CATEGORY = 'CLEAR_CATEGORY';
 export const GET_ALL_CATEGORY_DATA = 'GET_ALL_CATEGORY_DATA';
 export const UPDATE_PARAMS = 'UPDATE_PARAMS';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
+export const LOADING_CATEGORY = 'LOADING_CATEGORY';
+
 
 export const GET_ITEM = 'GET_ITEM,';
 export const ITEM_ERROR = 'ITEM_ERROR,';
@@ -28,3 +30,6 @@ export const UPDATE_ITEM = 'UPDATE_ITEM,';
 export const CLEAR_ITEM = 'CLEAR_ITEM';
 export const UPDATE_ITEM_PAGE = 'UPDATE_ITEM_PAGE,';
 export const UPDATE_ITEM_PARAMS = 'UPDATE_ITEM_PARAMS';
+export const LOADING_ITEM = 'LOADING_ITEM';
+
+

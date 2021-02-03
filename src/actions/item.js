@@ -6,12 +6,16 @@ import {
 	UPDATE_ITEM,
 	UPDATE_ITEM_PAGE,
 	UPDATE_ITEM_PARAMS,
+	LOADING_ITEM,
 } from './types';
 
 // Add item to category
 export const addItem = (formData, rating, history, catId) => async (
 	dispatch
 ) => {
+	dispatch({
+		type: LOADING_ITEM,
+	});
 	try {
 		formData.rating = rating;
 		const config = {
@@ -42,6 +46,9 @@ export const addItem = (formData, rating, history, catId) => async (
 export const addItemImage = (itemId, image, catId, params) => async (
 	dispatch
 ) => {
+	dispatch({
+		type: LOADING_ITEM,
+	});
 	try {
 		const config = {
 			headers: {
@@ -66,6 +73,9 @@ export const addItemImage = (itemId, image, catId, params) => async (
 };
 
 export const getItem = (params, id) => async (dispatch) => {
+	dispatch({
+		type: LOADING_ITEM,
+	});
 	try {
 		const res = await axios.get(`/item/${id}`, { params });
 		dispatch({
@@ -82,6 +92,9 @@ export const getItem = (params, id) => async (dispatch) => {
 
 // Delete item
 export const deleteItem = (itemId, catId, params) => async (dispatch) => {
+	dispatch({
+		type: LOADING_ITEM,
+	});
 	try {
 		await axios.delete(`/item/${itemId}`);
 		const res = await axios.get(`/item/${catId}`, { params });
@@ -102,6 +115,9 @@ export const deleteItem = (itemId, catId, params) => async (dispatch) => {
 export const editItem = (formData, rating, itemId, catId, params) => async (
 	dispatch
 ) => {
+	dispatch({
+		type: LOADING_ITEM,
+	});
 	try {
 		formData.rating = rating;
 		const config = {
@@ -129,6 +145,9 @@ export const editItem = (formData, rating, itemId, catId, params) => async (
 // Pagination
 export const updatePage = (page) => async (dispatch) => {
 	dispatch({
+		type: LOADING_ITEM,
+	});
+	dispatch({
 		type: UPDATE_ITEM_PAGE,
 		payload: page,
 	});
@@ -136,6 +155,9 @@ export const updatePage = (page) => async (dispatch) => {
 
 // Filter Category
 export const filterItemList = (params) => async (dispatch) => {
+	dispatch({
+		type: LOADING_ITEM,
+	});
 	dispatch({
 		type: UPDATE_ITEM_PARAMS,
 		payload: params,

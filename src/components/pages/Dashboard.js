@@ -31,7 +31,7 @@ const Dashboard = ({ getCategoryList, categories, auth }) => {
 		getCategoryList(categories.filters);
 	}, [getCategoryList, auth.isAuthenticated, categories.filters]);
 
-	if (auth.loading) {
+	if (categories.loading) {
 		return <Spinner />;
 	} else {
 		return (
