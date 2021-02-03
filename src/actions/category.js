@@ -9,10 +9,14 @@ import {
 	GET_ALL_CATEGORY_DATA,
 	UPDATE_PARAMS,
 	UPDATE_PAGE,
+	LOADING_CATEGORY,
 } from './types';
 
 // Get all categories by user
 export const getCategoryList = (params) => async (dispatch) => {
+	dispatch({
+		type: LOADING_CATEGORY,
+	});
 	try {
 		const res = await axios.get(`/category`, { params });
 		dispatch({
@@ -29,7 +33,9 @@ export const getCategoryList = (params) => async (dispatch) => {
 
 // Get all categories by user
 export const getPublicCategoryList = (params) => async (dispatch) => {
-	console.log(params)
+	dispatch({
+		type: LOADING_CATEGORY,
+	});
 	try {
 		const res = await axios.get(`/category/public`, { params });
 		dispatch({
@@ -46,6 +52,9 @@ export const getPublicCategoryList = (params) => async (dispatch) => {
 
 // Get current category
 export const getCategory = (id, history) => async (dispatch) => {
+	dispatch({
+		type: LOADING_CATEGORY,
+	});
 	try {
 		const res = await axios.get(`/category/${id}`);
 		dispatch({
@@ -64,6 +73,9 @@ export const getCategory = (id, history) => async (dispatch) => {
 
 // Create category
 export const createCategory = (formData, history) => async (dispatch) => {
+	dispatch({
+		type: LOADING_CATEGORY,
+	});
 	try {
 		const config = {
 			headers: {
@@ -92,6 +104,9 @@ export const createCategory = (formData, history) => async (dispatch) => {
 
 // Delete Category
 export const deleteCategory = (id, params) => async (dispatch) => {
+	dispatch({
+		type: LOADING_CATEGORY,
+	});
 	try {
 		await axios.delete(`/category/${id}`);
 		const res = await axios.get('/category', { params });
@@ -110,6 +125,9 @@ export const deleteCategory = (id, params) => async (dispatch) => {
 
 // Edit Category
 export const editCategory = (formData, id, params) => async (dispatch) => {
+	dispatch({
+		type: LOADING_CATEGORY,
+	});
 	try {
 		const config = {
 			headers: {
@@ -135,6 +153,9 @@ export const editCategory = (formData, id, params) => async (dispatch) => {
 
 // Filter Category
 export const filterCategoryList = (params) => async (dispatch) => {
+	dispatch({
+		type: LOADING_CATEGORY,
+	});
 	dispatch({
 		type: UPDATE_PARAMS,
 		payload: params,

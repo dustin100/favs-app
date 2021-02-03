@@ -5,6 +5,7 @@ import {
 	UPDATE_ITEM,
 	UPDATE_ITEM_PAGE,
 	UPDATE_ITEM_PARAMS,
+	LOADING_ITEM,
 } from '../actions/types';
 
 const initialState = {
@@ -66,6 +67,12 @@ export default (state = initialState, action) => {
 				catInfo: [],
 				loading: false,
 			};
+
+			case LOADING_ITEM:
+				return {
+					...state,
+					loading:true,
+				}
 
 		default:
 			return state;

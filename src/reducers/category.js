@@ -7,6 +7,7 @@ import {
 	GET_ALL_CATEGORY_DATA,
 	UPDATE_PARAMS,
 	UPDATE_PAGE,
+	LOADING_CATEGORY,
 } from '../actions/types';
 
 const initialState = {
@@ -20,7 +21,6 @@ const initialState = {
 		limit: 3,
 		skip: 0,
 		sortBy: `createdAt:desc`,
-
 	},
 };
 
@@ -81,6 +81,11 @@ export default (state = initialState, action) => {
 				loading: false,
 			};
 
+		case LOADING_CATEGORY:
+			return {
+				...state,
+				loading: true,
+			};
 		default:
 			return state;
 	}

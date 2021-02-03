@@ -30,6 +30,9 @@ const Public = ({ getPublicCategoryList, categories }) => {
 		getPublicCategoryList(categories.filters);
 	}, [getPublicCategoryList, categories.filters]);
 
+	if (categories.loading) {
+		return <Spinner />;
+	}
 	return (
 		<Fragment>
 			{categories.catInfo.length ? (
